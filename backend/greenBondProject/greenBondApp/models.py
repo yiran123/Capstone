@@ -37,4 +37,3 @@ class Bond(models.Model):
     avg_mature_rate = models.DecimalField(max_digits=5, decimal_places=4)
 
     project = models.ManyToManyField(Project)
-
