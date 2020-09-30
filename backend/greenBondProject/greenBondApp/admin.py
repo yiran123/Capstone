@@ -8,6 +8,6 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Bond)
 class BondAdmin(admin.ModelAdmin):
-    filter_horizontal = ('project',)
+    filter_horizontal = ('projects',)
 
 admin.site.register(SDG)

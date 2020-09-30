@@ -36,4 +36,4 @@ class Bond(models.Model):
     CUSIP = models.CharField(max_length=100)
     avg_mature_rate = models.DecimalField(max_digits=5, decimal_places=4)
 
-    project = models.ManyToManyField(Project)
+    projects = models.ManyToManyField(Project)
