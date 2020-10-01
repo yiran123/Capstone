@@ -2,7 +2,9 @@
 
 ## Start the Program.
 0. **Make sure python version in your mac is python3**. Install pip3.
+```
 python3 -m pip install --user --upgrade pip
+```
 
 1. Enter virtual environment.
 In backend folder, enter the command below:
