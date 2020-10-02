@@ -20,11 +20,11 @@ class BondSerializerForList(serializers.ModelSerializer):
         return obj.projects.count()
     
     def get_use_of_proceeds(self, obj):
-        return obj.projects.aggregate(Sum('use_of_proceeds'))
+        return obj.projects.aggregate(Sum('use_of_proceeds'))['use_of_proceeds__sum']
     
     project_counts = serializers.SerializerMethodField()
     use_of_proceeds = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Bond
         fields = ('id', 'name', 'enterprise', 'issue_year', 'series',
