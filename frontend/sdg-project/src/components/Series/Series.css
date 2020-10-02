@@ -1,0 +1,70 @@
+.seriesWrapper{
+  width: 276px;
+  padding: 32px;
+  box-sizing: border-box;
+  background-color: #1589EE;
+  border-radius: 4px;
+color: #FFFFFF;
+margin-left: 33px;
+}
+
+.seriesWrapper:first-of-type{
+  margin-left: 0;
+
+}
+
+.seriesTitle{
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 36px;
+  margin-bottom: 8px;
+}
+.series-refunding-bond{
+  font-size: 16px;
+  line-height: 22px;
+  margin-bottom: 14px;
+
+}
+
+.series-bond-rating{
+  height: 38px;
+  line-height: 38px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-bottom: 12px;
+  background-color: rgba(243, 243, 243, 0.4);
+}
+
+.series-projects{
+  padding-bottom: 13px;
+}
+.series-line{
+  height: 2px;
+  margin-bottom: 15px;
+  background-color: #276AB9;
+}
+.series-uop{
+font-size: 12px;
+line-height: 12px;
+margin-bottom: 10px;
+
+}
+
+.series-avg-maturity{
+  font-size: 12px;
+  margin-bottom: 24px;
+  line-height: 12px;
+}
+
+.series-UN-SDGs{
+
+}
+
+
+.series-UN-SDGs-title{
+  font-weight: bold;
+font-size: 12px;
+line-height: 22px;
+margin-bottom: 5px;
+}
