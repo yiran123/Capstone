@@ -11,7 +11,7 @@ class Project(models.Model):
     name = models.CharField(max_length=1000)
     project_number = models.CharField(max_length=100)
     description = models.CharField(max_length=10000)
-    sdg = models.ManyToManyField(SDG)
+    sdgs = models.ManyToManyField(SDG)
     # TODO: VERIFY
     use_of_proceeds = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     prior_spends = models.IntegerField(default=0, validators=[MinValueValidator(0)])
