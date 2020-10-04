@@ -7,11 +7,11 @@ import sdg6 from '../../static/icons/sdgs/E-WEB-Goal-06.png';
 
 import './Series.css'
 
-function Series ({ seriesBg }) {
+function Series ({ bond, seriesBg }) {
 
   return (
     <div className="seriesWrapper" style={{ 'backgroundColor': seriesBg }}>
-      <div className="seriesTitle">Series 2017G
+      <div className="seriesTitle">{bond.name}
       <img src={right} alt="right" style={{ marginLeft: '20px', cursor: 'pointer' }} />
       </div>
       <div className="series-refunding-bond">
