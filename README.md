@@ -33,4 +33,8 @@ http://127.0.0.1:8000/api/bond/1
 http://127.0.0.1:8000/api/project
 http://127.0.0.1:8000/api/project/1
 ```
-
+4. For frontend, installation
+```
+npm install @material-ui/core
+npm install @material-ui/icons
+```
