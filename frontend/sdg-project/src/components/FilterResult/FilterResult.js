@@ -23,7 +23,7 @@ const StyledButton = styled(Button)`
 `;
 
 
-function FilterResult ({ result }) {
+function FilterResult ({ result, bonds}) {
   return (
     <div className="FilterResultWrapper">
       <div className="FilterResultWrapperTop">
@@ -56,8 +56,8 @@ function FilterResult ({ result }) {
         </div>
         <div className="FilterResultBody">
           {
-            result.series.map((serie) => {
-              return <Series serie={serie} seriesBg={result.seriesBg} />
+            bonds.filter(bond => bond.enterprise == result.enterprise).map((bond) => {
+              return <Series bond={bond} seriesBg={result.seriesBg} />
             })
           }
         </div>

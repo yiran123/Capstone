@@ -9,6 +9,7 @@ import sdg6 from '../static/icons/sdgs/E-WEB-Goal-06.png';
 export const filterResults = [
   {
     title: 'Water Enterprise',
+    enterprise: 'Water',
     titleIcon: water,
     bondRatings: [
       ['S&P', 'long term AA-', 'short term P-1'],
@@ -64,6 +65,7 @@ export const filterResults = [
   },
   {
     title: 'Sewer Enterprise',
+    enterprise: 'Waste Water',
     titleIcon: sewer,
     bondRatings: [
       ['Moody’s', 'long term Aa3', 'short term P-1'],
@@ -92,6 +94,7 @@ export const filterResults = [
   {
     title: 'Power Enterprise',
     titleIcon: porwer,
+    enterprise: 'Power',
     bondRatings: [
       ['Moody’s', 'long term Aa3', 'short term P-1'],
       ['S&P', 'long term AA', 'short term A-1'],
