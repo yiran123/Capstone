@@ -1,0 +1,82 @@
+.DetailContentBottom{
+  padding: 35px 76px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.DetailContentBottom .card{
+  width: 1008px;
+
+background: #FFFFFF;
+box-shadow: 0px 0px 15px 2px #C0CEDB;
+padding: 46px 49px;
+box-sizing: border-box;
+}
+.cardInner{
+padding: 46px 49px;
+display: flex;
+}
+.CommitmentsTitle{
+font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 17px;
+line-height: 20px;
+color: #0F1F19;
+padding-right: 20px;
+}
+
+.CommitmentsItem{
+font-style: normal;
+font-weight: 300;
+font-size: 12px;
+line-height: 16px;
+color: #36424D;
+line-height: 24px;
+height: 24px;
+padding-left: 34px;
+position: relative;
+padding-right: 30px;
+}
+
+.CommitmentsItem::before{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+ display: inline-block;
+ width: 24px;
+ height: 24px;
+background-color: #3C6D97;
+  }
+
+  .Disbursement.CommitmentsItem::before{
+  background-color: #0ACF83;
+    }
+
+  
+  
+.DetailContentBottom .LocalTitle{
+display: flex;
+justify-content: space-between;
+
+}
+
+.LocalTitleText {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  color: #0F1F19;
+}
+
+.LocalHelp{
+font-size: 15px;
+line-height: 18px;
+color: #3E3E3C;
+
+}

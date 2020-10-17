@@ -1,0 +1,71 @@
+.Tab{
+  padding: 22px 62px 0 32px;
+  background: #FFFDFD;
+box-shadow: 0px 4px 8px #A4B4C1;
+}
+
+.tabDesc {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: #3E5060;
+  margin-top: 34px;
+  display: flex;
+  margin-left: 82px;
+  justify-content: space-between;
+}
+
+.tabDescContent {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  
+  color: #3E5060;
+}
+
+.tabDescContent-help{
+font-style: normal;
+font-weight: 300;
+font-size: 16px;
+line-height: 18px;
+color: #51687B;
+}
+
+.tabDescContent-desc{
+font-weight: 300;
+font-size: 32px;
+line-height: 53px;
+color: #042B4C;
+}
+
+.tabDescImg{
+  margin-right: 9px;
+}
+
+.tabWrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.tabItem{
+  width: 488px;
+  height: 36px;
+font-style: normal;
+font-weight: 500;
+font-size: 17px;
+line-height: 20px;
+color: #1589EE;
+text-align: center;
+cursor: pointer;
+}
+
+.tabItem.active{
+color: #0F1F19;
+border-bottom: 4px solid #1589EE;
+
+}
+
+
+

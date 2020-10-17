@@ -1,0 +1,92 @@
+.DetailContentProject{
+  background-color: #F5F5F5;
+  padding-top: 71px;
+}
+.DetailContentProjectInner{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.DetailContentProjectCard{
+  width: 488px;
+  background: #FFFFFF;
+  padding: 30px 36px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 15px 2px #C0CEDB;
+}
+
+.DetailContentProjectCardTop{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 27px;
+}
+
+.DetailContentProjectCard .title{
+font-weight: 500;
+font-size: 17px;
+line-height: 20px;
+color: #0F1F19;
+}
+
+.DetailContentProjectCard .desc{
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 20px;
+color: #1589EE;
+  }
+
+  .DetailContentProject .cardName{
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+text-align: center;
+color: #7B7B7B;
+padding-bottom: 20px;
+
+      }
+
+.impactTop{
+  padding: 45px 108px;
+  background-color: #E3E6E8;
+}
+
+.impactTop > .model {
+font-style: normal;
+font-weight: 500;
+font-size: 17px;
+line-height: 20px;
+color: #3CCE54;
+}
+
+.impactTop > .desc {
+font-weight: 300;
+font-size: 15px;
+line-height: 24px;
+color: #000000;
+}
+
+.impactBottom {
+  padding: 0 136px;
+  background-color: #E5E5E5;
+  border-top: 1px solid #fff;
+}
+
+.impactChartTitle{
+font-weight: 500;
+font-size: 17px;
+line-height: 20px;
+letter-spacing: 0.05em;
+color: #0F1F19;
+padding: 53px 0 25px 0;
+}
+
+.impactChartBody{
+width: 1008px;
+background: #FFFFFF;
+box-shadow: 0px 0px 15px 2px #C0CEDB;
+padding: 42px 105px;
+box-sizing: border-box;
+}
