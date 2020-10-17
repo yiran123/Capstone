@@ -6,6 +6,7 @@
 
 
 .un-sdgs-filter{
+  padding-top: 20px;
 }
 .un-sdgs-filter-top{
   width: 559px;
@@ -26,7 +27,7 @@
 }
 
 .other-filter{
-margin-top: 52px;
+margin-top: 32px;
 display: flex;
 }
 
@@ -86,4 +87,40 @@ width: 272px;
   cursor: pointer;
   margin-right: 8px;
   box-sizing: border-box;
+}
+
+.MuiButton-label {
+  font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 11px;
+line-height: 18px;
+/* or 164% */
+display: flex;
+align-items: center;
+text-align: center;
+}
+
+.buttonWrapper {
+
+  width: 232px;
+  height: 40px;
+  filter: drop-shadow(0px 0px 16px rgba(12, 43, 66, 0.1));
+  background: #1589EE;
+  border-radius: 6px;
+
+
+font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 18px;
+/* or 129% */
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 1px;
+
+color: #FFFFFF;
+
 }

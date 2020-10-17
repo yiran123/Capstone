@@ -9,11 +9,17 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "d3": "^6.2.0",
+    "d3-color-legend": "^1.2.5",
+    "d3-svg-legend": "^2.25.6",
     "react": "^16.13.1",
+    "react-d3-legends": "0.0.27",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-swipe": "^6.0.4",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "topojson-client": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

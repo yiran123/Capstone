@@ -41,3 +41,23 @@ export const issueYears = [
   { value: '2019', label: '2019' },
   { value: '2020', label: '2020' },
 ]
+
+export const unsdgs = {
+  1: sdg1,
+  2: sdg2,
+  3: sdg3,
+  4: sdg4,
+  5: sdg5,
+  6: sdg6,
+  7: sdg7,
+  8: sdg8,
+  9: sdg9,
+  10: sdg10,
+  11: sdg11,
+  12: sdg12,
+  13: sdg13,
+  14: sdg14,
+  15: sdg15,
+  16: sdg16,
+  17: sdg17,
+}

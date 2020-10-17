@@ -23,14 +23,22 @@ const StyledButton = styled(Button)`
 `;
 
 
-function FilterResult ({ result, bonds}) {
+class FilterResult extends React.Component {
+
+
+
+  render() {
+    const result = this.props.result;
+    const bonds = this.props.bonds;
+
   return (
+
     <div className="FilterResultWrapper">
       <div className="FilterResultWrapperTop">
         <div className="FilterResultHeader">
           <div className="FilterResultHeaderTop">
             <div className="FilterResultHeaderTitle">
-              <img src={result.titleIcon} style={{ marginRight: '19px' }} alt="water" />
+              <img src={this.props.result.titleIcon} style={{ marginRight: '19px' }} alt="water" />
               {result.title}
             </div>
             <div>
@@ -112,6 +120,7 @@ function FilterResult ({ result, bonds}) {
       </div>
     </div>
   );
+}
 }
 
 export default FilterResult;

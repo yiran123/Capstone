@@ -4,6 +4,8 @@ import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
 import InvestorPortal from './pages/InvestorPortal'
 import './App.css';
+import Routes from './Routes';
+
 
 function App () {
   return (
@@ -11,7 +13,7 @@ function App () {
       <Header />
       <Menu />
       <div className="LayoutWrapper">
-        <InvestorPortal />
+         <Routes />
       </div>
     </div>
   );

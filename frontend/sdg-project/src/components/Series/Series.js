@@ -7,15 +7,38 @@ import sdg6 from '../../static/icons/sdgs/E-WEB-Goal-06.png';
 
 import './Series.css'
 
-function Series ({ bond, seriesBg }) {
+class Series extends React.Component  {
+  constructor(props) {
+    super(props);
+    this.state ={
+      hash :'',
+    }
+    this.goOtherPage = this.goOtherPage.bind(this)
 
+  }
+
+  goOtherPage() {
+    this.setState({hash : `/detail/${this.props.bond.id}`})
+    window.location.href = `${window.location.origin}/detail/${this.props.bond.id}`
+  }
+
+  componentDidMount() {
+     if (window.location.hash === '/detail') {
+      this.setState({hash:window.location.hash})
+    }
+  }
+
+render() {
+  const seriesBg = this.props.seriesBg;
+  const bond = this.props.bond;
+  const self = this;
   return (
     <div className="seriesWrapper" style={{ 'backgroundColor': seriesBg }}>
       <div className="seriesTitle">{bond.name}
-      <img src={right} alt="right" style={{ marginLeft: '20px', cursor: 'pointer' }} />
+      <img onClick={()=>self.goOtherPage()} src={right} alt="right" style={{ marginLeft: '20px', cursor: 'pointer' }} />
       </div>
       <div className="series-refunding-bond">
-        Refunding Bond  •  2019
+        {bond.bond_type} Bond  •  {bond.issue_year}
     </div>
 
       <div className="series-bond-rating">
@@ -26,35 +49,43 @@ function Series ({ bond, seriesBg }) {
         <div style={{
           fontSize: '16px',
           lineHeight: '22px'
-        }}>41 projects</div>
+        }}>{bond.project_counts} projects</div>
         <div style={{
           fontSize: '16px',
           lineHeight: '22px',
           color: '#092A47'
-        }}>CUSIP: DF5</div>
+        }}>CUSIP: {bond.CUSIP}</div>
       </div>
 
       <div className="series-line"></div>
 
       <div className="series-uop">
-        UOP        $125, 960, 401
+        UOP        ${bond.use_of_proceeds}
     </div>
 
       <div className="series-avg-maturity">
-        Avg. Maturity       1.7%
+        Avg. Maturity       {(bond.avg_mature_rate*100).toFixed(2)}%
     </div>
 
       <div className="series-UN-SDGs">
         <div className="series-UN-SDGs-title">UN SDGs</div>
         <div className="series-UN-SDGs">
-          <img src={sdg3} width="52" height="54" alt="sdg3" style={{ marginRight: '11px' }} />
-          <img src={sdg4} width="52" height="54" alt="sdg3" style={{ marginRight: '11px' }} />
-          <img src={sdg6} width="52" height="54" alt="sdg3" style={{ marginRight: '11px' }} />
+          {
+            bond.sdgs.map((sdg)=>{
+              if(sdg <= 9) {
+                sdg = "0"+sdg
+              }
+
+              return <img src={require(`../../static/icons/sdgs/E-WEB-Goal-${sdg}.png`)} width="52" height="54" alt={sdg} style={{ marginRight: '11px' }} />
+
+            })
+          }
 
         </div>
       </div>
     </div>
   );
+}
 }
 
 export default Series;

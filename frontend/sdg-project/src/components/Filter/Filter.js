@@ -18,6 +18,9 @@ font-weight: bold;
 function Filter () {
   return (
     <div className="Filter">
+    <div className="buttonWrapper">
+    <nav>SELECT A BOND ISSUER</nav>
+    </div>
       <div className="un-sdgs-filter">
         <div className="un-sdgs-filter-top">
           <div className="filter-name">UN SDGs</div>

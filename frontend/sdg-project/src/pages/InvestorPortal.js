@@ -9,7 +9,8 @@ class InvestorPortal extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      bonds:[]
+      bonds:[],
+      hash :'',
     }
     this.fetchBonds = this.fetchBonds.bind(this)
 
@@ -25,11 +26,10 @@ class InvestorPortal extends React.Component {
 
   componentWillMount() {
     this.fetchBonds();
-
   }
 
-  render() {
 
+  render() {
       return (
     <div className="Header">
       <Swiper />
@@ -44,5 +44,6 @@ class InvestorPortal extends React.Component {
   }
 
 }
+
 
 export default InvestorPortal;

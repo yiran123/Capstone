@@ -4,33 +4,24 @@ import './Menu.css'
 
 const menus = [
   {
-    title: 'About Us',
-    path: '/about'
+    title: 'Investor Portal',
+    path: '/investor'
   },
   {
-    title: 'Customer Service',
-    path: '/customer',
+    title: 'About Impact Green',
+    path: '/about',
     children: [{}]
   },
   {
-    title: 'Environment',
-    path: '/environment',
+    title: 'Resources',
+    path: '/resources',
     children: [{}]
   },
-  {
-    title: 'Community',
-    path: '/community',
-    children: [{}]
-  },
-  {
-    title: 'Construction Contracts',
-    path: '/construction',
-    children: [{}]
-  },
+  
 ]
 
 function Menu () {
-  const [curentMenu] = useState('/about')
+  const [curentMenu] = useState('/investor')
   return (
     <div className="menu">
       <div className="menu-inner">
