@@ -13,24 +13,24 @@ import { unsdgs } from '../Filter/const'
 import zhishu from '../../static/icons/zhishu.svg';
 
 
- function createData (name, impactTypes, useOfProceeds, priorSpends, unSdgs) {
-    return { name, impactTypes, useOfProceeds, priorSpends, unSdgs };
+ function createData (name, useOfProceeds, spending, priorSpends, unSdgs) {
+    return { name, useOfProceeds, spending, priorSpends, unSdgs };
   }
-const rows = [
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CF331E', hasIcon: true }, [4, 5]),
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#992819', hasIcon: true }, [4, 5]),
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: false }, [4, 5]),
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-  createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-];
+// const rows = [
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CF331E', hasIcon: true }, [4, 5]),
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#992819', hasIcon: true }, [4, 5]),
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: false }, [4, 5]),
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
+//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
+// ];
 
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'PROJECT NAME' },
-  { id: 'impactTypes', numeric: true, disablePadding: false, label: 'IMPACT TYPES' },
   { id: 'useOfProceeds', numeric: true, disablePadding: false, label: 'USE OF PROCEEDS' },
+  { id: 'spending', numeric: true, disablePadding: false, label: 'FY 18-19 SPENDING' },
   { id: 'priorSpends', numeric: true, disablePadding: false, label: 'PRIOR SPENDS' },
   { id: 'unSdgs', numeric: true, disablePadding: false, label: 'UN SDGs' },
 ];
@@ -106,7 +106,7 @@ line-height: 20px;
 color: #1589EE;
 `
 
-const ImpactTypesWrapper = styled.div`
+const SpendingWrapper = styled.div`
 font-size: 17px;
 line-height: 20px;
 color: #000000;
@@ -203,8 +203,8 @@ class EnhancedTable extends React.Component {
     var order = this.state.order;
     var orderBy = this.state.orderBy;
     var rows = this.props.projects.map((project) => {
-        return createData( project.name, "Water Impact", 
-        project.use_of_proceeds, { val: `$ ${project.prior_spends}`, color: '#CAC8C8', hasIcon: true }, project.sdgs );
+        return createData( project.name, 
+        project.use_of_proceeds, 3084618 , { val: `$ ${project.prior_spends}`, color: '#CAC8C8', hasIcon: true }, project.sdgs );
     });
 
      return (
@@ -247,15 +247,16 @@ class EnhancedTable extends React.Component {
                     <TableCell component="th" id={labelId} scope="row" padding="none">
                       <NameWrapper>{row.name}</NameWrapper>
                     </TableCell>
-                    <TableCell align="right">
-                      <ImpactTypesWrapper>
-                        {row.impactTypes}
-                      </ImpactTypesWrapper>
-                    </TableCell>
+
                     <TableCell align="right">
                       <UseOfProceedsWrapper>
                         {row.useOfProceeds}
                       </UseOfProceedsWrapper>
+                    </TableCell>
+                    <TableCell align="right">
+                      <SpendingWrapper>
+                        {row.spending}
+                      </SpendingWrapper>
                     </TableCell>
                     <TableCell align="right">
                       {getPriorSpends(row.priorSpends)}

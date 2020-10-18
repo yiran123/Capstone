@@ -18,28 +18,34 @@ const BreadcrumbLink = styled(Link)`
   }
 `;
 
-function Tab ({ change, bond }) {
-  const [curTab, setCurTab] = useState('TRACKER')
-  let reactSwipeEl;
+class Tab extends React.Component {
 
-  const onChangeTab = (tab) => {
-    setCurTab(tab)
-    change(tab)
+  constructor(props) {
+    super(props);
+    this.state = {
+      curTab: 'TRACKER',
+    }
+    this.onChangeTab = this.onChangeTab.bind(this);
   }
 
+  onChangeTab = (tab) => {
+    this.setState({curTab:tab})
+    this.props.change(tab)
+  }
 
-  return (
+  render() {
+    var curTab = this.state.curTab;
+    var bond = this.props.bond;
+
+      return (
     <div className="Tab">
-      <Breadcrumbs aria-label="breadcrumb">
-        <BreadcrumbLink color="inherit" href="/" > Investor Relations & Financial Reports</BreadcrumbLink>
-        <BreadcrumbLink color="inherit" href="/getting-started/installation/" >Debt Management & Disclosure Reports</BreadcrumbLink>
-      </Breadcrumbs>
+
       <div className="tabDesc">
         <div className="tabDescContent">
           <div className="tabDescContent">
-            41 PROJECTS <i className="tabDescContent-help"> • REFUNDING • SERIES G • ISSUED IN 2017</i>
+            {bond.projects.length} PROJECTS <i className="tabDescContent-help"> • REFUNDING • SERIES {bond.series} • ISSUED IN {bond.issue_year}</i>
           </div>
-          <p className="tabDescContent-desc">Water Revenue Bond Series 2017G</p>
+          <p className="tabDescContent-desc">{bond.name} {bond.bond_type} Bond</p>
         </div>
         <div className="tabDescImgs">
           <img width="52" height="52" className="tabDescImg" src={sdg8} alt='sdg8' />
@@ -50,15 +56,17 @@ function Tab ({ change, bond }) {
         </div>
       </div>
       <div className="tabWrapper">
-        <div className={`tabItem ${curTab === 'TRACKER' && 'active'}`} onClick={() => { onChangeTab('TRACKER') }} style={{ marginRight: '29px' }}>
+        <div className={`tabItem ${curTab === 'TRACKER' && 'active'}`} onClick={() => { this.onChangeTab('TRACKER') }} style={{ marginRight: '29px' }}>
           PROJECT TRACKER
         </div>
-        <div className={`tabItem ${curTab === 'IMPACT' && 'active'}`} onClick={() => { onChangeTab('IMPACT') }}>
-          PCLIMATE IMPACT DATA
+        <div className={`tabItem ${curTab === 'IMPACT' && 'active'}`} onClick={() => { this.onChangeTab('IMPACT') }}>
+          CLIMATE IMPACT DATA
         </div>
       </div>
     </div >
   );
+  }
+
 }
 
 export default Tab;

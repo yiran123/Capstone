@@ -70,7 +70,7 @@ class DetailContent extends React.Component {
     var curTab = this.state.curTab;
       return (
     <div className="DetailContent">
-      <Tab change={this.onChangeTab} bond={this.bond} />
+      <Tab change={this.onChangeTab} bond={this.state.bond} />
       {
         curTab === 'TRACKER' && <div>
           <div className="DetailContentProject">
@@ -89,12 +89,7 @@ class DetailContent extends React.Component {
                   <SdgsAlignment />
                 </div>
               </div>
-              <div className="DetailContentProjectCard">
-                <div className="DetailContentProjectCardTop">
-                  <div className="title">Impact Types</div>
-                </div>
-                <div id="impactTypesNode"></div>
-              </div>
+
             </div>
             <p className="cardName">
               VIEWING : ALL PROJECTS
@@ -112,9 +107,7 @@ class DetailContent extends React.Component {
               <img className="tabDescImg" src={cloundy} alt='cloundy' />
               CLIMATE IMPACT MODEL
           </p>
-            <p>
-              Developed by Dr. Jan Whittington and her team of researchers at the University of Washington. Their model attempts to capture and forecast carbon emissions for SFPUC capital planning projects. This model provides the SFPUC with clear alternatives with different avoided cost and climate impacts.
-          </p>
+
           </div>
           <div className="impactBottom">
             <div className="impactChart">
