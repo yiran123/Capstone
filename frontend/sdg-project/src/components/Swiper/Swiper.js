@@ -42,12 +42,7 @@ function Swiper () {
         ref={el => (reactSwipeEl = el)}
       >
         <div className="Swiper-item page-one">
-          <div>
-            <Breadcrumbs aria-label="breadcrumb">
-              <BreadcrumbLink color="inherit" href="/" > Investor Relations & Financial Reports</BreadcrumbLink>
-              <BreadcrumbLink color="inherit" href="/getting-started/installation/" >Debt Management & Disclosure Reports</BreadcrumbLink>
-            </Breadcrumbs>
-          </div>
+    
           <img className="page-one-bg" src={treebg} alt="treebg" />
           <div className="page-one-content">
             <p className="page-one-title">Welcome to the Investor Portal</p>
@@ -55,17 +50,12 @@ function Swiper () {
           </div>
         </div>
         <div className="Swiper-item page-two">
-          <div>
-            <Breadcrumbs aria-label="breadcrumb">
-              <BreadcrumbLink color="inherit" href="/" > Investor Relations & Financial Reports</BreadcrumbLink>
-              <BreadcrumbLink color="inherit" href="/getting-started/installation/" >Debt Management & Disclosure Reports</BreadcrumbLink>
-            </Breadcrumbs>
-          </div>
+      
           <img className="page-two-bg" src={yunduo} alt="yunduo" />
           <div className="page-two-content">
             <p className="page-two-title">Climate-based Impact Reporting
             <ReadMoreButton size="small" variant="contained" color="primary">READ MORE</ReadMoreButton></p>
-            <p className="page-two-desc">Developed by Dr. Jan Whittington and her team of researchers at the University of Washington, provides the SFPUC with clear alternatives with different avoided cost and climate impacts. </p>
+            <p className="page-two-desc">Based on the ICMA Harmonized Framework, our tool attempts to standardize green bond issuer disclosure methods across utility enterprises. </p>
           </div>
         </div>
       </ReactSwipe>

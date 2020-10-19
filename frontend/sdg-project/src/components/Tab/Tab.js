@@ -43,7 +43,7 @@ class Tab extends React.Component {
       <div className="tabDesc">
         <div className="tabDescContent">
           <div className="tabDescContent">
-            {bond.projects.length} PROJECTS <i className="tabDescContent-help"> • REFUNDING • SERIES {bond.series} • ISSUED IN {bond.issue_year}</i>
+            {bond.projects.length} PROJECTS <i className="tabDescContent-help"> • {bond.bond_type} • SERIES {bond.series} • ISSUED IN {bond.issue_year}</i>
           </div>
           <p className="tabDescContent-desc">{bond.name} {bond.bond_type} Bond</p>
         </div>

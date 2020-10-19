@@ -19,15 +19,7 @@ function DetailContentBottom () {
   })
   return (
     <div className="DetailContentBottom">
-      <div className="card" style={{ marginBottom: '54px', padding: 0, display: 'flex' }}>
-        <div className="cardInner">
-          <p className="CommitmentsTitle">Neighborhood Commitments</p>
-          <div className="CommitmentsItem">
-            Commitment</div>
-          <div className="CommitmentsItem Disbursement">Disbursement</div>
-        </div>
-        <div id="mapChart" className="mapChart"></div>
-      </div>
+
       <div className="card">
         <div>
           <div className="LocalTitle">
