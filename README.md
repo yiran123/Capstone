@@ -33,7 +33,7 @@ http://127.0.0.1:8000/api/bond/1
 http://127.0.0.1:8000/api/project
 http://127.0.0.1:8000/api/project/1
 ```
-4. For frontend, installation
+4. For frontend, installation and start
 ```
 npm install
 npm start
