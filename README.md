@@ -36,4 +36,5 @@ http://127.0.0.1:8000/api/project/1
 4. For frontend, installation
 ```
 npm install
+npm start
 ```
