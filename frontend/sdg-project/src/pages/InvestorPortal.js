@@ -10,17 +10,35 @@ class InvestorPortal extends React.Component {
     super(props);
     this.state ={
       bonds:[],
-      hash :'',
+      filteredBonds:[],
+      hash :''
     }
     this.fetchBonds = this.fetchBonds.bind(this)
-
+    this.applyFilter = this.applyFilter.bind(this)
   }
 
-   fetchBonds() {
+  applyFilter(funding, year, sdg) {
+
+     var temp = this.state.bonds.filter(bond => {
+        if (sdg == 'all') return true;
+        else return bond.sdgs.includes(sdg);
+        } )
+       temp =  temp.filter(bond => {
+        if (funding == 'all') return true;
+        else return bond.series == funding;
+        } )
+          temp =  temp.filter(bond => {
+        if (year == 'all') return true;
+        else return bond.issue_year == year;
+        } )
+        this.setState({filteredBonds: temp})
+  }
+
+  fetchBonds() {
       fetch('http://localhost:8000/api/bond')
     .then(response => response.json())
     .then(data =>
-      this.setState({bonds:data})
+      this.setState({bonds:data, filteredBonds:data})
       )
   }
 
@@ -33,10 +51,10 @@ class InvestorPortal extends React.Component {
       return (
     <div className="Header">
       <Swiper />
-      <Filter />
+      <Filter changeFilter={this.applyFilter}  />
       {
         filterResults.map((item) => {
-          return <FilterResult result={item} bonds={this.state.bonds} />
+          return <FilterResult result={item} bonds={this.state.filteredBonds} />
         })
       }
 
