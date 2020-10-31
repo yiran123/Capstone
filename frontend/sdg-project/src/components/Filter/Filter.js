@@ -21,6 +21,7 @@ class Filter extends React.Component {
     super(props);
     this.state = {
       funding: 'all',
+      bondType: 'all',
       year: 'all',
       sdgs: 'all'
     }
@@ -28,9 +29,9 @@ class Filter extends React.Component {
   }
 
 
-  onChange = (myFunding, myYear, mySdg) => {
-    this.props.changeFilter(myFunding, myYear, mySdg)
-    this.setState({funding:myFunding, year:myYear, sdgs:mySdg  })
+  onChange = (myFunding, myBondType, myYear, mySdg) => {
+    this.props.changeFilter(myFunding, myBondType, myYear, mySdg)
+    this.setState({funding:myFunding, bondType: myBondType, year:myYear, sdgs:mySdg  })
   }
 
   render() {
@@ -43,12 +44,12 @@ class Filter extends React.Component {
       <div className="un-sdgs-filter">
         <div className="un-sdgs-filter-top">
           <div className="filter-name">UN SDGs</div>
-          <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.year,'all') }}>SELECT ALL</SelectAllButton>
+          <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year,'all') }}>SELECT ALL</SelectAllButton>
         </div>
         <div className="un-sdgs-filter-bottom">
           {
             sdgs.map((sdg) => {
-              return <div className="un-sdgs-filter-item" onClick={() => { this.onChange(this.state.funding, this.state.year, sdg.value) }}>
+              return <div className="un-sdgs-filter-item" onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year, sdg.value) }}>
                 <img width="52" height="52" src={sdg.imgSrc} alt='sdg' />
               </div>
             })
@@ -59,30 +60,30 @@ class Filter extends React.Component {
         <div className="other-filter-item">
           <div className="other-filter-item-top">
             <div className="filter-name">Funding</div>
-            <SelectAllButton onClick={() => { this.onChange('all', this.state.year, this.state.sdgs)}}>SELECT ALL</SelectAllButton>
+            <SelectAllButton onClick={() => { this.onChange('all', this.state.bondType, this.state.year, this.state.sdgs)}}>SELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom" >
-            {fundings.map((item) => <div className="funding-filter-item" onClick={() => { this.onChange(item.label, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
+            {fundings.map((item) => <div className="funding-filter-item" onClick={() => { this.onChange(item.label, this.state.bondType, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
           </div>
         </div>
 
         <div className="other-filter-item" style={{ margin: '0 56px' }}>
           <div className="other-filter-item-top" style={{ width: '200px' }}>
             <div className="filter-name">Bond Type</div>
-            <SelectAllButton>SELECT ALL</SelectAllButton>
+            <SelectAllButton onClick={() => { this.onChange(this.state.funding, 'all', this.state.year, this.state.sdgs)}}>SELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom">
-            {bondTypes.map((item) => <div className="bond-types-filter-item">{item.label}</div>)}
+            {bondTypes.map((item) => <div className="bond-types-filter-item" onClick={() => { this.onChange(this.state.funding, item.label, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
           </div>
         </div>
 
         <div className="other-filter-item">
           <div className="other-filter-item-top" style={{ width: '424px' }}>
             <div className="filter-name">Issue Year</div>
-            <SelectAllButton onClick={() => { this.onChange(this.state.funding, 'all', this.state.sdgs)}}>SELECT ALL</SelectAllButton>
+            <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.bondType, 'all', this.state.sdgs)}}>SELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom">
-            {issueYears.map((item) => <div className="issue-years-filter-item" onClick={() => { this.onChange(this.state.funding, item.label, this.state.sdgs) }}>{item.label}</div>)}
+            {issueYears.map((item) => <div className="issue-years-filter-item" onClick={() => { this.onChange(this.state.funding, this.state.bondType, item.label, this.state.sdgs) }}>{item.label}</div>)}
           </div>
         </div>
       </div>

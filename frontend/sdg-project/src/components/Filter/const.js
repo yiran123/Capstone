@@ -29,7 +29,7 @@ export const fundings = [
 ]
 
 export const bondTypes = [
-  { value: 'New Money', label: 'New Money' },
+  { value: 'Revenue', label: 'Revenue' },
   { value: 'Refunding', label: 'Refunding' },
 ]
 

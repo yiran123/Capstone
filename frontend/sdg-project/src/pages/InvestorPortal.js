@@ -17,7 +17,7 @@ class InvestorPortal extends React.Component {
     this.applyFilter = this.applyFilter.bind(this)
   }
 
-  applyFilter(funding, year, sdg) {
+  applyFilter(funding, bondType, year, sdg) {
 
      var temp = this.state.bonds.filter(bond => {
         if (sdg == 'all') return true;
@@ -28,6 +28,10 @@ class InvestorPortal extends React.Component {
         else return bond.series == funding;
         } )
           temp =  temp.filter(bond => {
+        if (bondType == 'all') return true;
+        else return bond.bond_type == bondType;
+        } )
+            temp =  temp.filter(bond => {
         if (year == 'all') return true;
         else return bond.issue_year == year;
         } )
