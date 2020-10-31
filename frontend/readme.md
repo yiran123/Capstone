@@ -1,3 +1,3 @@
-npm install @material-ui/core
-npm install @material-ui/icons
+npm install @material-ui/core --save
+npm install @material-ui/icons --save
 8000/admin

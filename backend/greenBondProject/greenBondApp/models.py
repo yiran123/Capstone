@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 
+
 class SDG(models.Model):
     name = models.CharField(max_length=1000)
     official_description = models.CharField(max_length=10000)
@@ -12,9 +13,10 @@ class Project(models.Model):
     project_number = models.CharField(max_length=100)
     description = models.CharField(max_length=10000)
     sdgs = models.ManyToManyField(SDG)
-    # TODO: VERIFY
-    use_of_proceeds = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     prior_spends = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+
+    def __str__(self):
+        return self.name
 
 
 class Bond(models.Model):
@@ -38,5 +40,16 @@ class Bond(models.Model):
     bond_type = models.CharField(max_length=100, choices=BOND_TYPES)
     CUSIP = models.CharField(max_length=100)
     avg_mature_rate = models.DecimalField(max_digits=5, decimal_places=4)
+    projects = models.ManyToManyField(Project, through='UseOfProceeds')
 
-    projects = models.ManyToManyField(Project)
+    def ___str__(self):
+        return self.name
+
+
+class UseOfProceeds(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    bond = models.ForeignKey(Bond, on_delete=models.CASCADE)
+    use_of_proceeds = models.DecimalField(max_digits=20, decimal_places=2, default=0, null=True)
+
+    class Meta:
+        db_table = 'greenBondApp_bond_projects'

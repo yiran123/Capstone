@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.db.models import Sum
 
-from greenBondApp.models import SDG, Project, Bond
+from greenBondApp.models import SDG, Project, Bond, UseOfProceeds
 
 class SDGSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +12,7 @@ class SDGSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'use_of_proceeds', 'prior_spends')
+        fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'prior_spends')
 
 
 class BondSerializerForList(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class BondSerializerForList(serializers.ModelSerializer):
         return obj.projects.count()
     
     def get_use_of_proceeds(self, obj):
-        return obj.projects.aggregate(Sum('use_of_proceeds'))['use_of_proceeds__sum']
+        return obj.useofproceeds_set.aggregate(use_of_proceeds=Sum('use_of_proceeds'))
     
     def get_sdgs(self, obj):
         # Get SDG frequencies.
@@ -46,8 +46,37 @@ class BondSerializerForList(serializers.ModelSerializer):
 
 
 class BondSerializerForDetail(serializers.ModelSerializer):
+    def get_sdg_stats(self, obj):
+        pass
+
+    def get_projects(self, obj):
+        """Serialize project.
+        """
+        # Use of proceeds.
+        # Dict: {id, serialization of the project}
+        #       key:    project.id
+        #       value:  dict(serialization of the project)
+        uop = dict()
+
+        # Get use of proceeds for the project and bond.
+        for project in obj.projects.values('id', 'useofproceeds__use_of_proceeds'):
+            uop[project['id']] = {
+                'id': project['id'],
+                'use_of_proceeds': project['useofproceeds__use_of_proceeds']
+            }
+
+        # Get the rest of the projects' fields;
+        # And update the dictionary.
+        for project in obj.projects.all():
+            uop[project.id].update(dict(ProjectSerializer(project).data))
+
+        # Return a list of the serializations.
+        return uop.values()
+
+    projects = serializers.SerializerMethodField()
+
     class Meta:
         model = Bond
         fields = ('id', 'name', 'enterprise', 'issue_year', 'series', 'bond_type', 'CUSIP',
          'avg_mature_rate', 'projects')
-        depth = 1
+        #depth = 1

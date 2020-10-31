@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Project, SDG, Bond
+from .models import Project, SDG, Bond, UseOfProceeds
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -8,6 +8,12 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Bond)
 class BondAdmin(admin.ModelAdmin):
-    filter_horizontal = ('projects',)
+    #filter_horizontal = ('projects',)
+    pass
+
+# @admin.register(UseOfProceeds)
+# class UseOfProceedsAdmin(admin.ModelAdmin):
+#     filter_horizontal = ('bond', 'project',)
 
 admin.site.register(SDG)
+admin.site.register(UseOfProceeds)
