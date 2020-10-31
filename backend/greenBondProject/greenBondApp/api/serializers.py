@@ -20,7 +20,7 @@ class BondSerializerForList(serializers.ModelSerializer):
         return obj.projects.count()
     
     def get_use_of_proceeds(self, obj):
-        return obj.useofproceeds_set.aggregate(use_of_proceeds=Sum('use_of_proceeds'))
+        return obj.useofproceeds_set.aggregate(use_of_proceeds=Sum('use_of_proceeds'))['use_of_proceeds']
     
     def get_sdgs(self, obj):
         # Get SDG frequencies.
