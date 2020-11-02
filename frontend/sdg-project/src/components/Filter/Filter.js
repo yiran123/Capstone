@@ -23,6 +23,7 @@ class Filter extends React.Component {
       funding: 'all',
       fundingArray: [],
       bondType: 'all',
+      bondTypeArray: [],
       year: 'all',
       yearArray: [],
       sdgs: 'all',
@@ -34,21 +35,23 @@ class Filter extends React.Component {
 
   onChange = (myFunding, myBondType, myYear, mySdg) => {
     var myFundingArray = [...this.state.fundingArray];
-    var myFundingType = 'all';
+    var myFundingRange = 'all';
+    var myBondTypeArray = [...this.state.bondTypeArray];
+    var myBondTypeRange = 'all';
     var myYearArray = [...this.state.yearArray];
     var myYearRange = 'all';
     var mySdgsArray = [...this.state.sdgsArray];
     var mySdgsRange = 'all';
 
     if(myFunding != 'all') {
-      myFundingType = 'part';
+      myFundingRange = 'part';
       if(myFundingArray.includes(myFunding)) {
        var index = myFundingArray.indexOf(myFunding);
         if(index > -1) {
           myFundingArray.splice(index, 1);
         }
         if(myFundingArray.length == 0) {
-          myFundingType = 'all';
+          myFundingRange = 'all';
         }
       }
       else {
@@ -56,8 +59,27 @@ class Filter extends React.Component {
       }
     }
     else {
-      myFundingType = 'all';
+      myFundingRange = 'all';
     }
+    if(myBondType != 'all') {
+      myBondTypeRange = 'part';
+      if(myBondTypeArray.includes(myBondType)) {
+       var index = myBondTypeArray.indexOf(myBondType);
+        if(index > -1) {
+          myBondTypeArray.splice(index, 1);
+        }
+        if(myBondTypeArray.length == 0) {
+          myBondTypeRange = 'all';
+        }
+      }
+      else {
+        myBondTypeArray = myBondTypeArray.concat(myBondType)
+      }
+    }
+    else {
+      myBondTypeRange = 'all';
+    }
+
     if(myYear != 'all') {
       myYearRange = 'part';
       if(myYearArray.includes(myYear)) {
@@ -72,6 +94,9 @@ class Filter extends React.Component {
       else {
         myYearArray = myYearArray.concat(myYear);
       }
+    }
+    else {
+      myYearRange = 'all';
     }
     if(mySdg != 'all') {
       mySdgsRange = 'part';
@@ -88,10 +113,14 @@ class Filter extends React.Component {
         mySdgsArray = mySdgsArray.concat(mySdg);
       }
     }
-     
-    this.setState({funding: myFundingType, fundingArray: myFundingArray, bondType: myBondType, year: myYearRange, yearArray: myYearArray, sdgs:mySdgsRange, sdgsArray: mySdgsArray })
-    this.props.changeFilter(myFundingType, myFundingArray, myBondType, myYearRange, myYearArray, mySdgsRange, mySdgsArray)
+    else {
+      mySdgsRange = 'all';
     }
+     
+    this.setState({funding: myFundingRange, fundingArray: myFundingArray, bondType: myBondTypeRange, bondTypeArray: myBondTypeArray, year: myYearRange, yearArray: myYearArray, sdgs:mySdgsRange, sdgsArray: mySdgsArray })
+    this.props.changeFilter(myFundingRange, myFundingArray, myBondTypeRange, myBondTypeArray, myYearRange, myYearArray, mySdgsRange, mySdgsArray)
+    }
+    
     
   
 

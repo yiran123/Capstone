@@ -17,7 +17,7 @@ class InvestorPortal extends React.Component {
     this.applyFilter = this.applyFilter.bind(this)
   }
 
-  applyFilter(funding, fundingArray, bondType, year, yearArray, sdg, sdgsArray) {
+  applyFilter(funding, fundingArray, bondType, bondTypeArray, year, yearArray, sdg, sdgsArray) {
 
      var temp = this.state.bonds.filter(bond => {
         if (sdg == 'all') return true;
@@ -39,7 +39,10 @@ class InvestorPortal extends React.Component {
         } )
           temp =  temp.filter(bond => {
         if (bondType == 'all') return true;
-        else return bond.bond_type == bondType;
+        else {
+          return bondTypeArray.includes(bond.bond_type);
+          
+        }
         } )
             temp =  temp.filter(bond => {
               if (year == 'all') return true;
