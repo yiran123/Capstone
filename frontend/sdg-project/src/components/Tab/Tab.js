@@ -18,6 +18,7 @@ const BreadcrumbLink = styled(Link)`
   }
 `;
 
+
 class Tab extends React.Component {
 
   constructor(props) {
@@ -26,6 +27,7 @@ class Tab extends React.Component {
       curTab: 'TRACKER',
     }
     this.onChangeTab = this.onChangeTab.bind(this);
+    this.createSdgs = this.createSdgs.bind(this);
   }
 
   onChangeTab = (tab) => {
@@ -33,9 +35,18 @@ class Tab extends React.Component {
     this.props.change(tab)
   }
 
+  createSdgs() {
+    var array =[];
+    this.props.bond.projects.forEach((project)=>{
+      array = array.concat(project.sdgs).unique();
+    })
+    return array;
+  }
+
   render() {
     var curTab = this.state.curTab;
     var bond = this.props.bond;
+    var sdgList = this.createSdgs();
 
       return (
     <div className="Tab">
@@ -48,11 +59,17 @@ class Tab extends React.Component {
           <p className="tabDescContent-desc">{bond.name} {bond.bond_type} Bond</p>
         </div>
         <div className="tabDescImgs">
-          <img width="52" height="52" className="tabDescImg" src={sdg8} alt='sdg8' />
-          <img width="52" height="52" className="tabDescImg" src={sdg7} alt='sdg8' />
-          <img width="52" height="52" className="tabDescImg" src={sdg6} alt='sdg8' />
-          <img width="52" height="52" className="tabDescImg" src={sdg4} alt='sdg8' />
-          <img width="52" height="52" className="tabDescImg" src={sdg5} alt='sdg8' />
+          {
+
+            sdgList.map((sdg) =>{
+               if(sdg <= 9) {
+                sdg = "0"+sdg
+              }
+                       return <img width="52" height="52" className="tabDescImg" src={require(`../../static/icons/sdgs/E-WEB-Goal-${sdg}.png`)} alt='sdg8' />
+
+            })
+          }
+      
         </div>
       </div>
       <div className="tabWrapper">

@@ -17,24 +17,36 @@ class InvestorPortal extends React.Component {
     this.applyFilter = this.applyFilter.bind(this)
   }
 
-  applyFilter(funding, bondType, year, sdg) {
+  applyFilter(funding, fundingArray, bondType, year, yearArray, sdg, sdgsArray) {
 
      var temp = this.state.bonds.filter(bond => {
         if (sdg == 'all') return true;
-        else return bond.sdgs.includes(sdg);
+        else {
+          var result = false;
+          sdgsArray.forEach((item)=>{
+             if(bond.sdgs.indexOf(item) > -1)
+              result = true;
+
+          })
+          return result;
+        }
         } )
        temp =  temp.filter(bond => {
         if (funding == 'all') return true;
-        else return bond.series == funding;
+        else {
+          return fundingArray.includes(bond.series);
+        }
         } )
           temp =  temp.filter(bond => {
         if (bondType == 'all') return true;
         else return bond.bond_type == bondType;
         } )
             temp =  temp.filter(bond => {
-        if (year == 'all') return true;
-        else return bond.issue_year == year;
-        } )
+              if (year == 'all') return true;
+              else {
+                return yearArray.includes(bond.issue_year);
+              }
+              } )
         this.setState({filteredBonds: temp})
   }
 

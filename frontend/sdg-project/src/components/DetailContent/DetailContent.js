@@ -86,7 +86,7 @@ class DetailContent extends React.Component {
                   </div>
                 </div>
                 <div className="DetailContentProjectCardBottom">
-                  <SdgsAlignment />
+                  <SdgsAlignment projects={this.state.bond.projects}/>
                 </div>
               </div>
 
