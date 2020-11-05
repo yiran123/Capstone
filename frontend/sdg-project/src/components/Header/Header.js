@@ -39,10 +39,32 @@ const SearchButton = styled(Button)`
 `;
 
 
-function Header () {
-  const [lang, setLang] = useState('ESPANOL')
+class Header extends React.Component  {
 
-  return (
+  constructor(props) {
+    super(props);
+    this.state ={
+      hash :'',
+    }
+    this.goOtherPage = this.goOtherPage.bind(this)
+
+  }
+
+  goOtherPage() {
+    this.setState({hash : `/login`})
+    window.location.href = `${window.location.origin}/login`
+  }
+
+  componentDidMount() {
+     if (window.location.hash === '/login') {
+      this.setState({hash:window.location.hash})
+    }
+  }
+  
+
+  render() {
+    var self  = this;
+    return (
     <div className="page-header">
       <div className="page-header-inner">
         <img src={logo} className="page-header-logo" alt="logo" />
@@ -51,7 +73,7 @@ function Header () {
           <SearchButton size="small" variant="contained" color="primary">
             <img src={search} alt="search" />
           </SearchButton>
-          <LoginButton size="small" variant="contained" color="primary">
+          <LoginButton onClick={()=>self.goOtherPage()} size="small" variant="contained" color="primary">
             LOGIN
         </LoginButton>
         </div>
@@ -65,5 +87,7 @@ function Header () {
     </div>
   );
 }
+}
+
 
 export default Header;
