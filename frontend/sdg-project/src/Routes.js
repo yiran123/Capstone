@@ -5,6 +5,7 @@ import history from './history';
 
 import InvestorPortal from "./pages/InvestorPortal";
 import DetailContent from "./components/DetailContent/DetailContent";
+import Login from './containers/Login/Login';
 
 export default class Routes extends Component {
     render() {
@@ -13,6 +14,7 @@ export default class Routes extends Component {
                 <Switch>
                     <Route path="/" exact component={InvestorPortal} />
                     <Route path="/detail/:id" component={DetailContent} />
+                    <Route path="/login" component={Login} />
                 </Switch>
             </Router>
         )

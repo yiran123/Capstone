@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'greenBondApp',
+    'rest_framework.authtoken',
+    'rest_auth',
     'corsheaders',
+
+    'greenBondApp'
 ]
 
 MIDDLEWARE = [
@@ -134,3 +137,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+
+ACCOUNT_EMAIL_REQUIRED = False
+
+ACCOUNT_EMAIL_REQUIRED = False
