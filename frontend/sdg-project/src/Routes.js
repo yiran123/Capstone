@@ -8,6 +8,7 @@ import DetailContent from "./components/DetailContent/DetailContent";
 import Login from './containers/Login/Login';
 import Uploader from './containers/Uploader/Uploader';
 
+
 export default class Routes extends Component {
     render() {
         return (
