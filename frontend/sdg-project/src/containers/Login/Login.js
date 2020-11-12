@@ -1,25 +1,21 @@
 import React from 'react';
 
 import { Form, Input, Button, Spin } from 'antd';
+import { Container } from 'reactstrap';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/auth';
+import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import './Login.css';
 
+
 class NormalLoginForm extends React.Component {
+    
+
     onFinish = (values) => {
-        console.log(values);
-        console.log(values.username);
-        console.log(values.password);
-
-        this.props.onAuth(values.username, values.password)
-            .then((res) => {
-                this.props.history.push('/');
-            }
-        )
-
-        // TODO: Change the link to uploading excel sheet.
-        //this.props.history.push('/');
+        this.props.onAuth(values.username, values.password);
     }
 
     onFinishFailed = (errorInfo) => {
@@ -36,7 +32,9 @@ class NormalLoginForm extends React.Component {
         }
         
         return (
+            
             <div>
+                <h2>Sign In</h2>
                 {errorMessage}
                 {
                     this.props.loading ?
@@ -44,36 +42,37 @@ class NormalLoginForm extends React.Component {
                     <LoadingOutlined style={{ fontSize: 24 }} spin />
     
                     :
-    
+
                     <Form
-                        name="normal_login"
-                        className="login-form"
-                        initialValues={{
-                        remember: true,
-                        }}
+                        name="basic"
+                        initialValues={{remember: true,}}
                         onFinish={this.onFinish}
                         onFinishFailed={this.onFinishFailed}
                     >
                         
                         <Form.Item 
+                            className='field'
                             name="username"
                             rules={[
                                 {
-                                required: true,
-                                message: 'Please input your Username!',
+                                    required: true,
+                                    message: 'Please input your Username!',
                                 },
                             ]}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-    
+                            <Input 
+                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            type='username'
+                            placeholder="Username" />
                         </Form.Item>
     
                         <Form.Item
+                            className='field'
                             name="password"
                             rules={[
                                 {
-                                required: true,
-                                message: 'Please input your Password!',
+                                    required: true,
+                                    message: 'Please input your Password!',
                                 },
                             ]}
                         >
@@ -93,7 +92,7 @@ class NormalLoginForm extends React.Component {
                         </Form.Item> */}
     
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
+                            <Button fullWidth type="primary" color='primary' htmlType="submit">
                                 Log in
                             </Button>
                             Or <a href="">register now!</a>
@@ -103,7 +102,6 @@ class NormalLoginForm extends React.Component {
             </div>
         );
     }
-    
 };
 
 const mapStateToProps = (state) => {

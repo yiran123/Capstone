@@ -62,9 +62,6 @@ class Header extends Component {
                 LOGIN
               </LoginButton>
             }
-            <LoginButton onClick={this.props.logout} size="small" variant="contained" color="primary">
-              LOGOUT
-            </LoginButton>
   
           </div>
         </div>
