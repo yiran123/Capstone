@@ -126,3 +126,31 @@ letter-spacing: 1px;
 color: #FFFFFF;
 
 }
+.buttonWrapper .MuiInputBase-root{
+  width: 100%;
+  /* color: #fff; */
+}
+
+.buttonWrapper select{
+  /* width: 100%; */
+  color: #fff;
+}
+
+.buttonWrapper .MuiSelect-select:not([multiple]) option, .MuiSelect-select:not([multiple]) optgroup{
+  color: #000
+}
+
+.buttonWrapper .MuiSelect-icon{
+  color: #fff;
+}
+
+.buttonWrapper .MuiInput-underline:hover:not(.Mui-disabled):before,
+.buttonWrapper .MuiInput-underline:before {
+  border: none;
+}
+.buttonWrapper .MuiSelect-select.MuiSelect-select{
+  /*padding-left: 20px;*/
+  color: #fff;
+  width: 232px;
+}
+

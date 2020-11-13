@@ -13,19 +13,10 @@ import { unsdgs } from '../Filter/const'
 import zhishu from '../../static/icons/zhishu.svg';
 
 
- function createData (name, useOfProceeds, spending, priorSpends, unSdgs) {
-    return { name, useOfProceeds, spending, priorSpends, unSdgs };
+ function createData (name, useOfProceeds, spending, priorSpends, unSdgs, projectId) {
+    return { name, useOfProceeds, spending, priorSpends, unSdgs, projectId };
   }
-// const rows = [
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CF331E', hasIcon: true }, [4, 5]),
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#992819', hasIcon: true }, [4, 5]),
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: false }, [4, 5]),
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-//   createData('Bond Commercial Paper', 'Water Repair', '$3,084,618', { val: '$ 3,084,614', color: '#CAC8C8', hasIcon: true }, [4, 5]),
-// ];
+
 
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'PROJECT NAME' },
@@ -40,14 +31,9 @@ function EnhancedTableHead (props) {
 
   return (
     <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+      <TableRow >
+        <TableCell >
+      
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -84,6 +70,9 @@ const useStyles = theme => ({
   },
   table: {
     minWidth: 750,
+  },
+  tableRow: {
+    cursor: 'pointer',
   },
   visuallyHidden: {
     border: 0,
@@ -166,35 +155,21 @@ class EnhancedTable extends React.Component {
       orderBy: 'calories',
       dense: false,
       selected: [],
+      hash: ''
     }
     this.handleClick = this.handleClick.bind(this);
-    this.isSelected = this.isSelected.bind(this);
+    
   }
 
-  handleClick = (event, name) => {
-    const selectedIndex = this.state.selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(this.state.selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(this.state.selected.slice(1));
-    } else if (selectedIndex === this.state.selected.length - 1) {
-      newSelected = newSelected.concat(this.state.selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        this.state.selected.slice(0, selectedIndex),
-        this.state.selected.slice(selectedIndex + 1),
-      );
-    }
-
-    this.setState({selected:newSelected});
+  handleClick = (event, id) => {
+    this.setState({hash : `/project/${id}`})
+    window.location.href = `${window.location.origin}/project/${id}`
   };
 
 
 
 
-  isSelected = (name) => this.state.selected.indexOf(name) !== -1;
+ 
   render() {
     const { classes } = this.props;
 
@@ -204,7 +179,7 @@ class EnhancedTable extends React.Component {
     var orderBy = this.state.orderBy;
     var rows = this.props.projects.map((project) => {
         return createData( project.name, 
-        project.use_of_proceeds, 3084618 , { val: `$ ${project.prior_spends}`, color: '#CAC8C8', hasIcon: true }, project.sdgs );
+        project.use_of_proceeds, 3084618 , { val: `$ ${project.prior_spends}`, color: '#CAC8C8', hasIcon: true }, project.sdgs, project.id );
     });
 
      return (
@@ -222,29 +197,25 @@ class EnhancedTable extends React.Component {
             order={order}
             orderBy={orderBy}
           />
-          <TableBody>
+          <TableBody
+           
+          >
             {
               rows.map((row, index) => {
-                const isItemSelected = this.isSelected(row.name);
-                const labelId = `enhanced-table-checkbox-${index}`;
+
 
                 return (
-                  <TableRow
+                  <TableRow className={classes.tableRow}
                     hover
-                    onClick={(event) => this.handleClick(event, row.name)}
+                    onClick={(event) => this.handleClick(event, row.projectId)}
                     role="checkbox"
-                    aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
-                    selected={isItemSelected}
+                    key={row.projectId}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isItemSelected}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
+                    <TableCell>
+                  
                     </TableCell>
-                    <TableCell component="th" id={labelId} scope="row" padding="none">
+                    <TableCell component="th" id={row.projectId} scope="row" padding="none">
                       <NameWrapper>{row.name}</NameWrapper>
                     </TableCell>
 
