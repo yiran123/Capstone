@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.db.models import Sum
 
-from greenBondApp.models import SDG, Project, Bond, UseOfProceeds
+from greenBondApp.models import SDG, Project, Bond
 
 class SDGSerializer(serializers.ModelSerializer):
     class Meta:
