@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactSwipe from 'react-swipe';
 import styled from 'styled-components'
-import { Breadcrumbs, Link, Button } from '@material-ui/core';
+import { Breadcrumbs, Link, Button, Select, FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import sdg1 from '../../static/icons/sdgs/E-WEB-Goal-01.png';
 import yunduo from '../../static/icons/yunduo.svg';
 import { sdgs, fundings, bondTypes, issueYears } from './const'
@@ -131,7 +131,24 @@ class Filter extends React.Component {
   return (
     <div className="Filter">
     <div className="buttonWrapper">
-    <nav>SELECT A BOND ISSUER</nav>
+          <FormControl variant="outlined" >
+        <InputLabel id="select-outlined-label">SELECT A BOND ISSUER</InputLabel>
+        <Select
+          labelId="select-outlined-label"
+          id="select-outlined"
+          value={this.state.bondIssuer}
+          onChange={this.handleChange}
+          label="Age"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl>
+          {/* <nav>SELECT A BOND ISSUER</nav> */}
     </div>
       <div className="un-sdgs-filter">
         <div className="un-sdgs-filter-top">

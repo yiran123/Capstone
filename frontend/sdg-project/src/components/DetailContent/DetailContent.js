@@ -7,6 +7,10 @@ import impactTypesNode from './impactTypes'
 import cloundy from '../../static/icons/cloundy.svg';
 import areaLineNode from './areaLine'
 import barNode from './bar'
+import AnnualWaterReduction from './AnnualWaterReduction/index'
+import AnnualGHG from './AnnualGHG/index'
+import AvoidedCost from './AvoidedCost/index'
+
 
 
 import './DetailContent.css'
@@ -100,33 +104,26 @@ class DetailContent extends React.Component {
         </div>
       }
       {
-        curTab === 'IMPACT' &&
-        <div>
-          <div className="impactTop">
-            <p className="model">
-              <img className="tabDescImg" src={cloundy} alt='cloundy' />
+          curTab === 'IMPACT' &&
+          <div>
+            <div className="impactTop">
+              <p className="model">
+                <img className="tabDescImg" src={cloundy} alt='cloundy' />
               CLIMATE IMPACT MODEL
           </p>
 
-          </div>
-          <div className="impactBottom">
-            <div className="impactChart">
-              <p className="impactChartTitle">GREENHOUSE GAS EMISSION & AVOIDED COSTS </p>
-              <div className="impactChartBody">
-                <div id="areaLineNode"></div>
-              </div>
             </div>
-            <div className="impactChart">
-              <p className="impactChartTitle">INFRASTRUCTURE RESILIENCE  </p>
-              <div className="impactChartBody">
-                <div id="barNode"></div>
+            <div className="impactBottom">
+              <div className="impactChart">
+                <AnnualWaterReduction />
+                <AnnualGHG />
+                <AvoidedCost />
               </div>
             </div>
           </div>
-        </div>
-      }
-    </div >
-  );
+        }
+      </div >
+    );
   }
 
 
