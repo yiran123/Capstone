@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 from greenBondApp.models import Project, Bond
-from .serializers import ProjectSerializer, BondSerializerForList, BondSerializerForDetail
+from .serializers import ProjectSerializerForDetail, ProjectSerializer, BondSerializerForList, BondSerializerForDetail
 
 
 class ProjectListView(ListAPIView):
@@ -11,7 +11,7 @@ class ProjectListView(ListAPIView):
 
 class ProjectDetailView(RetrieveAPIView):
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+    serializer_class = ProjectSerializerForDetail
 
 
 class BondListView(ListAPIView):

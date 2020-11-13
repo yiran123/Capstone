@@ -9,6 +9,18 @@ class SDGSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'official_description', 'original_description')
 
 
+class ProjectSerializerForDetail(serializers.ModelSerializer):
+    def get_associated_bonds(self, obj):
+        """Get info of bonds associated to this project.
+        """
+        return [BondSerializerForList(bond).data for bond in obj.bond_set.all()]
+        
+    associated_bonds = serializers.SerializerMethodField()
+    class Meta:
+        model = Project
+        fields = ('id', 'name', 'project_number', 'description', 'associated_bonds')
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
