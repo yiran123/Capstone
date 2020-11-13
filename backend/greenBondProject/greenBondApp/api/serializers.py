@@ -3,6 +3,7 @@ from django.db.models import Sum
 
 from greenBondApp.models import SDG, Project, Bond
 
+
 class SDGSerializer(serializers.ModelSerializer):
     class Meta:
         model = SDG
@@ -18,7 +19,7 @@ class ProjectSerializerForDetail(serializers.ModelSerializer):
     associated_bonds = serializers.SerializerMethodField()
     class Meta:
         model = Project
-        fields = ('id', 'name', 'project_number', 'description', 'associated_bonds')
+        fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'associated_bonds')
 
 
 class ProjectSerializer(serializers.ModelSerializer):
