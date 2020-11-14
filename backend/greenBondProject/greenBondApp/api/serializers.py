@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.db.models import Sum
+from decimal import Decimal
 
 from greenBondApp.models import SDG, Project, Bond
 
@@ -51,7 +52,7 @@ class BondSerializerForList(serializers.ModelSerializer):
     project_counts = serializers.SerializerMethodField()
     use_of_proceeds = serializers.SerializerMethodField()
     sdgs = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Bond
         fields = ('id', 'name', 'enterprise', 'issue_year', 'series',
@@ -59,9 +60,6 @@ class BondSerializerForList(serializers.ModelSerializer):
 
 
 class BondSerializerForDetail(serializers.ModelSerializer):
-    def get_sdg_stats(self, obj):
-        pass
-
     def get_projects(self, obj):
         """Serialize project.
         """
@@ -86,10 +84,21 @@ class BondSerializerForDetail(serializers.ModelSerializer):
         # Return a list of the serializations.
         return uop.values()
 
+    def get_constractors(self, obj):
+        contractors = dict()
+        for project in obj.projects.values('id', 'contractor__name', 'useofproceeds__use_of_proceeds'):
+            contractor_name = project['contractor__name']
+            contractors[contractor_name] = contractors.get(contractor_name, Decimal(0.0)) \
+                + project['useofproceeds__use_of_proceeds']
+
+        return {k: v for k, v in sorted(contractors.items(), key=lambda item: -item[1])}
+
+
     projects = serializers.SerializerMethodField()
+    constractors = serializers.SerializerMethodField()
 
     class Meta:
         model = Bond
-        fields = ('id', 'name', 'enterprise', 'issue_year', 'series', 'bond_type', 'CUSIP',
-         'avg_mature_rate', 'projects')
+        fields = ('id', 'name', 'enterprise', 'issue_year', 'series', 'bond_type', 'CUSIP', 
+        'avg_mature_rate', 'projects', 'constractors')
         #depth = 1

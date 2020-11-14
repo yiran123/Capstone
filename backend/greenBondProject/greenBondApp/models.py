@@ -2,6 +2,14 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 
 
+class Contractor(models.Model):
+    name = models.CharField(max_length=1000)
+    description = models.CharField(max_length=5000)
+
+    def __str__(self):
+        return self.name
+
+
 class SDG(models.Model):
     name = models.CharField(max_length=1000)
     official_description = models.CharField(max_length=10000)
@@ -14,6 +22,7 @@ class Project(models.Model):
     description = models.CharField(max_length=10000)
     sdgs = models.ManyToManyField(SDG)
     prior_spends = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
