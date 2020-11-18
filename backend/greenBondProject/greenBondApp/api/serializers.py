@@ -29,6 +29,21 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'prior_spends')
 
 
+class ProjectSerializerForCreation(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('name', 'project_number', 'description', 'prior_spends')
+    
+    def create(self, validated_data):
+        return Project.objects.create(
+            name=validated_data['name'],
+            project_number=validated_data['project_number'],
+            description=validated_data['description'],
+            contractor=validated_data['contractor'],
+            prior_spends=Decimal(0)
+        )
+
+
 class BondSerializerForList(serializers.ModelSerializer):
     def get_project_counts(self, obj):
         return obj.projects.count()
@@ -85,6 +100,9 @@ class BondSerializerForDetail(serializers.ModelSerializer):
         return uop.values()
 
     def get_constractors(self, obj):
+        """Get the contractors related to this bond, and the "Use of Proceeds" related to the contractor.
+        """
+        
         contractors = dict()
         for project in obj.projects.values('id', 'contractor__name', 'useofproceeds__use_of_proceeds'):
             contractor_name = project['contractor__name']

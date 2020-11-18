@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/auth';
 import * as XLSX from 'xlsx';
 import * as papa from 'papaparse';
+import axios from 'axios';
 
 
 class Uploader extends React.Component {
@@ -20,35 +21,68 @@ class Uploader extends React.Component {
         })
     }
 
+    renameKey = ( json, oldKey, newKey ) => {
+        json[newKey] = json[oldKey];
+        delete json[oldKey];
+    }
+
     onClickHandler = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
             const result = e.target.result;
 
-            console.log('+++++++++++++++++++');
-            console.log(result);
-
             const workbook = XLSX.read(result, {type: 'binary'});
-            console.log('workbook:');
-            console.log(workbook);
 
-            console.log('sheetname[0]:');
-            console.log(workbook.SheetNames[2]);
+            const worksheet = workbook.Sheets[workbook.SheetNames[2]];
 
-            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const csvString = XLSX.utils.sheet_to_csv(worksheet, {header: 1});
 
-            console.log('worksheet:');
-            console.log(worksheet);
-
-            const range = XLSX.utils.decode_range(worksheet['!ref']);
-            console.log('range:');
-            console.log(range);
-
-            const csvString = XLSX.utils.sheet_to_csv(worksheet, {header: 1});     
             const json = papa.parse(csvString, {header: true});
 
             console.log('(((((((((((((((');
-            console.log(json);
+
+            // filter empty cell.
+            const newJson = json.data.filter(item => {
+                for (let key in item) {
+                    if (item[key] != '') {
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+            // Change key name.
+            newJson.forEach((item) => {
+                delete item['Instructions'];
+                delete item[''];
+                delete item['Project Name and Number'];
+                delete item['Enterprise'];
+
+
+                item['name'] = item['Project Name'];
+                item['project_number'] = item['Project Number'];
+                item['description'] = item['Project Description']
+
+                delete item['Project Name'];
+                delete item['Project Number'];
+                delete item['Project Description'];
+                
+                // this.renameKey(item, 'Project Name', 'name');
+                // this.renameKey(item, 'Project Number', 'project_number');
+            });
+
+            //const jsonArray = JSON.stringify(newJson);
+            //const jsonArray = {"data": newJson};
+
+            const jsonArray = newJson;
+
+            console.log('new json:--------');
+            console.log(JSON.stringify(jsonArray));
+            
+            axios.post("http://127.0.0.1:8000/api/create", jsonArray)
+                .then(res => {
+                    console.log(res);
+                })
         };
 
         reader.readAsBinaryString(this.state.file);
