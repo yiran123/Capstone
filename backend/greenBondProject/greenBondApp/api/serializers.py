@@ -120,3 +120,20 @@ class BondSerializerForDetail(serializers.ModelSerializer):
         fields = ('id', 'name', 'enterprise', 'issue_year', 'series', 'bond_type', 'CUSIP', 
         'avg_mature_rate', 'projects', 'constractors')
         #depth = 1
+
+
+class BondSerializerForCreation(serializers.ModelSerializer):
+    class Meta:
+        model = Bond
+        fields = ('name', 'enterprise', 'issue_year', 'series' , 'bond_type', 'CUSIP', 'avg_mature_rate')
+    
+    def create(self, validated_data):
+        return Bond.objects.create(
+            name=validated_data['name'],
+            enterprise=validated_data['enterprise'],
+            issue_year=validated_data['issue_year'],
+            series=validated_data['series'],
+            bond_type=validated_data['bond_type'],
+            CUSIP=validated_data['CUSIP'],
+            avg_mature_rate=validated_data['avg_mature_rate']
+        )
