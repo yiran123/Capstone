@@ -47,7 +47,7 @@ class InvestorPortal extends React.Component {
             temp =  temp.filter(bond => {
               if (year == 'all') return true;
               else {
-                return yearArray.includes(bond.issue_year);
+                return yearArray.includes(bond.issue_year.toString());
               }
               } )
         this.setState({filteredBonds: temp})

@@ -60,6 +60,7 @@ class Filter extends React.Component {
     }
     else {
       myFundingRange = 'all';
+      myFundingArray = [];
     }
     if(myBondType != 'all') {
       myBondTypeRange = 'part';
@@ -78,6 +79,7 @@ class Filter extends React.Component {
     }
     else {
       myBondTypeRange = 'all';
+      myBondTypeArray = [];
     }
 
     if(myYear != 'all') {
@@ -97,6 +99,7 @@ class Filter extends React.Component {
     }
     else {
       myYearRange = 'all';
+      myYearArray = [];
     }
     if(mySdg != 'all') {
       mySdgsRange = 'part';
@@ -115,6 +118,7 @@ class Filter extends React.Component {
     }
     else {
       mySdgsRange = 'all';
+      mySdgsArray = [];
     }
      
     this.setState({funding: myFundingRange, fundingArray: myFundingArray, bondType: myBondTypeRange, bondTypeArray: myBondTypeArray, year: myYearRange, yearArray: myYearArray, sdgs:mySdgsRange, sdgsArray: mySdgsArray })
@@ -158,7 +162,7 @@ class Filter extends React.Component {
         <div className="un-sdgs-filter-bottom">
           {
             sdgs.map((sdg) => {
-              return <div className="un-sdgs-filter-item" onclick="changeClass(this.id)" onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year, sdg.value) }}>
+              return <div className={`un-sdgs-filter-item ${this.state.sdgs === 'part' && this.state.sdgsArray.includes(sdg.value) ? 'active' : ''}`} onclick="changeClass(this.id)" onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year, sdg.value) }}>
                 <img width="52" height="52" src={sdg.imgSrc} alt='sdg' />
               </div>
             })
@@ -172,7 +176,7 @@ class Filter extends React.Component {
             <SelectAllButton onClick={() => { this.onChange('all', this.state.bondType, this.state.year, this.state.sdgs)}}>SELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom" >
-            {fundings.map((item) => <div className="funding-filter-item" onClick={() => { this.onChange(item.label, this.state.bondType, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
+            {fundings.map((item) => <div className={`funding-filter-item ${this.state.funding === 'part' && this.state.fundingArray.includes(item.label) ? 'active' : ''}`} onClick={() => { this.onChange(item.label, this.state.bondType, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
           </div>
         </div>
 
@@ -182,7 +186,7 @@ class Filter extends React.Component {
             <SelectAllButton onClick={() => { this.onChange(this.state.funding, 'all', this.state.year, this.state.sdgs)}}>SELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom">
-            {bondTypes.map((item) => <div className="bond-types-filter-item" onClick={() => { this.onChange(this.state.funding, item.label, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
+            {bondTypes.map((item) => <div className={`bond-types-filter-item ${this.state.bondType === 'part' && this.state.bondTypeArray.includes(item.label) ? 'active' : ''}`} onClick={() => { this.onChange(this.state.funding, item.label, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
           </div>
         </div>
 
@@ -192,7 +196,7 @@ class Filter extends React.Component {
             <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.bondType, 'all', this.state.sdgs)}}>SELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom">
-            {issueYears.map((item) => <div className="issue-years-filter-item" onClick={() => { this.onChange(this.state.funding, this.state.bondType, Number(item.label), this.state.sdgs) }}>{item.label}</div>)}
+            {issueYears.map((item) => <div className={`issue-years-filter-item ${this.state.year === 'part' && this.state.yearArray.includes(item.label) ? 'active' : ''}`} onClick={() => { this.onChange(this.state.funding, this.state.bondType, item.label, this.state.sdgs) }}>{item.label}</div>)}
           </div>
         </div>
       </div>

@@ -24,7 +24,18 @@
 .un-sdgs-filter-item{
   cursor: pointer;
   margin-right: 9px;
+  width: 52px;
+height: 52px;
 }
+
+.un-sdgs-filter-item.active{
+  border: 1px solid #1589EE;
+}
+/* E_WEB_01 */
+
+
+
+
 
 
 
@@ -62,6 +73,12 @@ width: 272px;
   box-sizing: border-box;
 }
 
+.funding-filter-item.active{
+ 
+  background-color: #1589EE;
+  color: #fff;
+}
+
 .bond-types-filter-item{
   height: 32px;
   line-height: 32px;
@@ -74,6 +91,16 @@ width: 272px;
   cursor: pointer;
   margin-right: 8px;
   box-sizing: border-box;
+}
+
+.bond-types-filter-item.active{
+  background-color: #1589EE;
+  color: #fff;
+}
+
+.issue-years-filter-item.active{
+  background-color: #1589EE;
+  color: #fff;
 }
 
 
@@ -126,6 +153,7 @@ letter-spacing: 1px;
 color: #FFFFFF;
 
 }
+
 .buttonWrapper .MuiInputBase-root{
   width: 100%;
   /* color: #fff; */
