@@ -36,12 +36,19 @@ class ProjectSerializerForCreation(serializers.ModelSerializer):
         fields = ('name', 'project_number', 'description')
     
     def create(self, validated_data):
-        return Project.objects.create(
+        project =  Project.objects.create(
             name=validated_data['name'],
             project_number=validated_data['project_number'],
             description=validated_data['description'],
-            contractor=validated_data['contractor']
+            contractor=validated_data['contractor'],
         )
+        for sdg in validated_data['sdgs']:
+            print('sdg===')
+            print(sdg)
+            project.sdgs.add(sdg)
+        
+        project.save()
+        return project
 
 
 class BondSerializerForList(serializers.ModelSerializer):
@@ -153,4 +160,3 @@ class FinancialInfoSerializerForCreation(serializers.ModelSerializer):
             prior_year_spending=validated_data['prior_year_spending'],
             recent_year_spending=validated_data['recent_year_spending']
         )
-        

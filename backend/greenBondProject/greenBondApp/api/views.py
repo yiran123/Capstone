@@ -2,7 +2,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 
-from greenBondApp.models import Project, Bond, Contractor
+from greenBondApp.models import Project, Bond, Contractor, SDG
 from .serializers import ProjectSerializerForDetail, ProjectSerializerForList, BondSerializerForList, BondSerializerForDetail, \
     ProjectSerializerForCreation, BondSerializerForCreation, FinancialInfoSerializerForCreation
 
@@ -30,24 +30,45 @@ class BondDetailView(RetrieveAPIView):
 def create_projects(projects):
     for project in projects:
         contractor_name = project['Contractor']
-        
-        print("contractor name: " + contractor_name)
 
-        query = Contractor.objects.filter(name=contractor_name)
+        sdg1_fullname = project['sdg1']
+        sdg2_fullname = project['sdg2']
+
+        sdg1_splitted = sdg1_fullname.split('-')
+        sdg2_splitted = sdg2_fullname.split('-')
+
+        sdg_tags = []
+        if len(sdg1_splitted) >= 2:
+            sdg_tags.append(sdg1_splitted[0].strip())
         
-        if not query:
+        if len(sdg2_splitted) >= 2:
+            sdg_tags.append(sdg2_splitted[0].strip())
+        
+        contractor_query = Contractor.objects.filter(name=contractor_name)
+        sdg_query = SDG.objects.filter(name__in=sdg_tags)
+        
+        if not contractor_query:
             # TODO: throw error.
             print('no contractor:')
             print(contractor_name)
+            continue
+
+        if not sdg_query:
+            print('no sdg tags')
+            print(sdg1_fullname)
+            print(sdg2_fullname)
+            continue
+
+        contractor = contractor_query[0]
+        project_serializer = ProjectSerializerForCreation(data=project)
+        if project_serializer.is_valid():
+            # save project.
+            project_serializer.save(contractor=contractor, sdgs=sdg_query)
         else:
-            contractor = query[0]
-            project_serializer = ProjectSerializerForCreation(data=project)
-            if project_serializer.is_valid():
-                # save project.
-                project_serializer.save(contractor=contractor)
-            else:
-                print(project)
-                print(': project is not valid!')
+            print(project)
+            print(': project is not valid!')
+            print(project_serializer.error_messages)
+            print(project_serializer.errors)
 
 
 def create_bonds(bonds):

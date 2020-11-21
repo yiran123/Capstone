@@ -22,6 +22,8 @@ class Uploader extends React.Component {
 
     /**
      * Delete empty cells.
+     * Helper method.
+     * 
      * @param {JsonArray} jsonArray json array
      */
     deleteEmptyCells = (jsonArray) => {
@@ -64,9 +66,10 @@ class Uploader extends React.Component {
             delete item['Project Name'];
             delete item['Project Number'];
             delete item['Project Description'];
+            delete item['SDG Alignment #1'];
+            delete item['SDG Alignment #2'];
         });
-        //TODO: sdg tag.
-
+        
         return newJson;
     }
 
@@ -111,7 +114,7 @@ class Uploader extends React.Component {
         worksheets.forEach((worksheet) => {
             const csvString = XLSX.utils.sheet_to_csv(worksheet);
             const parsedData = papa.parse(csvString);
-            
+
             for (let j = BOND_INITIAL_COL; j < parsedData.data[0].length; j += GAP) {
                 if (parsedData.data[0][j] === undefined
                 || parsedData.data[0][j].toString().trim() == '') {
