@@ -20,6 +20,26 @@ class Uploader extends React.Component {
         })
     }
 
+    parseContractors = (worksheet) => {
+        const csvString = XLSX.utils.sheet_to_csv(worksheet, {header: 1});
+        const json = papa.parse(csvString, {header: true});
+
+        // filter empty cell.
+        const newJson = this.deleteEmptyCells(json.data);
+        
+        newJson.forEach((item) => {
+            delete item[''];
+            delete item['Instructions'];
+
+            item['name'] = item['Contractor Name'];
+            item['description'] = item['Contractor Description'];
+
+            delete item['Contractor Name'];
+            delete item['Contractor Description'];
+        })
+        return newJson;
+    }
+
     /**
      * Delete empty cells.
      * Helper method.
@@ -69,7 +89,7 @@ class Uploader extends React.Component {
             delete item['SDG Alignment #1'];
             delete item['SDG Alignment #2'];
         });
-        
+
         return newJson;
     }
 
@@ -168,6 +188,7 @@ class Uploader extends React.Component {
         const PROJECT_INFO_SHEET = "Project Information";
         const BOND_INFO_SHEET = "Bond Information";
         const FINANCIAL_INFO_SHEET_PREFIX = "Financial Information - Bonds";
+        const CONTRACTOR_INFO_SHEET = "Contractor Information";
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -176,6 +197,7 @@ class Uploader extends React.Component {
 
             const projectWorksheet = workbook.Sheets[PROJECT_INFO_SHEET];
             const bondWorksheet = workbook.Sheets[BOND_INFO_SHEET];
+            const contractorWorksheet = workbook.Sheets[CONTRACTOR_INFO_SHEET];
 
             const financialInfoWorksheets = [];
             workbook.SheetNames.forEach((sheetName) => {
@@ -184,11 +206,13 @@ class Uploader extends React.Component {
                 }
             });
 
+            const contractors = this.parseContractors(contractorWorksheet);
             const projects = this.parseProjects(projectWorksheet);
             const bonds = this.parseBonds(bondWorksheet);
             const financialInfo = this.parseFinancialInfo(financialInfoWorksheets);
 
             const json = {
+                contractors: contractors,
                 projects: projects,
                 bonds: bonds,
                 financialInfo: financialInfo

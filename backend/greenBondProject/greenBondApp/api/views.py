@@ -3,8 +3,9 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 
 from greenBondApp.models import Project, Bond, Contractor, SDG
-from .serializers import ProjectSerializerForDetail, ProjectSerializerForList, BondSerializerForList, BondSerializerForDetail, \
-    ProjectSerializerForCreation, BondSerializerForCreation, FinancialInfoSerializerForCreation
+from .serializers import ProjectSerializerForDetail, ProjectSerializerForList, BondSerializerForList, \
+     BondSerializerForDetail, ProjectSerializerForCreation, BondSerializerForCreation, \
+     FinancialInfoSerializerForCreation, ContractorSerializerForCreation
 
 
 class ProjectListView(ListAPIView):
@@ -25,6 +26,17 @@ class BondListView(ListAPIView):
 class BondDetailView(RetrieveAPIView):
     queryset = Bond.objects.all()
     serializer_class = BondSerializerForDetail
+
+
+def create_contractors(contractors):
+    for contractor in contractors:
+        contractor_serializer = ContractorSerializerForCreation(data=contractor)
+        if contractor_serializer.is_valid():
+            contractor_serializer.save()
+        else:
+            print(contractor)
+            print('is not a valid contractor')
+            print(contractor_serializer.errors)
 
 
 def create_projects(projects):
@@ -122,10 +134,12 @@ def create_data(request):
         print(request.data)
         print('json array: -------7')
 
+        contractors     = request.data['contractors']
         projects        = request.data['projects']
         bonds           = request.data['bonds']
         financial_info  = request.data['financialInfo']
-
+        
+        create_contractors(contractors)
         create_projects(projects)
         create_bonds(bonds)
         create_financial_info(financial_info)

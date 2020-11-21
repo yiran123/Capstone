@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.db.models import Sum
 from decimal import Decimal
 
-from greenBondApp.models import SDG, Project, Bond, FinancialInfo
+from greenBondApp.models import SDG, Project, Bond, FinancialInfo, Contractor
 
 
 class SDGSerializer(serializers.ModelSerializer):
@@ -11,12 +11,25 @@ class SDGSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'official_description', 'original_description')
 
 
+class ContractorSerializerForCreation(serializers.ModelSerializer):
+    class Meta:
+        model = Contractor
+        fields = ('name', 'description')
+
+    def create(self, validated_data):
+        print('create contractor====')
+        return Contractor.objects.create(
+            name=validated_data['name'],
+            description=validated_data['description']
+        )
+
+
 class ProjectSerializerForDetail(serializers.ModelSerializer):
     def get_associated_bonds(self, obj):
         """Get info of bonds associated to this project.
         """
         return [BondSerializerForList(bond).data for bond in obj.bond_set.all()]
-        
+
     associated_bonds = serializers.SerializerMethodField()
 
     class Meta:
@@ -40,11 +53,9 @@ class ProjectSerializerForCreation(serializers.ModelSerializer):
             name=validated_data['name'],
             project_number=validated_data['project_number'],
             description=validated_data['description'],
-            contractor=validated_data['contractor'],
+            contractor=validated_data['contractor']
         )
         for sdg in validated_data['sdgs']:
-            print('sdg===')
-            print(sdg)
             project.sdgs.add(sdg)
         
         project.save()
