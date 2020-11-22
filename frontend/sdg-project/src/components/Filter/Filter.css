@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap');
+
 .Filter {
   background-color: #EFF1F1;
   padding: 33px 136px 57px;
@@ -28,10 +30,7 @@
 height: 52px;
 }
 
-.un-sdgs-filter-item.active{
-  border: 1px solid #1589EE;
-}
-/* E_WEB_01 */
+
 
 
 
@@ -75,7 +74,7 @@ width: 272px;
 
 .funding-filter-item.active{
  
-  background-color: #1589EE;
+  background-color: #1C354A;
   color: #fff;
 }
 
@@ -94,12 +93,12 @@ width: 272px;
 }
 
 .bond-types-filter-item.active{
-  background-color: #1589EE;
+  background-color: #1C354A;
   color: #fff;
 }
 
 .issue-years-filter-item.active{
-  background-color: #1589EE;
+  background-color: #1C354A;
   color: #fff;
 }
 
@@ -120,14 +119,14 @@ width: 272px;
 
 .MuiButton-label {
   font-family: Roboto;
-font-style: normal;
-font-weight: bold;
-font-size: 11px;
-line-height: 18px;
-/* or 164% */
-display: flex;
-align-items: center;
-text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 18px;
+  /* or 164% */
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
 .buttonWrapper {
@@ -139,24 +138,70 @@ text-align: center;
   border-radius: 6px;
 
 
-font-family: Roboto;
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 18px;
-/* or 129% */
-display: flex;
-align-items: center;
-text-align: center;
-letter-spacing: 1px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  /* or 129% */
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 1px;
 
-color: #FFFFFF;
+  color: #FFFFFF;
 
+}
+
+.buttonWrapper2 {
+  margin-left: 561px;
+  margin-top: 9px;
+  width: 214px;
+  height: 32px;
+  background: #ECEFF5;
+  border: 0.75px solid #1C9A4E;
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: flex;
+}
+
+.buttonWrapper2 p {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 32px;
+  width: 214px;
+  /* or 150% */
+  
+  align-items: center;
+  text-align: center;
+
+  color: #1C354A;
+}
+
+.buttonLine {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#select-outlined-label {
+  color: #fff;
+  text-align: center;
+  letter-spacing: 1px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 0;
 }
 
 .buttonWrapper .MuiInputBase-root{
   width: 100%;
   /* color: #fff; */
+  background-color: #1C354A;
+  width: 232px;
+  height: 40px;
 }
 
 .buttonWrapper select{

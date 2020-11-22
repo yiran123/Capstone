@@ -14,27 +14,14 @@ const LoginButton = styled(Button)`
   height: 32px;
   width: 99px;
   &.MuiButton-containedPrimary{
-    background-color: #1589EE;
+    background-color: #9EB35B;
     &:hover{
-      background-color: #1589EE;
+      background-color: #9EB35B;
       }
   }
 `;
 
-const SearchButton = styled(Button)`
-  color: white;
-  height: 32px;
-  &.MuiButton-containedPrimary{
-    width: 32px;
-    min-width: 32px;
-    height: 32px;
-    background-color: rgba(21, 137, 238, 0.1);
-    margin-right: 14px;
-    &:hover{
-    background-color: rgba(21, 137, 238, 0.1);
-      }
-  }
-`;
+
 
 class Header extends Component {
   //const [lang, setLang] = useState('ESPANOL')
@@ -45,9 +32,7 @@ class Header extends Component {
           <img src={logo} className="page-header-logo" alt="logo" />
   
           <div>
-            <SearchButton size="small" variant="contained" color="primary">
-              <img src={search} alt="search" />
-            </SearchButton>
+
             
             {
               this.props.isAuthenticated ?

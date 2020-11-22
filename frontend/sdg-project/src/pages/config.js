@@ -15,9 +15,9 @@ export const filterResults = [
       ['S&P', 'long term AA-', 'short term P-1'],
       ['Moody’s', 'long term Aa2', 'short term P-1'],
     ],
-    seriesBg: '#1589EE',
+    seriesBg: '#3A668A',
     btnBt: '#E8F3FD',
-    downloadBorderColor: '#1589EE',
+    downloadBorderColor: '#3A668A',
     series: [
       {
         title: 'Series 2017G',
@@ -72,8 +72,8 @@ export const filterResults = [
       ['S&P', 'long term AA', 'short term A-1'],
     ],
     btnBg: '#E8F3FD',
-    seriesBg: '#1C9A4E',
-    downloadBorderColor: '#1C9A4E',
+    seriesBg: '#728A12',
+    downloadBorderColor: '#728A12',
     series: [
       {
         title: 'Series 2017G',

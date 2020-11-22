@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 
 import right from '../../static/icons/seriesRight.svg';
-import sdg3 from '../../static/icons/sdgs/E-WEB-Goal-03.png';
-import sdg4 from '../../static/icons/sdgs/E-WEB-Goal-04.png';
-import sdg6 from '../../static/icons/sdgs/E-WEB-Goal-06.png';
+
 
 import './Series.css'
 
@@ -18,12 +16,12 @@ class Series extends React.Component  {
   }
 
   goOtherPage() {
-    this.setState({hash : `/detail/${this.props.bond.id}`})
-    window.location.href = `${window.location.origin}/detail/${this.props.bond.id}`
+    this.setState({hash : `/bond/${this.props.bond.id}`})
+    window.location.href = `${window.location.origin}/bond/${this.props.bond.id}`
   }
 
   componentDidMount() {
-     if (window.location.hash === '/detail') {
+     if (window.location.hash === '/bond') {
       this.setState({hash:window.location.hash})
     }
   }
@@ -34,7 +32,7 @@ render() {
   const self = this;
   return (
     <div className="seriesWrapper" style={{ 'backgroundColor': seriesBg }}>
-      <div className="seriesTitle">{bond.name}
+      <div className="seriesTitle">{`Series ${bond.issue_year}${bond.series}`}
       <img onClick={()=>self.goOtherPage()} src={right} alt="right" style={{ marginLeft: '20px', cursor: 'pointer' }} />
       </div>
       <div className="series-refunding-bond">
@@ -42,33 +40,49 @@ render() {
     </div>
 
       <div className="series-bond-rating">
-        <div>S&P Bond rating</div>
+        <div className="SP">S&P <span class="bondRating">Bond rating</span></div>
         <div>AAA</div>
       </div>
       <div className="series-projects">
         <div style={{
           fontSize: '16px',
-          lineHeight: '22px'
+          lineHeight: '22px',
+          fontFamily: 'Roboto',
+          fontWeight: '300',
+          lineHeight: '24px',
+          letterSpacing: '1px'
         }}>{bond.project_counts} projects</div>
         <div style={{
           fontSize: '16px',
+          fontFamily: 'Roboto',
+          fontWeight: '500',
           lineHeight: '22px',
-          color: '#092A47'
+          color: '#092A47',
+          paddingTop: '5px'
         }}>CUSIP: {bond.CUSIP}</div>
       </div>
 
       <div className="series-line"></div>
 
       <div className="series-uop">
-        UOP        ${bond.use_of_proceeds}
+        Use of Proceeds       ${bond.use_of_proceeds}
     </div>
 
-      <div className="series-avg-maturity">
-        Avg. Maturity       {(bond.avg_mature_rate*100).toFixed(2)}%
+      <div className="series-coupon-rate">
+        Coupon Rate       
+        <div style={{
+          display: 'inline-block',
+          float:'right'
+        }}>
+          {(bond.avg_mature_rate*100).toFixed(2)}%
+        </div>
     </div>
+     <div className="series-maturity-year">
+        Maturity Year
+      </div>
 
       <div className="series-UN-SDGs">
-        <div className="series-UN-SDGs-title">UN SDGs</div>
+        <div className="series-UN-SDGs-title">TOP UN SDGs</div>
         <div className="series-UN-SDGs">
           {
             bond.sdgs.map((sdg)=>{

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap');
 .DetailContentProject{
   background-color: #F5F5F5;
   padding-top: 71px;
@@ -10,6 +11,7 @@
 
 .DetailContentProjectCard{
   width: 488px;
+  height: 428px;
   background: #FFFFFF;
   padding: 30px 36px;
   box-sizing: border-box;

@@ -3,6 +3,7 @@ import Tab from '../Tab/Tab'
 import Table from './Table'
 import DetailContentBottom from './DetailContentBottom'
 import SdgsAlignment from './SdgsAlignment'
+import FinancialInformation from './FinancialInformation'
 import impactTypesNode from './impactTypes'
 import cloundy from '../../static/icons/cloundy.svg';
 import areaLineNode from './areaLine'
@@ -79,7 +80,7 @@ class DetailContent extends React.Component {
         curTab === 'TRACKER' && <div>
           <div className="DetailContentProject">
             <div className="DetailContentProjectInner">
-              <div className="DetailContentProjectCard" style={{ marginRight: '32px' }}>
+              <div className="DetailContentProjectCard" style={{ margin: '0 31px' }}>
                 <div className="DetailContentProjectCardTop">
                   <div className="title">SDG Alignment</div>
                   <div >
@@ -92,6 +93,17 @@ class DetailContent extends React.Component {
                 <div className="DetailContentProjectCardBottom">
                   <SdgsAlignment projects={this.state.bond.projects}/>
                 </div>
+
+              </div>
+              <div className="DetailContentProjectCard" style={{ margin: '0 31px' }}>
+                <div className="DetailContentProjectCardTop">
+                  <div className="title">FINANCIAL INFORMATION</div>
+
+                </div>
+                <div className="DetailContentProjectCardBottom">
+                  <FinancialInformation projects={this.state.bond.projects}/>
+                </div>
+
               </div>
 
             </div>

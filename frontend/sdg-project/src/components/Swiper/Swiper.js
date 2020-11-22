@@ -3,7 +3,7 @@ import ReactSwipe from 'react-swipe';
 import styled from 'styled-components'
 import { Breadcrumbs, Link, Button } from '@material-ui/core';
 import treebg from '../../static/icons/treebg.svg';
-import yunduo from '../../static/icons/yunduo.svg';
+import clouds from '../../static/icons/clouds.svg';
 
 import './Swiper.css'
 
@@ -51,10 +51,10 @@ function Swiper () {
         </div>
         <div className="Swiper-item page-two">
       
-          <img className="page-two-bg" src={yunduo} alt="yunduo" />
+          <img className="page-two-bg" src={clouds} alt="clouds" />
           <div className="page-two-content">
             <p className="page-two-title">Climate-based Impact Reporting
-            <ReadMoreButton size="small" variant="contained" color="primary">READ MORE</ReadMoreButton></p>
+            </p>
             <p className="page-two-desc">Based on the ICMA Harmonized Framework, our tool attempts to standardize green bond issuer disclosure methods across utility enterprises. </p>
           </div>
         </div>

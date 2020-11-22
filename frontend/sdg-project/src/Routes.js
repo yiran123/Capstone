@@ -16,7 +16,7 @@ export default class Routes extends Component {
             <Router history={history}>
                 <Switch>
                     <Route path="/" exact component={InvestorPortal} />
-                    <Route path="/detail/:id" component={DetailContent} />
+                    <Route path="/bond/:id" component={DetailContent} />
                     <Route path="/login" component={Login} />
                     <Route path='/upload' component={Uploader} />
                     <Route path="/project/:id" component={WaterBond} />

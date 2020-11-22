@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap');
 .Tab{
   padding: 22px 62px 0 32px;
   background: #FFFDFD;
@@ -18,27 +19,41 @@ box-shadow: 0px 4px 8px #A4B4C1;
 }
 
 .tabDescContent {
+
+  font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
-  
+
+  align-items: center;
+  letter-spacing: 1px;
+
   color: #3E5060;
 }
 
 .tabDescContent-help{
-font-style: normal;
-font-weight: 300;
-font-size: 16px;
-line-height: 18px;
-color: #51687B;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 1px;
+
+  color: #51687B;
 }
 
 .tabDescContent-desc{
-font-weight: 300;
-font-size: 32px;
-line-height: 53px;
-color: #042B4C;
+  margin-top: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 37px;
+  letter-spacing: 0;
+  align-items: center;
+
+  color: #0F1F19;
 }
 
 .tabDescImg{

@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import ReactSwipe from 'react-swipe';
 import styled from 'styled-components'
 import { Breadcrumbs, Link, Button, Select, FormControl, InputLabel, MenuItem } from '@material-ui/core';
-import sdg1 from '../../static/icons/sdgs/E-WEB-Goal-01.png';
-import yunduo from '../../static/icons/yunduo.svg';
-import { sdgs, fundings, bondTypes, issueYears } from './const'
+import { sdgs, sdgsgrey, fundings, bondTypes, issueYears } from './const'
 import './Filter.css'
 
 const SelectAllButton = styled(Button)`
@@ -27,9 +25,20 @@ class Filter extends React.Component {
       year: 'all',
       yearArray: [],
       sdgs: 'all',
-      sdgsArray: []
+      sdgsArray: [],
+      sdgdisplay: []
     }
     this.onChange = this.onChange.bind(this);
+    this.deepCopySdgsgrey = this.deepCopySdgsgrey.bind(this);
+  }
+
+  componentWillMount() {
+    this.deepCopySdgsgrey();
+  }
+
+  deepCopySdgsgrey() {
+    var sdgsgreyCopy = JSON.parse(JSON.stringify(sdgsgrey));
+    this.setState({sdgdisplay: sdgsgreyCopy});
   }
 
 
@@ -101,10 +110,17 @@ class Filter extends React.Component {
       myYearRange = 'all';
       myYearArray = [];
     }
-    if(mySdg != 'all') {
+
+    if(mySdg != 'all')   {
       mySdgsRange = 'part';
+      var displayindex = this.state.sdgdisplay.map(function(e) { return e.value; }).indexOf(mySdg);
       if(mySdgsArray.includes(mySdg)) {
-        var index = mySdgsArray.indexOf(mySdg);
+        if(displayindex > -1)   { 
+          var temp1 = this.state.sdgdisplay;
+          temp1[displayindex] = sdgsgrey[displayindex];
+          this.setState({sdgdisplay: temp1});
+        }
+        var index = mySdgsArray.indexOf(mySdg);      
         if(index > -1) {
           mySdgsArray.splice(index, 1);
         }
@@ -114,11 +130,18 @@ class Filter extends React.Component {
       }
       else {
         mySdgsArray = mySdgsArray.concat(mySdg);
+        
+        if(displayindex > -1) {
+          var temp2 = this.state.sdgdisplay;
+          temp2[displayindex] = sdgs[displayindex];
+          this.setState({sdgdisplay: temp2});
+        }
       }
     }
     else {
       mySdgsRange = 'all';
       mySdgsArray = [];
+      this.deepCopySdgsgrey();
     }
      
     this.setState({funding: myFundingRange, fundingArray: myFundingArray, bondType: myBondTypeRange, bondTypeArray: myBondTypeArray, year: myYearRange, yearArray: myYearArray, sdgs:mySdgsRange, sdgsArray: mySdgsArray })
@@ -134,6 +157,7 @@ class Filter extends React.Component {
 
   return (
     <div className="Filter">
+    <div className="buttonLine">
     <div className="buttonWrapper">
           <FormControl variant="outlined" >
         <InputLabel id="select-outlined-label">SELECT A BOND ISSUER</InputLabel>
@@ -154,15 +178,19 @@ class Filter extends React.Component {
       </FormControl>
           {/* <nav>SELECT A BOND ISSUER</nav> */}
     </div>
+    <div className="buttonWrapper2">
+    <p>UPDATED AS OF JUNE 30, 2019</p>
+    </div>
+    </div>
       <div className="un-sdgs-filter">
         <div className="un-sdgs-filter-top">
           <div className="filter-name">UN SDGs</div>
-          <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year,'all') }}>SELECT ALL</SelectAllButton>
+          <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year,'all') }}>DESELECT ALL</SelectAllButton>
         </div>
         <div className="un-sdgs-filter-bottom">
           {
-            sdgs.map((sdg) => {
-              return <div className={`un-sdgs-filter-item ${this.state.sdgs === 'part' && this.state.sdgsArray.includes(sdg.value) ? 'active' : ''}`} onclick="changeClass(this.id)" onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year, sdg.value) }}>
+            this.state.sdgdisplay.map((sdg) => {
+              return <div className="un-sdgs-filter-item" onclick="changeClass(this.id)" onClick={() => { this.onChange(this.state.funding, this.state.bondType, this.state.year, sdg.value) }}>
                 <img width="52" height="52" src={sdg.imgSrc} alt='sdg' />
               </div>
             })
@@ -173,7 +201,7 @@ class Filter extends React.Component {
         <div className="other-filter-item">
           <div className="other-filter-item-top">
             <div className="filter-name">Funding</div>
-            <SelectAllButton onClick={() => { this.onChange('all', this.state.bondType, this.state.year, this.state.sdgs)}}>SELECT ALL</SelectAllButton>
+            <SelectAllButton onClick={() => { this.onChange('all', this.state.bondType, this.state.year, this.state.sdgs)}}>DESELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom" >
             {fundings.map((item) => <div className={`funding-filter-item ${this.state.funding === 'part' && this.state.fundingArray.includes(item.label) ? 'active' : ''}`} onClick={() => { this.onChange(item.label, this.state.bondType, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
@@ -183,7 +211,7 @@ class Filter extends React.Component {
         <div className="other-filter-item" style={{ margin: '0 56px' }}>
           <div className="other-filter-item-top" style={{ width: '200px' }}>
             <div className="filter-name">Bond Type</div>
-            <SelectAllButton onClick={() => { this.onChange(this.state.funding, 'all', this.state.year, this.state.sdgs)}}>SELECT ALL</SelectAllButton>
+            <SelectAllButton onClick={() => { this.onChange(this.state.funding, 'all', this.state.year, this.state.sdgs)}}>DESELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom">
             {bondTypes.map((item) => <div className={`bond-types-filter-item ${this.state.bondType === 'part' && this.state.bondTypeArray.includes(item.label) ? 'active' : ''}`} onClick={() => { this.onChange(this.state.funding, item.label, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
@@ -193,7 +221,7 @@ class Filter extends React.Component {
         <div className="other-filter-item">
           <div className="other-filter-item-top" style={{ width: '424px' }}>
             <div className="filter-name">Issue Year</div>
-            <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.bondType, 'all', this.state.sdgs)}}>SELECT ALL</SelectAllButton>
+            <SelectAllButton onClick={() => { this.onChange(this.state.funding, this.state.bondType, 'all', this.state.sdgs)}}>DESELECT ALL</SelectAllButton>
           </div>
           <div className="other-filter-item-bottom">
             {issueYears.map((item) => <div className={`issue-years-filter-item ${this.state.year === 'part' && this.state.yearArray.includes(item.label) ? 'active' : ''}`} onClick={() => { this.onChange(this.state.funding, this.state.bondType, item.label, this.state.sdgs) }}>{item.label}</div>)}

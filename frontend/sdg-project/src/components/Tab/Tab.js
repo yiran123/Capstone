@@ -8,7 +8,7 @@ import sdg6 from '../../static/icons/sdgs/E-WEB-Goal-06.png';
 import sdg7 from '../../static/icons/sdgs/E-WEB-Goal-07.png';
 import sdg8 from '../../static/icons/sdgs/E-WEB-Goal-08.png';
 import treebg from '../../static/icons/treebg.svg';
-import yunduo from '../../static/icons/yunduo.svg';
+import clouds from '../../static/icons/clouds.svg';
 
 import './Tab.css'
 
@@ -56,7 +56,7 @@ class Tab extends React.Component {
           <div className="tabDescContent">
             {bond.projects.length} PROJECTS <i className="tabDescContent-help"> • {bond.bond_type} • SERIES {bond.series} • ISSUED IN {bond.issue_year}</i>
           </div>
-          <p className="tabDescContent-desc">{bond.name} {bond.bond_type} Bond</p>
+          <div className="tabDescContent-desc">{bond.name} {bond.bond_type} Bond</div>
         </div>
         <div className="tabDescImgs">
           {
