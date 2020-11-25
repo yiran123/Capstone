@@ -101,12 +101,12 @@ class BondSerializerForDetail(serializers.ModelSerializer):
         #       value:  dict(serialization of the project)
         uop = dict()
 
-        # Get use of proceeds for the project and bond.
+        # Get financial info for the project and bond.
         for project in obj.projects.values('id', 'financialinfo__use_of_proceeds',\
             'financialinfo__prior_year_spending', 'financialinfo__recent_year_spending'):
 
             uop[project['id']] = {
-                'id': project['id'],
+                'id':                   project['id'],
                 'use_of_proceeds':      project['financialinfo__use_of_proceeds'],
                 'prior_spending':       project['financialinfo__prior_year_spending'],
                 'recent_year_spending': project['financialinfo__recent_year_spending']
