@@ -131,13 +131,23 @@ class BondSerializerForDetail(serializers.ModelSerializer):
 
         return {k: v for k, v in sorted(contractors.items(), key=lambda item: -item[1])}
 
+    def get_financial_info(self, obj):
+        return {
+            'use_of_proceeds':        obj.financialinfo_set.aggregate(use_of_proceeds=Sum('use_of_proceeds'))['use_of_proceeds'],
+            'prior_year_spending':    obj.financialinfo_set.aggregate(prior_year_spending=Sum('prior_year_spending'))['prior_year_spending'],
+            'recent_year_spending':   obj.financialinfo_set.aggregate(recent_year_spending=Sum('recent_year_spending'))['recent_year_spending'],
+            'maturity_date':          obj.maturity_date,
+            'avg_mature_rate':        obj.avg_mature_rate
+        }
+        
     projects = serializers.SerializerMethodField()
     constractors = serializers.SerializerMethodField()
+    financial_info = serializers.SerializerMethodField()
 
     class Meta:
         model = Bond
         fields = ('id', 'name', 'enterprise', 'issue_year', 'series', 'bond_type', 'CUSIP',
-         'avg_mature_rate', 'projects', 'constractors')
+         'avg_mature_rate', 'projects', 'constractors', 'financial_info')
         #depth = 1
 
 

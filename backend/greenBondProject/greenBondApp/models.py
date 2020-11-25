@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+import datetime
 
 
 class Contractor(models.Model):
@@ -48,6 +49,8 @@ class Bond(models.Model):
     bond_type = models.CharField(max_length=100, choices=BOND_TYPES)
     CUSIP = models.CharField(max_length=100)
     avg_mature_rate = models.DecimalField(max_digits=5, decimal_places=4)
+    verifier = models.CharField(max_length=200, default='')
+    maturity_date = models.DateField(default=datetime.date.today)
     projects = models.ManyToManyField(Project, through='FinancialInfo')
 
     def ___str__(self):
