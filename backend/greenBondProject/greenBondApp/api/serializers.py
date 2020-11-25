@@ -17,7 +17,6 @@ class ContractorSerializerForCreation(serializers.ModelSerializer):
         fields = ('name', 'description')
 
     def create(self, validated_data):
-        print('create contractor====')
         return Contractor.objects.create(
             name=validated_data['name'],
             description=validated_data['description']
@@ -103,11 +102,14 @@ class BondSerializerForDetail(serializers.ModelSerializer):
         uop = dict()
 
         # Get use of proceeds for the project and bond.
-        for project in obj.projects.values('id', 'financialinfo__use_of_proceeds', 'financialinfo__prior_year_spending'):
+        for project in obj.projects.values('id', 'financialinfo__use_of_proceeds',\
+            'financialinfo__prior_year_spending', 'financialinfo__recent_year_spending'):
+
             uop[project['id']] = {
                 'id': project['id'],
-                'use_of_proceeds': project['financialinfo__use_of_proceeds'],
-                'prior_spending': project['financialinfo__prior_year_spending']
+                'use_of_proceeds':      project['financialinfo__use_of_proceeds'],
+                'prior_spending':       project['financialinfo__prior_year_spending'],
+                'recent_year_spending': project['financialinfo__recent_year_spending']
             }
 
         # Get the rest of the projects' fields;
@@ -121,7 +123,6 @@ class BondSerializerForDetail(serializers.ModelSerializer):
     def get_constractors(self, obj):
         """Get the contractors related to this bond, and the "Use of Proceeds" related to the contractor.
         """
-        
         contractors = dict()
         for project in obj.projects.values('id', 'contractor__name', 'financialinfo__use_of_proceeds'):
             contractor_name = project['contractor__name']
@@ -129,7 +130,6 @@ class BondSerializerForDetail(serializers.ModelSerializer):
                 + project['financialinfo__use_of_proceeds']
 
         return {k: v for k, v in sorted(contractors.items(), key=lambda item: -item[1])}
-
 
     projects = serializers.SerializerMethodField()
     constractors = serializers.SerializerMethodField()
