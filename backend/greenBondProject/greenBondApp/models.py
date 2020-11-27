@@ -66,3 +66,30 @@ class FinancialInfo(models.Model):
 
     class Meta:
         db_table = 'greenBondApp_bond_projects'
+
+
+class TimeSeries(models.Model):
+    class Meta:
+        unique_together = (('year', 'project'),)
+
+    PROJECT_STATUS = [
+        ('Built', 'Built'),
+        ('Upgraded', 'Upgraded'),
+        ('Under Construction', 'Under Construction'),
+        ('Not Started', 'Not Started'),
+    ]
+
+    year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)])
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    status = models.CharField(max_length=100, choices=PROJECT_STATUS)
+    household_connections_count = models.PositiveIntegerField()
+    people_with_access_to_utilities_count = models.PositiveIntegerField()
+    people_benefiting_count = models.PositiveIntegerField()
+    
+    water_reduction = models.DecimalField(max_digits=20, decimal_places=2, default=0, null=True)
+    water_catchment = models.DecimalField(max_digits=20, decimal_places=2, default=0, null=True)
+
+    ghg_emissions_business_as_usual = models.DecimalField(max_digits=20, decimal_places=2, default=0, null=True)
+    ghg_emissions_actual_emissions = models.DecimalField(max_digits=20, decimal_places=2, default=0, null=True)
+    

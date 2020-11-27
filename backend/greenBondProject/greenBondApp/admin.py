@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Project, SDG, Bond, FinancialInfo, Contractor
+from .models import Project, SDG, Bond, FinancialInfo, Contractor, TimeSeries
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -18,3 +18,4 @@ class BondAdmin(admin.ModelAdmin):
 admin.site.register(SDG)
 admin.site.register(FinancialInfo)
 admin.site.register(Contractor)
+admin.site.register(TimeSeries)

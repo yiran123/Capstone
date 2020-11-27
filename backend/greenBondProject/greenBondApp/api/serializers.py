@@ -29,11 +29,18 @@ class ProjectSerializerForDetail(serializers.ModelSerializer):
         """
         return [BondSerializerForList(bond).data for bond in obj.bond_set.all()]
 
+    def get_financial_info(self, obj):
+        print('===============financial info')
+        print(obj.financialinfo_set.all())
+        #return [FinancialInfoSerializerForProject(financial_info).__dict__ for financial_info in obj.financialinfo_set.all()]
+        return [FinancialInfoSerializerForProject(financial_info).data for financial_info in obj.financialinfo_set.all()]
+
     associated_bonds = serializers.SerializerMethodField()
+    financial_info = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
-        fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'associated_bonds')
+        fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'associated_bonds', 'financial_info')
 
 
 class ProjectSerializerForList(serializers.ModelSerializer):
@@ -190,3 +197,19 @@ class FinancialInfoSerializerForCreation(serializers.ModelSerializer):
             prior_year_spending=validated_data['prior_year_spending'],
             recent_year_spending=validated_data['recent_year_spending']
         )
+
+
+class FinancialInfoSerializerForProject(serializers.ModelSerializer):
+    def get_project(self, obj):
+        return obj.project.name
+
+    def get_bond(self, obj):
+        return obj.bond.name
+
+    project = serializers.SerializerMethodField()
+    bond = serializers.SerializerMethodField()
+
+    class Meta:
+        model = FinancialInfo
+        fields = ('project', 'bond', 'use_of_proceeds', 'prior_year_spending', \
+            'recent_year_spending')
