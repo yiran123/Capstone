@@ -106,26 +106,26 @@ class Uploader extends React.Component {
             item['name'] = item['Bond Name'];
             item['enterprise'] = item['Enterprise'];
             item['avg_mature_rate'] = parseFloat(item['Coupon Rate']) / 100.0;
-
-            item['CUSIP'] = item['Final CUSIP'];
             item['bond_type'] = item['Bond Type'];
             item['issue_year'] = parseInt(item['Issue Year']);
-            item['series'] = item['Series']
+            item['series'] = item['Series'];
+            item['verifier'] = item['Green Bond Verifier (If Applicable)'];
+            item['maturity_date'] = item['Final Maturity Date'];
 
-            delete item['Bond Name']
-            delete item['Enterprise']
-            delete item['Coupon Rate']
-            delete item['Final CUSIP']
-            delete item['Bond Type']
-            delete item['Issue Year']
-            delete item['Series']
+            delete item['Bond Name'];
+            delete item['Enterprise'];
+            delete item['Coupon Rate'];
+            delete item['Bond Type'];
+            delete item['Issue Year'];
+            delete item['Series'];
+            delete item['Green Bond Verifier (If Applicable)'];
+            delete item['Final Maturity Date'];
         });
-
         return newJson;
     }
 
     parseFinancialInfo = (worksheets) => {
-        const GAP = 6;
+        const GAP = 7;
         const BOND_INITIAL_COL = 3;
         const PROJECT_INITIAL_COL = 2;
 
@@ -181,6 +181,9 @@ class Uploader extends React.Component {
                 }
             }
         });
+
+        console.log('financial info==========');
+        console.log(financialInfo);
         return financialInfo;
     }
 

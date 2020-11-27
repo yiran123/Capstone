@@ -43,21 +43,11 @@ def create_projects(projects):
     for project in projects:
         contractor_name = project['Contractor']
 
-        sdg1_fullname = project['sdg1']
-        sdg2_fullname = project['sdg2']
+        sdg1 = project['sdg1']
+        sdg2 = project['sdg2']
 
-        sdg1_splitted = sdg1_fullname.split('-')
-        sdg2_splitted = sdg2_fullname.split('-')
-
-        sdg_tags = []
-        if len(sdg1_splitted) >= 2:
-            sdg_tags.append(sdg1_splitted[0].strip())
-        
-        if len(sdg2_splitted) >= 2:
-            sdg_tags.append(sdg2_splitted[0].strip())
-        
         contractor_query = Contractor.objects.filter(name=contractor_name)
-        sdg_query = SDG.objects.filter(name__in=sdg_tags)
+        sdg_query = SDG.objects.filter(name__in=[sdg1, sdg2])
         
         if not contractor_query:
             # TODO: throw error.
@@ -67,8 +57,8 @@ def create_projects(projects):
 
         if not sdg_query:
             print('no sdg tags')
-            print(sdg1_fullname)
-            print(sdg2_fullname)
+            print(sdg1)
+            print(sdg2)
             continue
 
         contractor = contractor_query[0]
@@ -91,6 +81,7 @@ def create_bonds(bonds):
         else:
             print('bond validation: --------')
             print(bond_serializer.error_messages)
+            print(bond_serializer.errors)
             print(bond)
             print(': bond is not valid!')
 

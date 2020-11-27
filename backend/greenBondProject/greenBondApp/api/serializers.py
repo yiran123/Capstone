@@ -81,14 +81,18 @@ class BondSerializerForList(serializers.ModelSerializer):
         # Return top 3 sdg.
         return [sdg for sdg, _ in sdg_freq_list[:min(3, len(sdg_freq_list))]]
 
+    def get_maturity_year(self, obj):
+        return obj.maturity_date.year
+
     project_counts = serializers.SerializerMethodField()
     use_of_proceeds = serializers.SerializerMethodField()
     sdgs = serializers.SerializerMethodField()
+    maturity_year = serializers.SerializerMethodField()
     
     class Meta:
         model = Bond
         fields = ('id', 'name', 'enterprise', 'issue_year', 'series',
-         'bond_type', 'CUSIP', 'avg_mature_rate', 'project_counts', 'use_of_proceeds', 'sdgs')
+         'bond_type', 'CUSIP', 'avg_mature_rate', 'project_counts', 'use_of_proceeds', 'sdgs', 'maturity_year')
 
 
 class BondSerializerForDetail(serializers.ModelSerializer):
@@ -139,7 +143,7 @@ class BondSerializerForDetail(serializers.ModelSerializer):
             'maturity_date':          obj.maturity_date,
             'avg_mature_rate':        obj.avg_mature_rate
         }
-        
+
     projects = serializers.SerializerMethodField()
     constractors = serializers.SerializerMethodField()
     financial_info = serializers.SerializerMethodField()
@@ -152,9 +156,12 @@ class BondSerializerForDetail(serializers.ModelSerializer):
 
 
 class BondSerializerForCreation(serializers.ModelSerializer):
+    maturity_date = serializers.DateField(input_formats=['%m/%d/%Y',])
+
     class Meta:
         model = Bond
-        fields = ('name', 'enterprise', 'issue_year', 'series' , 'bond_type', 'CUSIP', 'avg_mature_rate')
+        fields = ('name', 'enterprise', 'issue_year', 'series' , 'bond_type', 'CUSIP', \
+            'avg_mature_rate', 'maturity_date', 'verifier')
     
     def create(self, validated_data):
         return Bond.objects.create(
@@ -164,7 +171,9 @@ class BondSerializerForCreation(serializers.ModelSerializer):
             series=validated_data['series'],
             bond_type=validated_data['bond_type'],
             CUSIP=validated_data['CUSIP'],
-            avg_mature_rate=validated_data['avg_mature_rate']
+            avg_mature_rate=validated_data['avg_mature_rate'],
+            maturity_date=validated_data['maturity_date'],
+            verifier=validated_data['maturity_date']
         )
 
 

@@ -20,7 +20,7 @@ class SDG(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=1000)
     project_number = models.CharField(max_length=100)
-    description = models.CharField(max_length=10000)
+    description = models.CharField(max_length=10000, blank=True)
     sdgs = models.ManyToManyField(SDG)
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
 
