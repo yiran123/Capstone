@@ -11,13 +11,20 @@ class Uploader extends React.Component {
         super(props); 
         this.state = {
             file: '',
+            error: ''
         }
     };
 
     onChangeHandler = (e) => {
-        this.setState({
-            file: e.target.files[0]
-        })
+        if (e.target.files[0].name.split('.').pop().toLowerCase() != 'xlsx') {
+            this.setState({
+                error: 'The file should have extension of "xlsx"'
+            });
+        } else {
+            this.setState({
+                file: e.target.files[0]
+            });
+        }
     }
 
     parseContractors = (worksheet) => {
@@ -233,6 +240,9 @@ class Uploader extends React.Component {
     }
 
     render() {
+        const error = this.state.error;
+        const file = this.state.file;
+
         return (
             <div>
                 <div className="col-sm-12 btn btn-primary">
@@ -240,9 +250,19 @@ class Uploader extends React.Component {
                 </div>
 
                 <input type="file" onChange={e => this.onChangeHandler(e)} />
-                <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>
-                    Upload
-                </button> 
+
+                {file
+                    ?
+                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>
+                        Upload
+                    </button>
+                    :
+                    <p>Please select a file</p>
+                }
+
+                {error &&
+                <p>{error}</p>
+                }
             </div>    
         )    
     }
