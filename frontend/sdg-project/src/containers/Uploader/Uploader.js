@@ -219,6 +219,10 @@ class Uploader extends React.Component {
 
         const reader = new FileReader();
         reader.onload = (e) => {
+            this.setState({
+                errors: []
+            });
+
             const result = e.target.result;
             const workbook = XLSX.read(result, {type: 'binary'});
 
@@ -230,29 +234,27 @@ class Uploader extends React.Component {
             const existence2 = this.checkSheetExistence(bondWorksheet, BOND_INFO_SHEET);
             const existence3 = this.checkSheetExistence(contractorWorksheet, CONTRACTOR_INFO_SHEET);
             
-            if (!existence1 || !existence2 || !existence3) {
-                console.log('not existe!');
-                return;
-            }
-            // this.setState({
-            //     errors: [
-            //         ...this.state.errors,
-            //         "newError"
-            //     ]
-            // });
-
-            console.log('========== files names:');
-            
-            console.log(projectWorksheet);
-            console.log(bondWorksheet);
-            console.log(contractorWorksheet);
-
             const financialInfoWorksheets = [];
+            let existence4 = false;
             workbook.SheetNames.forEach((sheetName) => {
                 if (sheetName.startsWith(FINANCIAL_INFO_SHEET_PREFIX)) {
                     financialInfoWorksheets.push(workbook.Sheets[sheetName]);
+                    existence4 = true;
                 }
             });
+
+            const newError = 'There is not sheet with name: ' + FINANCIAL_INFO_SHEET_PREFIX + "...";
+            if (!existence4) {
+                this.setState({
+                    errors: [
+                        ...this.state.errors,
+                        newError
+                    ]
+                });
+            }
+            if (!existence1 || !existence2 || !existence3) {
+                return;
+            }
 
             const contractors = this.parseContractors(contractorWorksheet);
             const projects = this.parseProjects(projectWorksheet);
@@ -281,9 +283,6 @@ class Uploader extends React.Component {
         const errors = this.state.errors;
         const file = this.state.file;
 
-        console.log('=======');
-        console.log(file.length);
-
         return (
             <div>
                 <div className="col-sm-12 btn btn-primary">
@@ -298,8 +297,8 @@ class Uploader extends React.Component {
                     </button>
                 }
 
-                {this.state.errors && (
-                    this.state.errors.map(error => <p>{error}</p>)
+                {errors && (
+                    errors.map(error => <p>{error}</p>)
                 )}
             </div>    
         )    
