@@ -11,14 +11,17 @@ class Uploader extends React.Component {
         super(props); 
         this.state = {
             file: '',
-            error: ''
+            errors: []
         }
     };
 
     onChangeHandler = (e) => {
         if (e.target.files[0].name.split('.').pop().toLowerCase() != 'xlsx') {
             this.setState({
-                error: 'The file should have extension of "xlsx"'
+                errors: [
+                    ...this.state.errors,
+                    'The file should have extension of "xlsx"'
+                ]
             });
         } else {
             this.setState({
@@ -194,6 +197,20 @@ class Uploader extends React.Component {
         return financialInfo;
     }
 
+    checkSheetExistence = (sheet, sheetName) => {
+        const newError = 'The sheet \' ' + sheetName + ' \' doesn\'t exist!';
+        if (sheet === undefined) {
+            this.setState({
+                errors: [
+                    ...this.state.errors,
+                    newError
+                ]
+            });
+            return false;
+        }
+        return true;
+    }
+
     onClickHandler = () => {
         const PROJECT_INFO_SHEET = "Project Information";
         const BOND_INFO_SHEET = "Bond Information";
@@ -208,6 +225,27 @@ class Uploader extends React.Component {
             const projectWorksheet = workbook.Sheets[PROJECT_INFO_SHEET];
             const bondWorksheet = workbook.Sheets[BOND_INFO_SHEET];
             const contractorWorksheet = workbook.Sheets[CONTRACTOR_INFO_SHEET];
+
+            const existence1 = this.checkSheetExistence(projectWorksheet, PROJECT_INFO_SHEET);
+            const existence2 = this.checkSheetExistence(bondWorksheet, BOND_INFO_SHEET);
+            const existence3 = this.checkSheetExistence(contractorWorksheet, CONTRACTOR_INFO_SHEET);
+            
+            if (!existence1 || !existence2 || !existence3) {
+                console.log('not existe!');
+                return;
+            }
+            // this.setState({
+            //     errors: [
+            //         ...this.state.errors,
+            //         "newError"
+            //     ]
+            // });
+
+            console.log('========== files names:');
+            
+            console.log(projectWorksheet);
+            console.log(bondWorksheet);
+            console.log(contractorWorksheet);
 
             const financialInfoWorksheets = [];
             workbook.SheetNames.forEach((sheetName) => {
@@ -240,8 +278,11 @@ class Uploader extends React.Component {
     }
 
     render() {
-        const error = this.state.error;
+        const errors = this.state.errors;
         const file = this.state.file;
+
+        console.log('=======');
+        console.log(file.length);
 
         return (
             <div>
@@ -251,18 +292,15 @@ class Uploader extends React.Component {
 
                 <input type="file" onChange={e => this.onChangeHandler(e)} />
 
-                {file
-                    ?
+                {file &&
                     <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>
                         Upload
                     </button>
-                    :
-                    <p>Please select a file</p>
                 }
 
-                {error &&
-                <p>{error}</p>
-                }
+                {this.state.errors && (
+                    this.state.errors.map(error => <p>{error}</p>)
+                )}
             </div>    
         )    
     }
@@ -271,7 +309,7 @@ class Uploader extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
-        error: state.error
+        errors: state.errors
     }
 }
 
