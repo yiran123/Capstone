@@ -158,14 +158,22 @@ class BondSerializerForDetail(serializers.ModelSerializer):
             'avg_mature_rate':        obj.avg_mature_rate
         }
 
+    def get_climate_impact(self, obj):
+        climate_impact = []
+        for time_series in TimeSeries.objects.filter(project__id__in=obj.projects.values('id')):
+            climate_impact.append(TimeSeriesSerializer(time_series).data)
+        
+        return climate_impact
+
     projects = serializers.SerializerMethodField()
     constractors = serializers.SerializerMethodField()
     financial_info = serializers.SerializerMethodField()
+    climate_impact = serializers.SerializerMethodField()
 
     class Meta:
         model = Bond
         fields = ('id', 'name', 'enterprise', 'issue_year', 'series', 'bond_type', 'CUSIP',
-         'avg_mature_rate', 'projects', 'constractors', 'financial_info')
+         'avg_mature_rate', 'projects', 'constractors', 'financial_info', 'climate_impact')
         #depth = 1
 
 
@@ -228,5 +236,5 @@ class TimeSeriesSerializer(serializers.ModelSerializer):
         fields = ('year', 'water_reduction', 'water_catchment', \
             'ghg_emissions_business_as_usual', 'ghg_emissions_actual_emissions', \
             'household_connections_count', 'people_with_access_to_utilities_count', \
-            'people_benefiting_count')
+            'people_benefiting_count', 'status')
         
