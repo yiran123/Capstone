@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.db.models import Sum
 from decimal import Decimal
 
-from greenBondApp.models import SDG, Project, Bond, FinancialInfo, Contractor
+from greenBondApp.models import SDG, Project, Bond, FinancialInfo, Contractor, TimeSeries
 
 
 class SDGSerializer(serializers.ModelSerializer):
@@ -30,17 +30,24 @@ class ProjectSerializerForDetail(serializers.ModelSerializer):
         return [BondSerializerForList(bond).data for bond in obj.bond_set.all()]
 
     def get_financial_info(self, obj):
-        print('===============financial info')
-        print(obj.financialinfo_set.all())
-        #return [FinancialInfoSerializerForProject(financial_info).__dict__ for financial_info in obj.financialinfo_set.all()]
-        return [FinancialInfoSerializerForProject(financial_info).data for financial_info in obj.financialinfo_set.all()]
+        return [FinancialInfoSerializerForProject(financial_info).data \
+            for financial_info in obj.financialinfo_set.all()]
+
+    def get_climate_impact(self, obj):
+        series_dict = dict()
+        for time_series in obj.timeseries_set.all():
+            series_dict[time_series.year] = TimeSeriesSerializer(time_series).data
+
+        return series_dict
 
     associated_bonds = serializers.SerializerMethodField()
     financial_info = serializers.SerializerMethodField()
+    climate_impact = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
-        fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'associated_bonds', 'financial_info')
+        fields = ('id', 'name', 'project_number', 'description', 'sdgs', 'associated_bonds', \
+            'financial_info', 'climate_impact')
 
 
 class ProjectSerializerForList(serializers.ModelSerializer):
@@ -213,3 +220,13 @@ class FinancialInfoSerializerForProject(serializers.ModelSerializer):
         model = FinancialInfo
         fields = ('project', 'bond', 'use_of_proceeds', 'prior_year_spending', \
             'recent_year_spending')
+
+
+class TimeSeriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimeSeries
+        fields = ('year', 'water_reduction', 'water_catchment', \
+            'ghg_emissions_business_as_usual', 'ghg_emissions_actual_emissions', \
+            'household_connections_count', 'people_with_access_to_utilities_count', \
+            'people_benefiting_count')
+        
