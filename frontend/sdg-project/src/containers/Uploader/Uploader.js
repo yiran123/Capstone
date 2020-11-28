@@ -219,6 +219,7 @@ class Uploader extends React.Component {
 
         const reader = new FileReader();
         reader.onload = (e) => {
+            // Clear errors.
             this.setState({
                 errors: []
             });
@@ -230,6 +231,7 @@ class Uploader extends React.Component {
             const bondWorksheet = workbook.Sheets[BOND_INFO_SHEET];
             const contractorWorksheet = workbook.Sheets[CONTRACTOR_INFO_SHEET];
 
+            // Check sheets existence.
             const existence1 = this.checkSheetExistence(projectWorksheet, PROJECT_INFO_SHEET);
             const existence2 = this.checkSheetExistence(bondWorksheet, BOND_INFO_SHEET);
             const existence3 = this.checkSheetExistence(contractorWorksheet, CONTRACTOR_INFO_SHEET);
@@ -256,6 +258,7 @@ class Uploader extends React.Component {
                 return;
             }
 
+            // Parse sheets.
             const contractors = this.parseContractors(contractorWorksheet);
             const projects = this.parseProjects(projectWorksheet);
             const bonds = this.parseBonds(bondWorksheet);
