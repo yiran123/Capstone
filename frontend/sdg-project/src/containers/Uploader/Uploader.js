@@ -33,9 +33,6 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-
-
-
 class Uploader extends React.Component {
     constructor(props) {
         super(props); 
@@ -378,13 +375,14 @@ class Uploader extends React.Component {
                 </div>
                 
                 <input 
-                  accept="image/*"
+                  accept=".xlsx"
                   
                   style={{ display: 'none' }}
                   id="raised-button-file"
                   multiple
                   type="file"
                 onChange={e => this.onChangeHandler(e)} />
+
                 <label htmlFor="raised-button-file">
                 <StyledButton variant="raised" component="span" className="download-button"> 
                     Upload Form
