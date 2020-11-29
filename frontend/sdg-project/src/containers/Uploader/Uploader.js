@@ -67,13 +67,21 @@ class Uploader extends React.Component {
         });
     }
 
+    checkPropertyExistence = (item, property, sheetName, errors) => {
+        if (!item.hasOwnProperty(property)) {
+            errors.push(sheetName + ' has no ' + property);
+        }
+    }
+
     /**
      * Parse project information.
      * 
      * @param {worksheet} worksheet "Project Information" worksheet.
      * @returns Json array of all project information.
      */
-    parseProjects = (worksheet) => {
+    parseProjects = (worksheet, sheetName) => {
+        const properties = ['Project Name', 'Project Number', 'Project Description', 'Contractor', 'SDG Alignment #1', 'SDG Alignment #2'];
+
         const csvString = XLSX.utils.sheet_to_csv(worksheet, {header: 1});
         const json = papa.parse(csvString, {header: true});
 
@@ -82,6 +90,22 @@ class Uploader extends React.Component {
 
         // Change key name.
         newJson.forEach((item) => {
+            // Check if all properties exist.
+            const errors = [];
+            properties.forEach(property => {
+                this.checkPropertyExistence(item, property, sheetName, errors);
+            });
+            if (errors.length > 0) {
+                this.setState({
+                    errors: [
+                        ...this.state.errors,
+                        ...errors
+                    ]
+                });
+                throw errors;
+            }
+
+            // change key name.
             delete item['Instructions'];
             delete item[''];
             delete item['Project Name and Number'];
@@ -105,6 +129,7 @@ class Uploader extends React.Component {
 
     parseBonds = (worksheet) => {
         const csvString = XLSX.utils.sheet_to_csv(worksheet, {header: 1});
+
         const json = papa.parse(csvString, {header: true});
         const newJson = this.deleteEmptyCells(json.data);
 
@@ -260,7 +285,14 @@ class Uploader extends React.Component {
 
             // Parse sheets.
             const contractors = this.parseContractors(contractorWorksheet);
-            const projects = this.parseProjects(projectWorksheet);
+            let projects;
+            try {
+                projects = this.parseProjects(projectWorksheet, PROJECT_INFO_SHEET);
+            }
+            catch (err) {
+                return;
+            }
+            
             const bonds = this.parseBonds(bondWorksheet);
             const financialInfo = this.parseFinancialInfo(financialInfoWorksheets);
 
