@@ -4,6 +4,36 @@ import * as actions from '../../store/actions/auth';
 import * as XLSX from 'xlsx';
 import * as papa from 'papaparse';
 import axios from 'axios';
+import rush from '../../static/icons/rush-11.png';
+import firstPage from '../../static/icons/first_page.svg';
+import uploadImg from '../../static/icons/upload.png';
+import { Button, Input } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
+import './Uploader.css'
+
+// The `withStyles()` higher-order component is injecting a `classes`
+// prop that is used by the `Button` component.
+const StyledButton = withStyles({
+  root: {
+    background: '#F4F6F9',
+    borderRadius: 3,
+    border: '1px solid #728A12',
+    height: 42,
+    width: 241,
+    marginLeft: '520px',
+    '&:hover': {
+        boxShadow: '0px 0px 3px #0070D2',
+        borderRadius: '4px',
+      },
+
+  },
+  label: {
+    textTransform: 'capitalize',
+  },
+})(Button);
+
+
 
 
 class Uploader extends React.Component {
@@ -320,11 +350,47 @@ class Uploader extends React.Component {
 
         return (
             <div>
+                <div className = "Swiper">
+                
+                    <div className="Swiper-item page-one">
+        
+                    <img className="page-one-bg" src={rush} alt="rush" />
+                        <div className="page-one-content">
+                            <p className="page-one-title">Welcome to the Issuer Portal</p>
+                            <p className="page-one-desc">Share your instutitions progress towards meeting 
+                            <br></br>climate-aligned internal goals with investors driven by impact</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="download">
+                    
+                    <p className="download-desc">Our team developed an Excel template for issuers to upload their data to our tool. Be sure to carefully input <br></br>information and read through thoroughly to avoid any errors. </p>
+                    <StyledButton variant="outlined" className="download-button"> 
+                        Download Template
+                        <img className="page-one-bg" src={firstPage} alt="firstPage" />
+                    </StyledButton>
+                </div>
+                <div className="upload">
+                <p className="upload-desc">Once you’ve filled out the sheet, double check to ensure that you’ve added your institution’s name and the reporting <br></br>year. This will investors to ensure they are receiving the most up-to-date information from your institution. </p>
+
                 <div className="col-sm-12 btn btn-primary">
                         File Upload
                 </div>
-
-                <input type="file" onChange={e => this.onChangeHandler(e)} />
+                
+                <input 
+                  accept="image/*"
+                  
+                  style={{ display: 'none' }}
+                  id="raised-button-file"
+                  multiple
+                  type="file"
+                onChange={e => this.onChangeHandler(e)} />
+                <label htmlFor="raised-button-file">
+                <StyledButton variant="raised" component="span" className="download-button"> 
+                    Upload Form
+                    <img className="page-one-bg" src={uploadImg} alt="uploadImg" />
+                </StyledButton>
+                </label> 
 
                 {file &&
                     <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>
@@ -335,6 +401,7 @@ class Uploader extends React.Component {
                 {errors && (
                     errors.map(error => <p>{error}</p>)
                 )}
+                </div>
             </div>    
         )    
     }
