@@ -32,7 +32,7 @@ class Bond(models.Model):
     ENTERPRISE_TYPES = [
         ('Water', 'Water'),
         ('Power', 'Power'),
-        ('Waste Water', 'Waste Water'),
+        ('Wastewater', 'Wastewater'),
     ]
     # TODO: VERIFY
     BOND_TYPES = [

@@ -43,6 +43,14 @@ class Uploader extends React.Component {
     };
 
     onChangeHandler = (e) => {
+        if (e.target.files === undefined 
+            || e.target.files.length == 0
+            || e.target.files[0].name === undefined
+            || e.target.files[0].name.split(',').length == 0) {
+                
+            return;
+        }
+
         if (e.target.files[0].name.split('.').pop().toLowerCase() != 'xlsx') {
             this.setState({
                 errors: [
@@ -57,23 +65,41 @@ class Uploader extends React.Component {
         }
     }
 
-    parseContractors = (worksheet) => {
+    parseContractors = (worksheet, sheetName) => {
+        const properties = ['Contractor Name', 'Contractor Description'];
+
         const csvString = XLSX.utils.sheet_to_csv(worksheet, {header: 1});
         const json = papa.parse(csvString, {header: true});
 
         // filter empty cell.
         const newJson = this.deleteEmptyCells(json.data);
         
-        newJson.forEach((item) => {
-            delete item[''];
-            delete item['Instructions'];
+        console.log('123123123123');
+        for (let item of newJson) {
+            const errors = [];
+                properties.forEach(property => {
+                    this.checkPropertyExistence(item, property, sheetName, errors);
+                });
+                if (errors.length > 0) {
+                    this.setState({
+                        errors: [
+                            ...this.state.errors,
+                            ...errors
+                        ]
+                    });
+                    return;
+                }
+    
+                delete item[''];
+                delete item['Instructions'];
+    
+                item['name'] = item['Contractor Name'];
+                item['description'] = item['Contractor Description'];
+    
+                delete item['Contractor Name'];
+                delete item['Contractor Description'];
+        }
 
-            item['name'] = item['Contractor Name'];
-            item['description'] = item['Contractor Description'];
-
-            delete item['Contractor Name'];
-            delete item['Contractor Description'];
-        })
         return newJson;
     }
 
@@ -96,7 +122,7 @@ class Uploader extends React.Component {
 
     checkPropertyExistence = (item, property, sheetName, errors) => {
         if (!item.hasOwnProperty(property)) {
-            errors.push(sheetName + ' has no ' + property);
+            errors.push('Sheet: \'' + sheetName + '\' has no column: \'' + property + '\'');
         }
     }
 
@@ -116,7 +142,7 @@ class Uploader extends React.Component {
         const newJson = this.deleteEmptyCells(json.data);
 
         // Change key name.
-        newJson.forEach((item) => {
+        for (let item of newJson) {
             // Check if all properties exist.
             const errors = [];
             properties.forEach(property => {
@@ -129,7 +155,7 @@ class Uploader extends React.Component {
                         ...errors
                     ]
                 });
-                throw errors;
+                return;
             }
 
             // change key name.
@@ -149,19 +175,36 @@ class Uploader extends React.Component {
             delete item['Project Description'];
             delete item['SDG Alignment #1'];
             delete item['SDG Alignment #2'];
-        });
+        }
 
         return newJson;
     }
 
-    parseBonds = (worksheet) => {
+    parseBonds = (worksheet, sheetName) => {
+        const properties = ['Issue Year', 'Series', 'Enterprise', 'Bond Type', 'Bond Name', 
+            'CUSIP', 'Green Bond Verifier (If Applicable)', 'Coupon Rate', 'Final Maturity Date']
+
         const csvString = XLSX.utils.sheet_to_csv(worksheet, {header: 1});
 
         const json = papa.parse(csvString, {header: true});
         const newJson = this.deleteEmptyCells(json.data);
 
         // Change key name.
-        newJson.forEach((item) => {
+        for (let item of newJson) {
+            const errors = [];
+            properties.forEach(property => {
+                this.checkPropertyExistence(item, property, sheetName, errors);
+            });
+            if (errors.length > 0) {
+                this.setState({
+                    errors: [
+                        ...this.state.errors,
+                        ...errors
+                    ]
+                });
+                return;
+            }
+
             delete item['Instructions'];
             delete item[''];
 
@@ -182,7 +225,9 @@ class Uploader extends React.Component {
             delete item['Series'];
             delete item['Green Bond Verifier (If Applicable)'];
             delete item['Final Maturity Date'];
-        });
+        }
+        console.log('99999999 bond');
+        console.log(newJson);
         return newJson;
     }
 
@@ -193,7 +238,7 @@ class Uploader extends React.Component {
 
         const financialInfo = []
 
-        worksheets.forEach((worksheet) => {
+        for (let worksheet of worksheets) {
             const csvString = XLSX.utils.sheet_to_csv(worksheet);
             const parsedData = papa.parse(csvString);
 
@@ -210,17 +255,19 @@ class Uploader extends React.Component {
                 });
             }
     
+            const number_error = 'Financial data should be decimal!';
             for (let j = PROJECT_INITIAL_COL, counter = 0; counter < financialInfo.length; j += GAP, counter++) {
                 for (let i = 2; i < parsedData.data.length; i++) {
                     
                     if (parsedData.data[i][j] === undefined
-                        || parsedData.data[i][j + 1] === undefined
-                        || parsedData.data[i][j + 2] === undefined
-                        || parsedData.data[i][j + 3] === undefined
-                        || parsedData.data[i][j].toString().trim() == ''
-                        || parsedData.data[i][j + 1].toString().trim() == ''
-                        || parsedData.data[i][j + 2].toString().trim() == ''
-                        || parsedData.data[i][j + 3].toString().trim() == '') {
+                    || parsedData.data[i][j + 1] === undefined
+                    || parsedData.data[i][j + 2] === undefined
+                    || parsedData.data[i][j + 3] === undefined
+                    || parsedData.data[i][j].toString().trim() == ''
+                    || parsedData.data[i][j + 1].toString().trim() == ''
+                    || parsedData.data[i][j + 2].toString().trim() == ''
+                    || parsedData.data[i][j + 3].toString().trim() == '') {
+                        
                         continue;
                     }
     
@@ -231,7 +278,13 @@ class Uploader extends React.Component {
                         prior_year_spending = parseFloat(parsedData.data[i][j + 2].toString().substring(1).replace(/,/g, ''));
                         recent_year_spending = parseFloat(parsedData.data[i][j + 3].toString().substring(1).replace(/,/g, ''));
                     } catch (err) {
-                        continue;
+                        this.setState({
+                            errors: [
+                                ...this.state.errors,
+                                number_error
+                            ]
+                        });
+                        return; 
                     }
                     
                     financialInfo[counter].projects.push({
@@ -242,10 +295,8 @@ class Uploader extends React.Component {
                     });
                 }
             }
-        });
+        }
 
-        console.log('financial info==========');
-        console.log(financialInfo);
         return financialInfo;
     }
 
@@ -277,6 +328,7 @@ class Uploader extends React.Component {
             });
 
             const result = e.target.result;
+            // TODO: parse xlsx error.
             const workbook = XLSX.read(result, {type: 'binary'});
 
             const projectWorksheet = workbook.Sheets[PROJECT_INFO_SHEET];
@@ -310,18 +362,19 @@ class Uploader extends React.Component {
                 return;
             }
 
-            // Parse sheets.
-            const contractors = this.parseContractors(contractorWorksheet);
-            let projects;
-            try {
-                projects = this.parseProjects(projectWorksheet, PROJECT_INFO_SHEET);
-            }
-            catch (err) {
+            const contractors = this.parseContractors(contractorWorksheet, CONTRACTOR_INFO_SHEET);
+            const projects = this.parseProjects(projectWorksheet, PROJECT_INFO_SHEET);
+            const bonds = this.parseBonds(bondWorksheet, BOND_INFO_SHEET);
+            const financialInfo = this.parseFinancialInfo(financialInfoWorksheets);
+            
+
+            if (contractors === undefined
+            || projects === undefined
+            || bonds === undefined
+            || financialInfo == undefined) {
+
                 return;
             }
-            
-            const bonds = this.parseBonds(bondWorksheet);
-            const financialInfo = this.parseFinancialInfo(financialInfoWorksheets);
 
             const json = {
                 contractors: contractors,
@@ -335,6 +388,39 @@ class Uploader extends React.Component {
             axios.post("http://127.0.0.1:8000/api/create", json)
                 .then(res => {
                     console.log(res);
+                    if (res === undefined || res.status != '200') {
+                        this.setState({
+                            errors: [
+                                ...this.state.errors,
+                                'res'
+                            ]
+                        });
+                    } else {
+                        this.setState({
+                            errors: [
+                                'Creation succeed!'
+                            ]
+                        });
+                    }
+                })
+                .catch((error) => {
+                    if (!error.response.data.hasOwnProperty('errors')) {
+                        this.setState({
+                            errors:[
+                                ...this.state.errors,
+                                'Unknown error!'
+                            ]
+                        });
+                        return;
+                    }
+                    error.response.data['errors'].forEach((err) => {
+                        this.setState({
+                            errors: [
+                                ...this.state.errors,
+                                err
+                            ]
+                        });
+                    });
                 });
         };
 
@@ -376,7 +462,6 @@ class Uploader extends React.Component {
                 
                 <input 
                   accept=".xlsx"
-                  
                   style={{ display: 'none' }}
                   id="raised-button-file"
                   multiple
