@@ -448,7 +448,7 @@ class Uploader extends React.Component {
                 <div className="download">
                     
                     <p className="download-desc">Our team developed an Excel template for issuers to upload their data to our tool. Be sure to carefully input <br></br>information and read through thoroughly to avoid any errors. </p>
-                    <StyledButton variant="outlined" className="download-button"> 
+                    <StyledButton variant="outlined" className="download-button" href="https://drive.google.com/uc?export=download&amp;id=1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H"> 
                         Download Template
                         <img className="page-one-bg" src={firstPage} alt="firstPage" />
                     </StyledButton>
