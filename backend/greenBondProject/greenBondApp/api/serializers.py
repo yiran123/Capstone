@@ -237,4 +237,26 @@ class TimeSeriesSerializer(serializers.ModelSerializer):
             'ghg_emissions_business_as_usual', 'ghg_emissions_actual_emissions', \
             'household_connections_count', 'people_with_access_to_utilities_count', \
             'people_benefiting_count', 'status')
-        
+
+
+class TimeSeriesSerializerForCreation(serializers.ModelSerializer):
+    class Meta:
+        model = TimeSeries
+        fields = ('year', 'water_reduction', 'water_catchment', \
+            'ghg_emissions_business_as_usual', 'ghg_emissions_actual_emissions', \
+            'household_connections_count', 'people_with_access_to_utilities_count', \
+            'people_benefiting_count', 'status')
+
+    def create(self, validated_data):
+        return TimeSeries.objects.create(
+            project=validated_data['project'],
+            year=validated_data['year'],
+            water_reduction=validated_data['water_reduction'],
+            water_catchment=validated_data['water_catchment'],
+            ghg_emissions_business_as_usual=validated_data['ghg_emissions_business_as_usual'],
+            ghg_emissions_actual_emissions=validated_data['ghg_emissions_actual_emissions'],
+            household_connections_count=validated_data['household_connections_count'],
+            people_with_access_to_utilities_count=validated_data['people_with_access_to_utilities_count'],
+            people_benefiting_count=validated_data['people_benefiting_count'],
+            status=validated_data['status']
+        )
