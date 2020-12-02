@@ -10,6 +10,7 @@ import Uploader from './containers/Uploader/Uploader';
 import WaterBond from "./components/WaterBond/WaterBond";
 
 
+
 export default class Routes extends Component {
     render() {
         return (
@@ -20,6 +21,7 @@ export default class Routes extends Component {
                     <Route path="/login" component={Login} />
                     <Route path='/upload' component={Uploader} />
                     <Route path="/project/:id" component={WaterBond} />
+
                 </Switch>
             </Router>
         )
