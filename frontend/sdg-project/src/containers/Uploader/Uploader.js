@@ -9,11 +9,10 @@ import firstPage from '../../static/icons/first_page.svg';
 import uploadImg from '../../static/icons/upload.png';
 import { Button, Input } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import './Uploader.css'
 
-// The `withStyles()` higher-order component is injecting a `classes`
-// prop that is used by the `Button` component.
 const StyledButton = withStyles({
   root: {
     background: '#F4F6F9',
@@ -22,10 +21,15 @@ const StyledButton = withStyles({
     height: 42,
     width: 241,
     marginLeft: '520px',
+    
     '&:hover': {
         boxShadow: '0px 0px 3px #0070D2',
         borderRadius: '4px',
       },
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: '1px 16px',
 
   },
   label: {
@@ -37,8 +41,11 @@ class Uploader extends React.Component {
     constructor(props) {
         super(props); 
         this.state = {
+            mainState: "initial",
             file: '',
-            errors: []
+            errors: [],
+            selectedFile: null,
+            loading: false
         }
     };
 
@@ -60,7 +67,9 @@ class Uploader extends React.Component {
             });
         } else {
             this.setState({
-                file: e.target.files[0]
+                file: e.target.files[0],
+                mainState: "uploaded",
+                selectedFile: e.target.files[0].name,
             });
         }
     }
@@ -315,6 +324,7 @@ class Uploader extends React.Component {
     }
 
     onClickHandler = () => {
+        this.setState({loading: true});
         const PROJECT_INFO_SHEET = "Project Information";
         const BOND_INFO_SHEET = "Bond Information";
         const FINANCIAL_INFO_SHEET_PREFIX = "Financial Information - Bonds";
@@ -324,7 +334,8 @@ class Uploader extends React.Component {
         reader.onload = (e) => {
             // Clear errors.
             this.setState({
-                errors: []
+                errors: [],
+                
             });
 
             const result = e.target.result;
@@ -355,7 +366,8 @@ class Uploader extends React.Component {
                     errors: [
                         ...this.state.errors,
                         newError
-                    ]
+                    ],
+                    loading: false
                 });
             }
             if (!existence1 || !existence2 || !existence3) {
@@ -393,13 +405,15 @@ class Uploader extends React.Component {
                             errors: [
                                 ...this.state.errors,
                                 'res'
-                            ]
+                            ],
+                            loading: false
                         });
                     } else {
                         this.setState({
                             errors: [
                                 'Creation succeed!'
-                            ]
+                            ],
+                            loading: false
                         });
                     }
                 })
@@ -409,7 +423,8 @@ class Uploader extends React.Component {
                             errors:[
                                 ...this.state.errors,
                                 'Unknown error!'
-                            ]
+                            ],
+                            loading: false
                         });
                         return;
                     }
@@ -418,7 +433,8 @@ class Uploader extends React.Component {
                             errors: [
                                 ...this.state.errors,
                                 err
-                            ]
+                            ],
+                            loading: false
                         });
                     });
                 });
@@ -450,41 +466,66 @@ class Uploader extends React.Component {
                     <p className="download-desc">Our team developed an Excel template for issuers to upload their data to our tool. Be sure to carefully input <br></br>information and read through thoroughly to avoid any errors. </p>
                     {/* sharelink: https://drive.google.com/file/d/1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H/view?usp=sharing*/}
                     <StyledButton variant="outlined" className="download-button" href="https://drive.google.com/uc?export=download&amp;id=1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H"> 
-                        Download Template
-                        <img className="page-one-bg" src={firstPage} alt="firstPage" />
+                        <div className="plabel">Download Template</div> 
+                        <img className="arrow" src={firstPage} alt="firstPage" />
                     </StyledButton>
                 </div>
                 <div className="upload">
-                <p className="upload-desc">Once you’ve filled out the sheet, double check to ensure that you’ve added your institution’s name and the reporting <br></br>year. This will investors to ensure they are receiving the most up-to-date information from your institution. </p>
+                    <p className="upload-desc">Once you’ve filled out the sheet, double check to ensure that you’ve added your institution’s name and the reporting <br></br>year. This will investors to ensure they are receiving the most up-to-date information from your institution. </p>
 
-                <div className="col-sm-12 btn btn-primary">
-                        File Upload
-                </div>
-                
-                <input 
-                  accept=".xlsx"
-                  style={{ display: 'none' }}
-                  id="raised-button-file"
-                  multiple
-                  type="file"
-                onChange={e => this.onChangeHandler(e)} />
 
-                <label htmlFor="raised-button-file">
-                <StyledButton variant="raised" component="span" className="download-button"> 
-                    Upload Form
-                    <img className="page-one-bg" src={uploadImg} alt="uploadImg" />
-                </StyledButton>
-                </label> 
+                    <input 
+                    accept=".xlsx"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
+                    onChange={e => this.onChangeHandler(e)} />
 
-                {file &&
-                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>
-                        Upload
-                    </button>
-                }
+                    
+                    <StyledButton variant="raised" component="span" className="select-button" htmlFor="raised-button-file"> 
+                    <label className="select-button" htmlFor="raised-button-file">
+                        <div className="plabel">Select File</div>
+                        <img className="arrow" src={uploadImg} alt="uploadImg" />
+                    </label>
+                    </StyledButton>
+                    
+                    <div className="file">
 
-                {errors && (
-                    errors.map(error => <p>{error}</p>)
-                )}
+                    <div className="file-name">
+                        <label className="file-label">{`${this.state.selectedFile === null ? 'No File Selected': this.state.selectedFile}`}</label>
+                    </div>
+
+
+                    {
+                    this.state.loading ?
+                    <div style={{    marginTop: '34px',
+                        marginLeft: '30px'}}>
+                    <CircularProgress size={20} />
+                    </div>
+                    
+                    :
+                    file &&
+                        
+                        <StyledButton variant="outlined" style={{
+                            width: '100px', 
+                            height: '40px',
+                            marginTop: '34px',
+                            marginLeft: '30px'
+                        }} 
+                            onClick={this.onClickHandler}> 
+                        <label className="plabel">Upload</label>
+                        
+                        </StyledButton>
+
+                    }
+                    
+                    </div>
+                    <div className="errorMessage">
+                        {errors && (
+                            errors.map(error => <p>{error}</p>)
+                        )}
+                    </div>
                 </div>
             </div>    
         )    
