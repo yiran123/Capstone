@@ -60,6 +60,12 @@
 
   }
 
+  .upload {
+    
+    width: 1280px;
+    height: 2577px;
+  }
+
   .upload-desc {
     height: 58px;
     font-family: Roboto;
@@ -69,6 +75,88 @@
     line-height: 28px;
     /* or 127% */
     text-align: center;
+    margin: 40px 0;
+    color: #000000;
+  }
+
+  .plabel {
+    width: 177px;
+    height: 20px;
+
+    cursor: pointer;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    /* identical to box height, or 100% */
+    text-align: center;
+
+    color: #728A12;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 8px 0px;
+  }
+
+  .arrow {
+    width: 39px;
+    height: 39px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    margin: 8px 0px;
+  }
+
+  .select-button {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .file-name {
+    
+    height: 40px;
+    
+    margin-top: 34px;
+    text-align: center;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
+  }
+
+
+
+  .file-label {
+    
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 40px;
+    /* or 127% */
+    margin: 0 10px;
+    color: #000000;
+  }
+
+  .errorMessage {
+    text-align: center;
     margin-top: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 28px;
+    /* or 127% */
+
     color: #000000;
   }
