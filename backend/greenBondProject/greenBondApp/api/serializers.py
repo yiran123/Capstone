@@ -142,12 +142,19 @@ class BondSerializerForDetail(serializers.ModelSerializer):
         """Get the contractors related to this bond, and the "Use of Proceeds" related to the contractor.
         """
         contractors = dict()
-        for project in obj.projects.values('id', 'contractor__name', 'financialinfo__use_of_proceeds'):
+        for project in obj.projects.values('id', 'contractor__name', 'financialinfo__use_of_proceeds', 'contractor__description'):
             contractor_name = project['contractor__name']
-            contractors[contractor_name] = contractors.get(contractor_name, Decimal(0.0)) \
-                + project['financialinfo__use_of_proceeds']
+            contractor_description = project['contractor__description']
+            if contractor_name not in contractors:
+                contractors[contractor_name] = {
+                    'description': contractor_description,
+                    'uop': 0.0
+                }
 
-        return {k: v for k, v in sorted(contractors.items(), key=lambda item: -item[1])}
+            contractors[contractor_name]['uop'] = contractors[contractor_name]['uop'] \
+                + float(project['financialinfo__use_of_proceeds'])
+
+        return {k: v for k, v in sorted(contractors.items(), key=lambda item: -item[1]['uop'])}
 
     def get_financial_info(self, obj):
         return {
