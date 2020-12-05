@@ -69,9 +69,6 @@ class FinancialInfo(models.Model):
 
 
 class TimeSeries(models.Model):
-    class Meta:
-        unique_together = (('year', 'project'),)
-
     PROJECT_STATUS = [
         ('Built', 'Built'),
         ('Upgraded', 'Upgraded'),

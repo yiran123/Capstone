@@ -162,7 +162,8 @@ class Uploader extends React.Component {
                     errors: [
                         ...this.state.errors,
                         ...errors
-                    ]
+                    ],
+                    loading: false
                 });
                 return;
             }
@@ -305,8 +306,58 @@ class Uploader extends React.Component {
                 }
             }
         }
-
         return financialInfo;
+    }
+
+    parseTimeSeries = (worksheets) => {
+        const PROJECT_INITIAL_COL = 3, GAP = 12;
+
+        const timeSeries = [];
+        for (let worksheet of worksheets) {
+            const csvString = XLSX.utils.sheet_to_csv(worksheet);
+            const parsedData = papa.parse(csvString);
+
+            let j = PROJECT_INITIAL_COL;
+            while (true) {
+                if (parsedData.data[0][j] === undefined
+                || parsedData.data[0][j].toString().trim() == '') {
+                    break;
+                }
+
+                if (parsedData.data.length == 0) {
+                    break;
+                }
+
+                let k = j;
+                while (true) {
+                    if (parsedData.data[1][k] === undefined
+                    || parsedData.data[1][k].toString().trim() == '') {
+                        break;
+                    }
+
+                    //TODO: parseInt
+                    timeSeries.push({
+                        project: parsedData.data[0][j],
+                        year: parseInt(parsedData.data[1][k]),
+                        status: parsedData.data[2][k],
+                        
+                        household_connections_count: parseInt(parsedData.data[3][k]),
+                        people_with_access_to_utilities_count: parseInt(parsedData.data[4][k]),
+                        people_benefiting_count: parseInt(parsedData.data[5][k]),
+
+                        ghg_emissions_business_as_usual: parseFloat(parsedData.data[7][k]),
+                        ghg_emissions_actual_emissions: parseFloat(parsedData.data[8][k]),
+
+                        water_reduction: parseFloat(parsedData.data[15][k]),
+                        water_catchment: parseFloat(parsedData.data[16][k])
+                    })
+
+                    k++;
+                }
+                j = k + 2;
+            }
+        }
+        return timeSeries;
     }
 
     checkSheetExistence = (sheet, sheetName) => {
@@ -316,7 +367,8 @@ class Uploader extends React.Component {
                 errors: [
                     ...this.state.errors,
                     newError
-                ]
+                ],
+                loading: false
             });
             return false;
         }
@@ -329,6 +381,7 @@ class Uploader extends React.Component {
         const BOND_INFO_SHEET = "Bond Information";
         const FINANCIAL_INFO_SHEET_PREFIX = "Financial Information - Bonds";
         const CONTRACTOR_INFO_SHEET = "Contractor Information";
+        const ENVIRONMENTAL_INFO_SHEET_PREFIX = "Environmental Information";
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -360,12 +413,31 @@ class Uploader extends React.Component {
                 }
             });
 
-            const newError = 'There is not sheet with name: ' + FINANCIAL_INFO_SHEET_PREFIX + "...";
+            const timeSeriesWorksheets = [];
+            let existence5 = false;
+            workbook.SheetNames.forEach((sheetName) => {
+                if (sheetName.startsWith(ENVIRONMENTAL_INFO_SHEET_PREFIX)) {
+                    timeSeriesWorksheets.push(workbook.Sheets[sheetName]);
+                    existence5 = true;
+                }
+            })
+
+            const noFinancialSheetError = 'There is not sheet with name: ' + FINANCIAL_INFO_SHEET_PREFIX + "...";
+            const noEnvironmentSheetError = 'There is not sheet with name: ' + ENVIRONMENTAL_INFO_SHEET_PREFIX + "...";
             if (!existence4) {
                 this.setState({
                     errors: [
                         ...this.state.errors,
-                        newError
+                        noFinancialSheetError
+                    ],
+                    loading: false
+                });
+            }
+            if (!existence5) {
+                this.setState({
+                    errors: [
+                        ...this.state.errors,
+                        noEnvironmentSheetError
                     ],
                     loading: false
                 });
@@ -378,12 +450,13 @@ class Uploader extends React.Component {
             const projects = this.parseProjects(projectWorksheet, PROJECT_INFO_SHEET);
             const bonds = this.parseBonds(bondWorksheet, BOND_INFO_SHEET);
             const financialInfo = this.parseFinancialInfo(financialInfoWorksheets);
-            
+            const timeSeries = this.parseTimeSeries(timeSeriesWorksheets);
 
             if (contractors === undefined
             || projects === undefined
             || bonds === undefined
-            || financialInfo == undefined) {
+            || financialInfo === undefined
+            || timeSeries === undefined) {
 
                 return;
             }
@@ -392,10 +465,12 @@ class Uploader extends React.Component {
                 contractors: contractors,
                 projects: projects,
                 bonds: bonds,
-                financialInfo: financialInfo
+                financialInfo: financialInfo,
+                timeSeries: timeSeries
             }
 
-            console.log(json);
+            console.log("time series:");
+            console.log(timeSeries);
             
             axios.post("http://127.0.0.1:8000/api/create", json)
                 .then(res => {

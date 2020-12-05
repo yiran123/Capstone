@@ -3,11 +3,12 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 import json
+from django.db import IntegrityError
 
 from greenBondApp.models import Project, Bond, Contractor, SDG
 from .serializers import ProjectSerializerForDetail, ProjectSerializerForList, BondSerializerForList, \
      BondSerializerForDetail, ProjectSerializerForCreation, BondSerializerForCreation, \
-     FinancialInfoSerializerForCreation, ContractorSerializerForCreation
+     FinancialInfoSerializerForCreation, ContractorSerializerForCreation, TimeSeriesSerializerForCreation
 
 
 class ProjectListView(ListAPIView):
@@ -51,11 +52,11 @@ def create_projects(projects, errors):
         sdg_query = SDG.objects.filter(name__in=[sdg1, sdg2])
         
         if not contractor_query:
-            errors.append('no such contractor named \'' + contractor_name)
+            errors.append('No such contractor named \'' + contractor_name)
             return
 
         if not sdg_query:
-            errors.append('no such sdg tag named \'' + sdg1 + ' or \'' + sdg2)
+            errors.append('No such sdg tag named \'' + sdg1 + ' or \'' + sdg2)
             return
 
         contractor = contractor_query[0]
@@ -87,7 +88,7 @@ def create_financial_info(financial_info, errors):
 
         bond_query = Bond.objects.filter(name=bond_name)
         if not bond_query:
-            errors.append('no such bond named ' + bond_name)
+            errors.append('No such bond named ' + bond_name)
             return
 
         bond = bond_query[0]
@@ -97,7 +98,7 @@ def create_financial_info(financial_info, errors):
 
             project_query = Project.objects.filter(name=project_name)
             if not project_query:
-                errors.append('no such project named ' + project_name)
+                errors.append('No such project named ' + project_name)
                 return
 
             project = project_query[0]
@@ -108,9 +109,30 @@ def create_financial_info(financial_info, errors):
                 errors.append(json.dumps(financial_info_serializer.errors))
                 return
 
+def create_time_series(time_series, errors):
+    for item in time_series:
+        project_name = item['project']
+        project_query = Project.objects.filter(name=project_name)
+        if not project_query:
+            errors.append('no such project named ' + project_name)
+            continue
+
+        project = project_query[0]
+        time_series_serializer = TimeSeriesSerializerForCreation(data=item)
+        if time_series_serializer.is_valid():
+            try:
+                time_series_serializer.save(project=project)
+            except IntegrityError:
+                print('exception111111111')
+                print(project)
+                print(item['year'])
+        else:
+            errors.append(json.dumps(time_series_serializer.errors))
+            continue
 
 @api_view(['POST'])
 def create_data(request):
+    errors = []
     if request.method == 'POST':
         print('json array: -------7')
         print(request.data)
@@ -120,17 +142,22 @@ def create_data(request):
         projects        = request.data['projects']
         bonds           = request.data['bonds']
         financial_info  = request.data['financialInfo']
-
-        errors = []
+        time_series     = request.data['timeSeries']
         
         create_contractors(contractors, errors)
         create_projects(projects, errors)
         create_bonds(bonds, errors)
         create_financial_info(financial_info, errors)
+        create_time_series(time_series, errors)
 
     if errors:
         return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
-        #return JsonResponse({'errorMessages': errors}, status=400)
 
-    #return JsonResponse({'errorMessages': 'no error'}, status=200)
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def delete_data(request):
+    Project.objects.all().delete()
+    Bond.objects.all().delete()
+    Contractor.objects.all().delete()
     return Response(status=status.HTTP_200_OK)
