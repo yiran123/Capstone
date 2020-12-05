@@ -474,7 +474,6 @@ class Uploader extends React.Component {
             
             axios.post("http://127.0.0.1:8000/api/create", json)
                 .then(res => {
-                    console.log(res);
                     if (res === undefined || res.status != '200') {
                         this.setState({
                             errors: [
