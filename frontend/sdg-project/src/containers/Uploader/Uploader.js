@@ -20,15 +20,15 @@ const StyledButton = withStyles({
     border: '1px solid #728A12',
     height: 42,
     width: 241,
-    marginLeft: '520px',
+    
     
     '&:hover': {
         boxShadow: '0px 0px 3px #0070D2',
         borderRadius: '4px',
       },
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    // display: 'flex',
+    // flexDirection: 'row',
+    // alignItems: 'center',
     padding: '1px 16px',
 
   },
@@ -485,7 +485,7 @@ class Uploader extends React.Component {
                     } else {
                         this.setState({
                             errors: [
-                                'Creation succeed!'
+                                'Upload Successful!'
                             ],
                             loading: false
                         });
@@ -538,11 +538,18 @@ class Uploader extends React.Component {
                 <div className="download">
                     
                     <p className="download-desc">Our team developed an Excel template for issuers to upload their data to our tool. Be sure to carefully input <br></br>information and read through thoroughly to avoid any errors. </p>
+                    <div className="dButtons">
                     {/* sharelink: https://drive.google.com/file/d/1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H/view?usp=sharing*/}
-                    <StyledButton variant="outlined" className="download-button" href="https://drive.google.com/uc?export=download&amp;id=1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H"> 
+                    <StyledButton style = {{marginLeft: '267px'}} variant="outlined" className="download-button" href="https://drive.google.com/uc?export=download&amp;id=1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H"> 
                         <div className="plabel">Download Template</div> 
                         <img className="arrow" src={firstPage} alt="firstPage" />
                     </StyledButton>
+                    {/* sharelink: https://drive.google.com/file/d/1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H/view?usp=sharing*/}
+                    <StyledButton  style = {{marginLeft: '267px'}} variant="outlined" className="download-button" > 
+                        <div className="plabel">Download Example</div> 
+                        <img className="arrow" src={firstPage} alt="firstPage" />
+                    </StyledButton>
+                    </div>
                 </div>
                 <div className="upload">
                     <p className="upload-desc">Once you’ve filled out the sheet, double check to ensure that you’ve added your institution’s name and the reporting <br></br>year. This will investors to ensure they are receiving the most up-to-date information from your institution. </p>
@@ -557,7 +564,7 @@ class Uploader extends React.Component {
                     onChange={e => this.onChangeHandler(e)} />
 
                     
-                    <StyledButton variant="raised" component="span" className="select-button" htmlFor="raised-button-file"> 
+                    <StyledButton  style = {{marginLeft: '520px'}} variant="raised" component="span" className="select-button" htmlFor="raised-button-file"> 
                     <label className="select-button" htmlFor="raised-button-file">
                         <div className="plabel">Select File</div>
                         <img className="arrow" src={uploadImg} alt="uploadImg" />
