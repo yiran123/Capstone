@@ -372,7 +372,7 @@
     margin-top: 5px;
   }
 
-  .FilterBondBody {
+  .filterBondBody {
     display: flex;
     flex-flow: column wrap;
     margin-bottom: 100px;

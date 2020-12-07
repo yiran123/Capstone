@@ -15,6 +15,9 @@ import FilterBond from './FilterBond';
 import './WaterProject.css'
 import ClimateTable from './ClimateTable';
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 class WaterProject extends React.Component {
 	constructor(props) {
@@ -92,16 +95,16 @@ class WaterProject extends React.Component {
             <div className="waterInfoContent-txt7">MEASURING SOCIAL IMPACT</div>
             <div className="flex-r">
               <div className="flex11 waterInfoContent-tab2-tr">
-                <div className="waterInfoContent-txt6">{access}</div>
+                <div className="waterInfoContent-txt6">{numberWithCommas(access)}</div>
                 <div className="waterInfoContent-txt4">Residents with Equitable and Clean Access to Utilities</div>
                 <div className="waterInfoContent-txt5">*Number of People with<br></br> Access to Clean Water</div>
               </div>
               <div className="flex11 waterInfoContent-tab2-tr">
-                <div className="waterInfoContent-txt6">{benefit}</div>
+                <div className="waterInfoContent-txt6">{numberWithCommas(benefit)}</div>
                 <div className="waterInfoContent-txt4">Residents Benefitting from Climate Mitigation Efforts</div>
               </div>
               <div className="flex11 waterInfoContent-tab2-tr">
-                <div className="waterInfoContent-txt6">{connection}</div>
+                <div className="waterInfoContent-txt6">{numberWithCommas(connection)}</div>
                 <div className="waterInfoContent-txt4">New Household  Connections</div>
                 <div className="waterInfoContent-txt52">*Number of New Household<br></br> Water Connections</div>
               </div>
@@ -136,15 +139,15 @@ class WaterProject extends React.Component {
       </div>
       <div className="waterInfoContent-right">
         <div className="waterInfoContent-txt12">ASSOCIATED BONDS</div>
-      
+      <div className="filterBondBody">
       {
         filterResults.map((item) => {
           return <FilterBond result={item} bonds={associatedBonds} />
         })
       }
-                  
+      </div>          
         
-        
+      
       </div>
     </div>
 	    	</div>

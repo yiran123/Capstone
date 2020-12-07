@@ -38,6 +38,10 @@ function getfiscalYear() {
   return new Date().getFullYear()-1;
 }
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 
 
 
@@ -286,16 +290,16 @@ class DetailContent extends React.Component {
          recommended by the ICMA Harmonized Framework for Green Bond Impact Reporting. </div>
         <div className="wrapper-impact-data">
           <div className="wrapper-impact-data-info">
-      <div className="wrapper-impact-data-txt1">{access}</div>
+      <div className="wrapper-impact-data-txt1">{numberWithCommas(access)}</div>
             <div className="wrapper-impact-data-txt2">Residents with Equitable and Clean Access to Utilities</div>
             <div className="wrapper-impact-data-txt3">*Number of People with Access to Clean Water</div>
           </div>
           <div className="wrapper-impact-data-info">
-      <div className="wrapper-impact-data-txt1">{benefit}</div>
+      <div className="wrapper-impact-data-txt1">{numberWithCommas(benefit)}</div>
             <div className="wrapper-impact-data-txt2">SF Residents Benefitting from Climate Mitigation Efforts</div>
           </div>
           <div className="wrapper-impact-data-info">
-            <div className="wrapper-impact-data-txt1">{connection}</div>
+            <div className="wrapper-impact-data-txt1">{numberWithCommas(connection)}</div>
             <div className="wrapper-impact-data-txt2">New Household  Connections</div>
             <div className="wrapper-impact-data-txt3">*Number of New Household Water Connections</div>
           </div>

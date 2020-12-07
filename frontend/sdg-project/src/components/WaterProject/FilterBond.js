@@ -5,13 +5,7 @@ import styled from 'styled-components'
 import Series from '../Series/Series'
 
 
-const FilterBody = styled.div`
-display: flex;
-flex-flow: column wrap;
-margin-bottom: 100px;
-justify-content: flex-start;
-  
-`;
+
 
 class FilterBond extends React.Component {
 

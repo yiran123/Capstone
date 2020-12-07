@@ -65,6 +65,10 @@ function createData(year, catchment, reduction, reductionTon, status) {
     return { year, catchment, reduction, reductionTon, status };
   }
 
+  function numberWithCommas(x) {
+    return parseInt(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
 
 
 class FinancialTable extends React.Component {
@@ -98,9 +102,9 @@ class FinancialTable extends React.Component {
                       {row.year}
                     </StyledTableCell>
                     
-                    <StyledTableCell align="left">{row.catchment}</StyledTableCell>
+                    <StyledTableCell align="left">{numberWithCommas(row.catchment)}</StyledTableCell>
                     <StyledTableCell align="left">{row.reduction}</StyledTableCell>
-                    <StyledTableCell align="left">{row.reductionTon}</StyledTableCell>
+                    <StyledTableCell align="left">{numberWithCommas(row.reductionTon)}</StyledTableCell>
                     <StyledTableCell align="left">{row.status}</StyledTableCell>
                   </TableRow>
                 ))}

@@ -5,7 +5,15 @@ import { unsdgs } from '../Filter/const'
 import './FinancialInformation.css'
 
 
+// Create our number formatter.
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
 
+  // These options are needed to round to whole numbers if that's what you want.
+  minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
 
 
 class FinancialInformation extends React.Component {
@@ -19,6 +27,8 @@ class FinancialInformation extends React.Component {
   render (){
     var bond = this.props.bond
     var financialInfo = { use_of_proceeds: -1, prior_year_spending: -1, recent_year_spending: -1, maturity_date: '', avg_mature_rate: -1}
+    var totalRemaining = -1;
+    var remaining = "";
     if(bond.financial_info != undefined 
       && bond.financial_info.use_of_proceeds != undefined
       && bond.financial_info.prior_year_spending != undefined
@@ -27,6 +37,13 @@ class FinancialInformation extends React.Component {
       && bond.financial_info.avg_mature_rate != undefined
       ) {
       financialInfo = bond.financial_info;
+      totalRemaining = parseInt(financialInfo.use_of_proceeds) - parseInt(financialInfo.prior_year_spending) - parseInt(financialInfo.recent_year_spending);
+      if(totalRemaining<0) {
+        remaining = '('+ formatter.format(-totalRemaining) + ')';
+      }
+      else {
+        remaining = formatter.format(totalRemaining);
+      }
     }
     return (
       <div>
@@ -36,7 +53,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        <div className="number"> ${financialInfo.use_of_proceeds} </div>
+        <div className="number"> {formatter.format(financialInfo.use_of_proceeds)} </div>
         </div>
       </div>
 
@@ -47,7 +64,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        <div className="number">(${financialInfo.prior_year_spending + financialInfo.recent_year_spending})</div>
+        <div className="number">({formatter.format(financialInfo.prior_year_spending + financialInfo.recent_year_spending)})</div>
         </div>
       </div>
 
@@ -58,7 +75,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        <div className="number">${financialInfo.use_of_proceeds - financialInfo.prior_year_spending - financialInfo.recent_year_spending}</div>
+        <div className="number">{remaining}</div>
         </div>
       </div>
 
@@ -69,7 +86,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        <div className="number">${financialInfo.recent_year_spending}</div>
+        <div className="number">{formatter.format(financialInfo.recent_year_spending)}</div>
         </div>
       </div>
 
@@ -80,7 +97,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        <div className="number">${financialInfo.prior_year_spending}</div>
+        <div className="number">{formatter.format(financialInfo.prior_year_spending)}</div>
         </div>
       </div>
 
