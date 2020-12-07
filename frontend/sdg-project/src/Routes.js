@@ -7,7 +7,7 @@ import InvestorPortal from "./pages/InvestorPortal";
 import DetailContent from "./components/DetailContent/DetailContent";
 import Login from './containers/Login/Login';
 import Uploader from './containers/Uploader/Uploader';
-import WaterBond from "./components/WaterBond/WaterBond";
+import WaterProject from "./components/WaterProject/WaterProject";
 
 
 
@@ -20,7 +20,7 @@ export default class Routes extends Component {
                     <Route path="/bond/:id" component={DetailContent} />
                     <Route path="/login" component={Login} />
                     <Route path='/upload' component={Uploader} />
-                    <Route path="/project/:id" component={WaterBond} />
+                    <Route path="/project/:id" component={WaterProject} />
 
                 </Switch>
             </Router>

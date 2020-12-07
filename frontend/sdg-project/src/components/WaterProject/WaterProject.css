@@ -5,11 +5,10 @@
   
   .waterInfoContent{
     box-sizing: border-box;
-    width: 1280px;
-    /* height: 2412px; */
-    margin: 10px;
+    width: 100%;
+    margin-top:10px;
     background-color: #fff;
-    padding: 135px 137px 274px 114px;
+    padding: 100px 94px 274px 94px;
     justify-content: space-between;
   }
   .waterInfoContent-txt1{
@@ -21,10 +20,19 @@
     align-items: center;
     color: #0F1F19;
   }
+  .waterInfoContent-txt12{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 20px;
+    align-items: center;
+    color: #0F1F19;
+    margin: 0 0 10px 23px;
+  }
   .waterInfoContent-left-tab1{
     margin: 29px 0px 72px;
     width: 700px;
-    /* height: 223px; */
     background: #FFFFFF;
     box-shadow: 0px 0px 16px 4px rgba(12, 43, 66, 0.15);
   }
@@ -81,7 +89,7 @@
   }
   .waterInfoContent-tab2-tr{
     width: 178px;
-    padding-left: 44px;
+    padding: 0 22px;
   }
   .waterInfoContent-txt7{
     height: 70px; 
@@ -118,7 +126,20 @@
     color: #0F1F19;
   }
   .waterInfoContent-txt5{
-    margin-top: 21px;
+    margin-top: 14px;
+    font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  
+  color: #0F1F19;
+  }
+
+  .waterInfoContent-txt52{
+    margin-top: 33px;
     font-family: Roboto;
   font-style: normal;
   font-weight: 300;
@@ -149,7 +170,6 @@
   .waterInfoContent-tab5{
     margin: 0px 0px 274px;
     width: 700px;
-    height: 345px;
     background: #FFFFFF;
     box-shadow: 0px 0px 16px 4px rgba(12, 43, 66, 0.15);
   }
@@ -331,18 +351,7 @@
     text-align: center;
     color: #51687B;
   }
-  .waterInfoContent-tab5-width182{
-    width: 182px;
-  }
-  .waterInfoContent-tab5-width131{
-    width: 131px;
-  }
-  .waterInfoContent-tab5-width149{
-    width: 149px;
-  }
-  .waterInfoContent-tab5-width120{
-    width: 120px;
-  }
+
   .waterInfoContent-tab5-border{
     background: #F9F8F8;
     border-bottom: 0.5px solid #8E8E8E;
@@ -351,105 +360,21 @@
     padding:0px 0px 0px 10px
   }
   
-  .waterInfoContent-right-label{
-    box-sizing: border-box;
-    width: 279px;
-    height: 400px;
-    border-radius: 4px;
-    margin: 25px 0px 20px;
-    padding: 30px 30px;
-  }
-  .waterInfoContent-right-label-bg1{
-    background: #6A7D1D;
-    box-shadow: 0px 0px 16px rgba(12, 43, 66, 0.15);
-  }
-  .waterInfoContent-right-label-bg2{
-    background: #3A668A;
-    box-shadow: 0px 0px 16px rgba(12, 43, 66, 0.15);
-  }
+
   .tabDescImg{
     width: 56px;
     height: 61px;
   }
-  .waterInfoContent-right-label-txt1{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 28px;
-    line-height: 33px;
-    align-items: center;
-    color: #FFFFFF;
-  }
+
   .whiteRight{
     width: 12.5px;
     height: 23.5px;
     margin-top: 5px;
   }
-  .waterInfoContent-right-label-txt2{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 19px;
-    align-items: center;
-    color: #FFFFFF;
-  }
-  .waterInfoContent-right-label-txt3{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 24px;
-    align-items: center;
-    color: #FFFFFF;
-  }
-  .waterInfoContent-right-label-txt4{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 12px;
-    align-items: center;
-    color: #FFFFFF;
-    padding-right: 25px;
-  }
-  .waterInfoContent-right-label-txt5{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 14px;
-    align-items: center;
-    color: #FFFFFF;
-  }
-  .waterInfoContent-right-label-txt6{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: #092A47;
-  }
-  .waterInfoContent-right-label-tr1{
-    padding-bottom: 15px;
-  }
-  .waterInfoContent-right-label-tr2{
-    padding-bottom: 15px;
-  }
-  .waterInfoContent-right-label-border1{
-    border-bottom: 2px solid rgb(92,122,14);
-  }
-  .waterInfoContent-right-label-border2{
-    border-bottom: 2px solid #1C9A4E;
-  }
-  .waterInfoContent-right-label-tr3{
-    padding: 20px 0px;
-  }
-  
-  .waterInfoContent-right-label-tr4{
-    padding: 15px 0px;
-  }
-  
-  .waterInfoContent-right-label-tr5{
-    padding: 10px 0px 15px;
+
+  .FilterBondBody {
+    display: flex;
+    flex-flow: column wrap;
+    margin-bottom: 100px;
+    justify-content: flex-start;
   }

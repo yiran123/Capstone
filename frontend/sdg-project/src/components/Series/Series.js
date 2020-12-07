@@ -65,7 +65,13 @@ render() {
       <div className="series-line"></div>
 
       <div className="series-uop">
-        Use of Proceeds       ${bond.use_of_proceeds}
+        Use of Proceeds  
+        <div style={{
+          display: 'inline-block',
+          float:'right'
+        }}>     
+        ${bond.use_of_proceeds}
+        </div>
     </div>
 
       <div className="series-coupon-rate">
@@ -79,6 +85,12 @@ render() {
     </div>
      <div className="series-maturity-year">
         Maturity Year
+        <div style={{
+          display: 'inline-block',
+          float:'right'
+        }}>
+          {bond.maturity_year}
+          </div>
       </div>
 
       <div className="series-UN-SDGs">

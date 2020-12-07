@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 
 const HeaderWrapper = styled.div`
-padding: 53px 140px 20px;
+padding: 73px 100px 40px 73px;
 backgroud: #fff;
 box-shadow: 0px 4px 8px #A4B4C1;
 `
@@ -24,8 +24,11 @@ flex-direction: row;
 justify-content: space-between;
 `
 
-const TextWrapper = styled.div`
+const TitleWrapper = styled.div`
+display: flex;
+flex-direction: row;
 
+margin-bottom:20px;
 `
 
 const Title = styled.div`
@@ -41,11 +44,14 @@ margin-bottom: 23px;
 const Desc = styled.div`
 font-family: Roboto;
 font-style: normal;
-font-weight: 700;
+font-weight: 300;
 font-size: 16px;
-line-height: 20px;
+line-height: 19px;
+display: flex;
+align-items: center;
+
 color: #51687B;
-margin: 10px 0;
+width: 921px;
 `
 
 const PictureWrapper = styled.div`
@@ -66,6 +72,30 @@ letterSpacing: 0.04em;
 
 const PicWrapper = styled.div``
 
+const StatusWrapper = styled.div`
+width: 129px;
+height: 59px;
+background: #08253D;
+border-radius: 6px;
+text-align: center;
+font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 21px;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.04em;
+
+color: #FFFFFF;
+margin-left: 40px;
+`
+
+function getfiscalYear() {
+  return new Date().getFullYear()-1;
+}
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -73,25 +103,38 @@ class Header extends React.Component {
 
     }
 }
+
   render() {
     var project = this.props.project;
-        var sdgList   = [];
-        if(this.props.project.sdgs != undefined) {
-          sdgList = project.sdgs;
+    var sdgList   = [];
+    var status = "";
+    if(this.props.project.sdgs != undefined) {
+      sdgList = project.sdgs;
+    }
+    if(this.props.status != undefined) {
+          status = this.props.status;
         }
-
     
     return (
       <HeaderWrapper>
     
     <HeaderBottomWrapper>
-      <TextWrapper>
+      <div>
+      <TitleWrapper>
         <Title>{project.name}</Title>
+        <StatusWrapper>
+        
+        {status}
+        
+        
+      </StatusWrapper>
+        </TitleWrapper>
         <Desc>
           
-          <p class="description">{project.description}</p>
+          {project.description}
         </Desc>
-      </TextWrapper>
+        </div>
+
       <PictureWrapper>
         <PicTitle>Aligned SDGs</PicTitle>
         <PicWrapper>

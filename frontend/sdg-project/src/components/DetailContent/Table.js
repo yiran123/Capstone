@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import { unsdgs } from '../Filter/const'
-import zhishu from '../../static/icons/zhishu.svg';
+
 
 
  function createData (name, useOfProceeds, currentSpending, priorSpending, totalExpended, unSdgs, projectId) {
