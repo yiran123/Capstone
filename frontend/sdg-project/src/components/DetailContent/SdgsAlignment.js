@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import { unsdgs } from '../Filter/const'
 
+import './SdgsAlignment.css'
+
 
 
 
@@ -11,11 +13,12 @@ import { unsdgs } from '../Filter/const'
 const SdgsAlignmentItemWrapper = styled.div`
   display: flex;
   margin-bottom: 6px;
+  cursor: pointer;
 `
 
 const ShowTotalLabel = styled.div`
   width: ${props => props.width}%;
-  background: #E6E7E8;
+  
   height: 56px;
   line-height: 56px;
   padding: 0 8px;
@@ -38,11 +41,14 @@ class SdgsAlignment extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      sdgsAlignment: [{value: 0, total:0, showTotal:''}]
+      sdgsAlignment: [{value: 0, total:0, showTotal:''}],
+      sdgs: 'all',
+      selected: {}
     }
     this.createData = this.createData.bind(this);
     this.numberWithCommas = this.numberWithCommas.bind(this);
     this.getWidth = this.getWidth.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   getWidth = (width, temp) => {
@@ -51,6 +57,22 @@ class SdgsAlignment extends React.Component {
 
   return Number.parseInt(width / maxWidth * 100)
 }
+  onChange(item) {
+    var temp = this.state.sdgs;
+    if(this.state.selected.value == item.value) {
+      temp = 'all';
+    }else{
+      temp = 'part';
+    }
+    if(temp == 'all') {
+      this.setState({sdgs:temp, selected: {} })
+    }
+    else {
+          this.setState({sdgs:temp, selected: item })
+    }
+
+    this.props.changeFilter(temp, item)
+  }
 
   createData() {
     var array =[];
@@ -84,15 +106,16 @@ class SdgsAlignment extends React.Component {
 
   render (){
     var temp = this.createData();
+    var self = this;
   return (
     <div className="SdgsAlignment">
       {
         
 
         temp.map(sdg => {
-          return <SdgsAlignmentItemWrapper>
+          return <SdgsAlignmentItemWrapper onClick={()=>self.onChange(sdg)}>
             <img width="56" height="56" src={unsdgs[sdg.value]} alt='sdg' />
-            <ShowTotalLabel width={this.getWidth(sdg.total, temp)}>{sdg.showTotal}</ShowTotalLabel>
+            <ShowTotalLabel className = {`sdg-filter-item ${this.state.sdgs == 'part' && this.state.selected.value == sdg.value ? 'active' : ''}`} width={this.getWidth(sdg.total, temp)}>{sdg.showTotal}</ShowTotalLabel>
           </SdgsAlignmentItemWrapper>
         })
       }

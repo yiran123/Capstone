@@ -1,64 +1,102 @@
-import * as d3 from 'd3'
+import React, { Component } from 'react'
+import * as d3 from 'd3';
+import { scaleLinear } from 'd3-scale'
+import { max } from 'd3-array'
+import { select } from 'd3-selection'
 
-const data = [
-    { name: "PG & E", value: 0.07507 },
-    { name: "Big Valley", value: 0.06966 },
-    { name: "Cal State", value: 0.06749 },
-    { name: "Boyer", value: 0.06327 },
-    { name: "Basin", value: 0.06094 },
-    { name: "Mixers", value: 0.05987 },
-    { name: "Water", value: 0.04253 },
-    { name: "Oak", value: 0.04025 },
-]
-const width = 541;
-const height = 362;
-const margin = { top: 0, right: 0, bottom: 30, left: 0 }
-const color = "#3290ED"
+class LocalContractor extends Component {
+   constructor(props){
+      super(props)
+      this.createBarChart = this.createBarChart.bind(this)
+   }
 
-const yAxis = g => g
-    .attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y).ticks(null, data.format))
-    .call(g => g.select(".domain").remove())
-    .call(g => g.append("text")
-        .attr("x", -margin.left)
-        .attr("y", 10)
-        .attr("fill", "currentColor"))
+   componentDidMount() {
+      this.createBarChart()
+   }
+   componentDidUpdate() {
+      this.createBarChart()
+   }
 
-const xAxis = g => g
-    .attr("transform", `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x)
-        .tickFormat(i => data[i].name)
-        .tickSizeOuter(0))
 
-const y = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.value)]).nice()
-    .range([height - margin.bottom, margin.top])
+   createBarChart() {
 
-const x = d3.scaleBand()
-    .domain(d3.range(data.length))
-    .range([margin.left, width - margin.right])
-    .padding(0.1)
+let data = this.props.data;
+let margin = {top: 20, right: 0, bottom: 30, left: 0};
+let svgWidth = 541, svgHeight = 362;
+let height = svgHeight- margin.top- margin.bottom, width = svgWidth - margin.left - margin.right;
+let sourceNames = [], sourceCount = [];
+const color = "#C0CEDB";
+const topColor = '#ABC24D';
 
-const svg = d3.create("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("viewBox", [0, 0, width, height]);
+
+let x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+    y = d3.scaleLinear().rangeRound([height, 0]);
+for(let key in data){
+    if(data[key].name.length > 0) {
+        sourceNames.push(data[key].name);
+        sourceCount.push(data[key].value);}
+    
+}
+x.domain(sourceNames);
+y.domain([0, d3.max(sourceCount, function(d) { return d; })]);
+
+let svg = select(this.node).append("svg");
+svg.attr('height', svgHeight)
+    .attr('width', svgWidth);
+
+svg = svg.append("g")
+         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.append("g")
-    .attr("fill", color)
-    .selectAll("rect")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// svg.append("g")
+//     .attr("class", "axis axis--y")
+//     .call(d3.axisLeft(y).ticks(5))
+//     ;
+        
+// Create rectangles
+let bars = svg.selectAll('.bar')
     .data(data)
-    .join("rect")
-    .attr("x", (d, i) => x(i))
-    .attr("y", d => y(d.value))
-    .attr("height", d => y(0) - y(d.value))
-    .attr("width", x.bandwidth());
+    .enter()
+    .append("g");
 
-svg.append("g")
-    .call(xAxis);
+bars.append('rect')
+    .attr('class', 'bar')
+    .attr("fill", (d,i) => {return i<2?topColor:color})
+    .attr("x", d => { return x(d.name); })
+    .attr("y", d => { return y(d.value); })
+    .attr("width", x.bandwidth())
+    .attr("height", d => { return height - y(d.value); });
+    
+bars.append("text")
+    .text(d => { 
+        return d.value;
+    })
+    .attr("x", d => {
+        return x(d.name) + x.bandwidth()/2;
+    })
+    .attr("y", d => {
+        return y(d.value) - 5;
+    })
+    .attr("font-family" , "sans-serif")
+    .attr("font-size" , "14px")
+    .attr("fill" , "black")
+    .attr("text-anchor", "middle");
 
-svg.append("g")
-    .call(yAxis);
 
-export default svg.node()
 
+   }
+
+render() {
+          return <svg ref={node => this.node = node}
+      width={541} height={362}>
+      </svg>
+   }
+}
+export default LocalContractor
+
+
+ 

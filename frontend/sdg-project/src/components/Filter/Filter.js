@@ -154,7 +154,7 @@ class Filter extends React.Component {
 
 
   render() {
-
+    var fiscalYear = new Date().getFullYear()-1;
   return (
     <div className="Filter">
     <div className="buttonLine">
@@ -179,7 +179,7 @@ class Filter extends React.Component {
           {/* <nav>SELECT A BOND ISSUER</nav> */}
     </div>
     <div className="buttonWrapper2">
-    <p>UPDATED AS OF JUNE 30, 2019</p>
+  <p>UPDATED AS OF JUNE 30, {fiscalYear}</p>
     </div>
     </div>
       <div className="un-sdgs-filter">

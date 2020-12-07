@@ -11,7 +11,7 @@
 
 .DetailContentProjectCard{
   width: 488px;
-  height: 428px;
+  /* height: 428px; */
   background: #FFFFFF;
   padding: 30px 36px;
   box-sizing: border-box;
@@ -25,10 +25,20 @@
 }
 
 .DetailContentProjectCard .title{
+/* SDG ALIGNMENT */
+
+font-family: Roboto;
+font-style: normal;
 font-weight: 500;
 font-size: 17px;
 line-height: 20px;
+display: flex;
+align-items: center;
+letter-spacing: 0.04em;
+
 color: #0F1F19;
+
+
 }
 
 .DetailContentProjectCard .desc{
@@ -36,7 +46,7 @@ font-style: normal;
 font-weight: 500;
 font-size: 14px;
 line-height: 20px;
-color: #1589EE;
+color: #0F1F19;
   }
 
   .DetailContentProject .cardName{

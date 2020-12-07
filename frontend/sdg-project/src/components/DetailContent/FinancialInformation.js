@@ -11,13 +11,23 @@ import './FinancialInformation.css'
 class FinancialInformation extends React.Component {
   constructor(props) {
     super(props);
-
+    
   }
 
   
 
   render (){
-    
+    var bond = this.props.bond
+    var financialInfo = { use_of_proceeds: -1, prior_year_spending: -1, recent_year_spending: -1, maturity_date: '', avg_mature_rate: -1}
+    if(bond.financial_info != undefined 
+      && bond.financial_info.use_of_proceeds != undefined
+      && bond.financial_info.prior_year_spending != undefined
+      && bond.financial_info.recent_year_spending != undefined
+      && bond.financial_info.maturity_date != undefined
+      && bond.financial_info.avg_mature_rate != undefined
+      ) {
+      financialInfo = bond.financial_info;
+    }
     return (
       <div>
       <div className="leftTitle">
@@ -26,7 +36,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        $
+        <div className="number"> ${financialInfo.use_of_proceeds} </div>
         </div>
       </div>
 
@@ -37,7 +47,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        ($)
+        <div className="number">(${financialInfo.prior_year_spending + financialInfo.recent_year_spending})</div>
         </div>
       </div>
 
@@ -48,7 +58,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        $
+        <div className="number">${financialInfo.use_of_proceeds - financialInfo.prior_year_spending - financialInfo.recent_year_spending}</div>
         </div>
       </div>
 
@@ -59,7 +69,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        $
+        <div className="number">${financialInfo.recent_year_spending}</div>
         </div>
       </div>
 
@@ -70,7 +80,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        $
+        <div className="number">${financialInfo.prior_year_spending}</div>
         </div>
       </div>
 
@@ -81,7 +91,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        08/24/2024
+        <div className="number">{financialInfo.maturity_date}</div>
         </div>
       </div>
 
@@ -92,7 +102,7 @@ class FinancialInformation extends React.Component {
           display: 'inline-block',
           float:'right'
         }}>
-        1.7%
+        <div className="number">{financialInfo.avg_mature_rate*100}%</div>
         </div>
       </div>
 

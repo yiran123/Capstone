@@ -72,14 +72,14 @@ font-style: normal;
 font-weight: 500;
 font-size: 17px;
 line-height: 20px;
-color: #1589EE;
+color: #6A7D1D;
 text-align: center;
 cursor: pointer;
 }
 
 .tabItem.active{
 color: #0F1F19;
-border-bottom: 4px solid #1589EE;
+border-bottom: 4px solid #0F1F19;
 
 }
 

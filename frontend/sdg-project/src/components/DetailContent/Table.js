@@ -8,13 +8,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import { unsdgs } from '../Filter/const'
 import zhishu from '../../static/icons/zhishu.svg';
 
 
- function createData (name, useOfProceeds, spending, priorSpends, unSdgs, projectId) {
-    return { name, useOfProceeds, spending, priorSpends, unSdgs, projectId };
+ function createData (name, useOfProceeds, currentSpending, priorSpending, totalExpended, unSdgs, projectId) {
+    return { name, useOfProceeds, currentSpending, priorSpending, totalExpended, unSdgs, projectId };
   }
 
 
@@ -22,51 +21,36 @@ const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'PROJECT NAME' },
   { id: 'useOfProceeds', numeric: true, disablePadding: false, label: 'USE OF PROCEEDS' },
   { id: 'spending', numeric: true, disablePadding: false, label: 'FY 18-19 SPENDING' },
-  { id: 'priorSpends', numeric: true, disablePadding: false, label: 'PRIOR SPENDS' },
+  { id: 'priorSpends', numeric: true, disablePadding: false, label: 'PRIOR SPENDING' },
+  { id: 'totalExpended', numeric: true, disablePadding: false, label: 'TOTAL EXPENDED' },
   { id: 'unSdgs', numeric: true, disablePadding: false, label: 'UN SDGs' },
 ];
 
-function EnhancedTableHead (props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
 
-  return (
-    <TableHead>
-      <TableRow >
-        <TableCell >
-      
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '14px',
+    lineHeight: '16px',
+    textAlign: 'left'
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
 const useStyles = theme => ({
   root: {
     width: '100%',
+
   },
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
+    
   },
   table: {
     minWidth: 750,
@@ -74,17 +58,8 @@ const useStyles = theme => ({
   tableRow: {
     cursor: 'pointer',
   },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
-  },
+
+
 });
 
 const NameWrapper = styled.div`
@@ -92,20 +67,31 @@ font-style: normal;
 font-weight: 500;
 font-size: 17px;
 line-height: 20px;
-color: #1589EE;
+color: #425206;
+width: 300px;
 `
 
 const SpendingWrapper = styled.div`
+width: 145.2px;
+text-align: left;
 font-size: 17px;
 line-height: 20px;
-color: #000000;
+font-style: normal;
+font-weight: 300;
+line-height: 20px;
+display: flex;
+align-items: center;
+color: #080707;
 `
 
 const UseOfProceedsWrapper = styled.div`
+width: 145.2px;
 font-style: normal;
 font-weight: 300;
 font-size: 17px;
 line-height: 20px;
+color: #080707;
+text-align: left;
 color: #080707;
 `
 
@@ -124,26 +110,19 @@ font-weight: 300;
 font-size: 17px;
 line-height: 20px;
 color: #080707;
-width: 149px;
-background: ${props => props.bgColor};
-padding: 6px 12px;
-box-sizing: border-box;
-color: #fff;
-text-align: left;
-display: flex;
-justify-content: space-between;
+width: 139.2px;
 `
 
-function getPriorSpends (spend) {
-  if (!spend) return null
+const TotalExpendedWrapper = styled.div`
+font-style: normal;
+font-weight: 300;
+font-size: 17px;
+line-height: 20px;
+color: #080707;
+width: 139.2px;
+`
 
-  return <PriorSpendsWrapper bgColor={spend.color}>
-    {spend.val}
-    <img src={zhishu} alt='sdg' />
-  </PriorSpendsWrapper>
 
-
-}
 
 
 class EnhancedTable extends React.Component {
@@ -151,10 +130,8 @@ class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      order: 'asc',
-      orderBy: 'calories',
+
       dense: false,
-      selected: [],
       hash: ''
     }
     this.handleClick = this.handleClick.bind(this);
@@ -169,17 +146,15 @@ class EnhancedTable extends React.Component {
 
 
 
+
  
   render() {
     const { classes } = this.props;
 
     var dense = this.state.dense;
-    var selected = this.state.selected;
-    var order = this.state.order;
-    var orderBy = this.state.orderBy;
     var rows = this.props.projects.map((project) => {
         return createData( project.name, 
-        project.use_of_proceeds, 3084618 , { val: `$ ${project.prior_spends}`, color: '#CAC8C8', hasIcon: true }, project.sdgs, project.id );
+        project.use_of_proceeds, project.recent_year_spending , project.prior_spending, project.prior_spending + project.recent_year_spending, project.sdgs, project.id );
     });
 
      return (
@@ -191,12 +166,19 @@ class EnhancedTable extends React.Component {
           size={dense ? 'small' : 'medium'}
           aria-label="enhanced table"
         >
-          <EnhancedTableHead
-            classes={classes}
-            numSelected={selected.length}
-            order={order}
-            orderBy={orderBy}
-          />
+    <TableHead>
+      <TableRow >
+
+        {headCells.map((headCell) => (
+          <StyledTableCell
+            key={headCell.id}
+           
+          >
+              {headCell.label}
+          </StyledTableCell>
+        ))}
+      </TableRow>
+    </TableHead>
           <TableBody
            
           >
@@ -212,27 +194,32 @@ class EnhancedTable extends React.Component {
                     tabIndex={-1}
                     key={row.projectId}
                   >
-                    <TableCell>
-                  
-                    </TableCell>
-                    <TableCell component="th" id={row.projectId} scope="row" padding="none">
+
+                    <TableCell component="th" id={row.projectId} scope="row">
                       <NameWrapper>{row.name}</NameWrapper>
                     </TableCell>
 
-                    <TableCell align="right">
+                    <TableCell align="left">
                       <UseOfProceedsWrapper>
-                        {row.useOfProceeds}
+                        ${row.useOfProceeds}
                       </UseOfProceedsWrapper>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">
                       <SpendingWrapper>
-                        {row.spending}
+                        ${row.currentSpending}
                       </SpendingWrapper>
                     </TableCell>
-                    <TableCell align="right">
-                      {getPriorSpends(row.priorSpends)}
+                    <TableCell align="left">
+                    <PriorSpendsWrapper>
+                    ${row.priorSpending}
+                    </PriorSpendsWrapper>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">
+                      <TotalExpendedWrapper>
+                      ${row.totalExpended}
+                      </TotalExpendedWrapper>
+                    </TableCell>
+                    <TableCell align="left">
                       {getUdSdgs(row.unSdgs)}
                     </TableCell>
                   </TableRow>
