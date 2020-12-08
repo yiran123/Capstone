@@ -472,6 +472,8 @@ class Uploader extends React.Component {
             console.log("time series:");
             console.log(timeSeries);
             
+            axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+            axios.defaults.xsrfCookieName = "csrftoken";
             axios.post("https://impact-green.herokuapp.com/api/create", json)
                 .then(res => {
                     if (res === undefined || res.status != '200') {

@@ -136,7 +136,8 @@ STATICFILE_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
-    "http://localhost:3000"
+    "http://localhost:3000",
+
 ]
 
 REST_FRAMEWORK = {
@@ -151,3 +152,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
 
 ACCOUNT_EMAIL_REQUIRED = False
+
+ CSRF_COOKIE_NAME = "csrftoken"
+ 
