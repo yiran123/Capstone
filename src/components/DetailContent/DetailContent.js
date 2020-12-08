@@ -201,7 +201,7 @@ class DetailContent extends React.Component {
   
 
   fetchBond()   {
-    fetch(`http://localhost:8000/api/bond/${this.props.match.params.id}`)
+    fetch(`https://impact-green.herokuapp.com/api/bond/${this.props.match.params.id}`)
     .then(response => response.json())
     .then(data =>
       this.setState({bond:data,filterProjects:data.projects})

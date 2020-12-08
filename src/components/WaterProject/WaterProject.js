@@ -35,7 +35,7 @@ class WaterProject extends React.Component {
     this.fetchProject();
   }
   fetchProject() {
-    fetch(`http://localhost:8000/api/project/${this.props.match.params.id}`)
+    fetch(`https://impact-green.herokuapp.com/api/project/${this.props.match.params.id}`)
     .then(response => response.json())
     .then(data =>
       this.setState({project:data})

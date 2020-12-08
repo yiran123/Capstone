@@ -54,7 +54,7 @@ class InvestorPortal extends React.Component {
   }
 
   fetchBonds() {
-      fetch('http://localhost:8000/api/bond')
+      fetch('https://impact-green.herokuapp.com/api/bond')
     .then(response => response.json())
     .then(data =>
       this.setState({bonds:data, filteredBonds:data})
