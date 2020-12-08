@@ -496,7 +496,8 @@ class Uploader extends React.Component {
                         this.setState({
                             errors:[
                                 ...this.state.errors,
-                                'Unknown error!'
+                                'Unknown error!',
+                                error.response.data['errors']
                             ],
                             loading: false
                         });
