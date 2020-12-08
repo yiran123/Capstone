@@ -48,6 +48,8 @@ const checkAuthTimeout = (expirationTime) => {
 export const authLogin = (username, password) => {
     return dispatch => {
         dispatch(authStart());
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+        axios.defaults.xsrfCookieName = "csrftoken";
         axios.post('https://impact-green.herokuapp.com/rest-auth/login/', {
             username: username,
             password: password
