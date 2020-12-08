@@ -472,7 +472,7 @@ class Uploader extends React.Component {
             console.log("time series:");
             console.log(timeSeries);
             
-            axios.post("http://127.0.0.1:8000/api/create", json)
+            axios.post("https://impact-green.herokuapp.com/api/create", json)
                 .then(res => {
                     if (res === undefined || res.status != '200') {
                         this.setState({

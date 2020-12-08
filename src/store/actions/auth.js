@@ -48,7 +48,7 @@ const checkAuthTimeout = (expirationTime) => {
 export const authLogin = (username, password) => {
     return dispatch => {
         dispatch(authStart());
-        axios.post('http://127.0.0.1:8000/rest-auth/login/', {
+        axios.post('https://impact-green.herokuapp.com/rest-auth/login/', {
             username: username,
             password: password
         })
