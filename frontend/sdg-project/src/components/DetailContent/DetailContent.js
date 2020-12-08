@@ -3,36 +3,14 @@ import Tab from '../Tab/Tab'
 import Table from './Table'
 import DetailContentBottom from './DetailContentBottom'
 import SdgsAlignment from './SdgsAlignment'
-import FinancialInformation from './FinancialInformation'
-import AnnualWaterReduction from './AnnualWaterReduction'
+import FinancialInformation from './FinancialInformation';
+import AnnualWaterReduction from './AnnualWaterReduction';
+import GHGEmissionBond from './GHGEmissionBond.js';
 
 
 
 import './DetailContent.css'
 
-
-const sdgsAlignment = [
-  { value: 7, showTotal: '$30, 084,618', total: 30084618 },
-  { value: 6, showTotal: '$30, 084,618', total: 30084618 },
-  { value: 5, showTotal: '$30, 084,618', total: 30084618 },
-  { value: 4, showTotal: '$30, 084,618', total: 30084618 },
-  { value: 8, showTotal: '$30, 084,618', total: 30084618 },
-]
-
-function getCounts(climateData) {
-  var access = 0;
-  var connection = 0;
-  var benefit = 0;
-  climateData.forEach(e => {
-    if(e.year == getfiscalYear()) {
-      access += e.people_with_access_to_utilities_count;
-      connection += e.household_connections_count;
-      benefit += e.people_benefiting_count;
-
-    }
-  })
-  return [access, connection, benefit];
-}
 
 function getfiscalYear() {
   return new Date().getFullYear()-1;
@@ -75,6 +53,21 @@ class DetailContent extends React.Component {
   onChangeTab(e) {
 
      this.setState({curTab: e})
+  }
+
+  getCounts(climateData) {
+    var access = 0;
+    var connection = 0;
+    var benefit = 0;
+    climateData.forEach(e => {
+      if(e.year == getfiscalYear()) {
+        access += e.people_with_access_to_utilities_count;
+        connection += e.household_connections_count;
+        benefit += e.people_benefiting_count;
+  
+      }
+    })
+    return [access, connection, benefit];
   }
 
   getPreStatus(climateData) {
@@ -156,12 +149,40 @@ class DetailContent extends React.Component {
           data[e.year] = parseInt(e.water_reduction);
         }
         else {
-          data[e.year] += parseInt(e.water_reduction  );
+          data[e.year] += parseInt(e.water_reduction);
         }
       }
     })
     return data;
   }
+
+  getGHGEmissionData(climateData) {
+    var fiscalYear = getfiscalYear();
+    var data = []
+    climateData.forEach(e => {
+      if(parseInt(e.year)<=parseInt(fiscalYear)) {
+        var index = this.findWithAttr(data, 'year', e.year);
+        if(index == -1) {
+          data.push( {year: e.year, baseline: parseInt(e.ghg_emissions_business_as_usual), actual: parseInt(e.ghg_emissions_actual_emissions)});
+        }
+        else {
+          data[index].baseline += parseInt(e.ghg_emissions_business_as_usual);
+          data[index].actual += parseInt(e.ghg_emissions_actual_emissions);
+        }
+      }
+    });
+    return data;
+  }
+
+  findWithAttr(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 
   applyFilter(sdg, sdgsArray) {
     if(sdg == 'part') {
@@ -189,7 +210,7 @@ class DetailContent extends React.Component {
 
   render() {
     var curTab = this.state.curTab;
-    var climateData = {};
+    var climateData = [];
     var status = [];
     var preStatus = [];
     var counts = [];
@@ -200,6 +221,7 @@ class DetailContent extends React.Component {
     var bondUnit = "Tons";
     var reductionData = {};
     var self = this;
+    var ghgData = {};
     if(this.state.bond.climate_impact != undefined) {
       climateData = this.state.bond.climate_impact
     }  
@@ -207,8 +229,9 @@ class DetailContent extends React.Component {
     if(climateData != undefined && climateData.length >   0) {
       status = this.getProjectStatus(climateData);
       preStatus = this.getPreStatus(climateData);
-      counts = getCounts(climateData);
-      reductionData = this.getReduction(climateData)
+      counts = this.getCounts(climateData);
+      reductionData = this.getReduction(climateData);
+      ghgData = this.getGHGEmissionData(climateData);
     }
 
     if(this.state.bond.enterprise != undefined) {
@@ -373,6 +396,7 @@ class DetailContent extends React.Component {
           </div>
         </div>
         <div className="wrapper-news-right" id="water-page-bar-char">
+          
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="waterInfoContent-tab3-demo">
               <div className="flex-r">
@@ -385,7 +409,10 @@ class DetailContent extends React.Component {
               </div>
             </div>
             <div className="waterInfoContent-tab3-txt2 waterInfoContent-tab3-bg2 line30">Raw Amount [kg]</div>
-
+            
+          </div>
+          <div style={{marginTop:'25px'}}>
+          <GHGEmissionBond  data={ghgData} />
           </div>
         </div>
       </div>

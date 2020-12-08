@@ -320,8 +320,7 @@ box-sizing: border-box;
 .wrapper-char-bar{
   width: 504px;
   height: 280px;
-  /* background-color: red; */
-  margin: 19px 40px 27px;
+  margin: 19px 67px 27px;
 }
 .wrapper-char-demo{
   margin: 0px 4px 0px 8px ;
@@ -529,9 +528,7 @@ box-sizing: border-box;
   color: #1C9A4E;
 }
 .wrapper-news-right{
-  width: 584px;
-  height: 355px;
-  padding: 19px 44px;
+  padding: 10px 38px 55px 38px;
   box-sizing: border-box;
   /* background-color: red; */
 }

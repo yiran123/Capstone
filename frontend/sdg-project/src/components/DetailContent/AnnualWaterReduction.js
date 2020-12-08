@@ -21,7 +21,7 @@ class AnnualWaterReduction extends Component {
    createBarChart() {
 
 let data = this.props.data;
-let margin = {top: 20, right: 0, bottom: 30, left: 0};
+let margin = {top: 30, right: 0, bottom: 30, left: 0};
 let svgWidth = 445.2, svgHeight = 290.65;
 let height = svgHeight- margin.top- margin.bottom, width = svgWidth - margin.left - margin.right;
 let sourceNames = [], sourceCount = [];

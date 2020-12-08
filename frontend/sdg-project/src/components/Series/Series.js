@@ -112,7 +112,7 @@ render() {
                 sdg = "0"+sdg
               }
 
-              return <img src={require(`../../static/icons/sdgs/E-WEB-Goal-${sdg}.png`)} width="52" height="54" alt={sdg} style={{ marginRight: '11px' }} />
+              return <img src={require(`../../static/icons/sdgs/E-WEB-Goal-${sdg}.png`)} width="52" height="54" alt={sdg} style={{ marginRight: '18px' }} />
 
             })
           }

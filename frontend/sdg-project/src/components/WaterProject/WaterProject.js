@@ -11,6 +11,7 @@ import { filterResults } from '../../pages/config';
 import FilterResult from '../FilterResult/FilterResult';
 import Series from '../Series/Series';
 import FilterBond from './FilterBond';
+import GhgEmission from './GHGEmission';
 
 import './WaterProject.css'
 import ClimateTable from './ClimateTable';
@@ -56,6 +57,7 @@ class WaterProject extends React.Component {
     var access = -1;
     var benefit = -1;
     var connection = -1;
+    var ghgEmissionData = [];
     if(this.state.project.climate_impact != undefined) {
       climateData = this.state.project.climate_impact;
       financialInfo = this.state.project.financial_info;
@@ -71,6 +73,7 @@ class WaterProject extends React.Component {
             connection = climateData[e].household_connections_count;
           }
           climateTableData.push(climateData[e]);
+          ghgEmissionData.push({year:climateData[e].year, baseline: parseInt(climateData[e].ghg_emissions_business_as_usual), actual: parseInt(climateData[e].ghg_emissions_actual_emissions)})
           
         }
         
@@ -129,7 +132,9 @@ class WaterProject extends React.Component {
               </div>
             </div>
           </div>
+          
           <div className="waterInfoContent-tab3-bar" id="water-info-bar-chart">
+          <GhgEmission data={ghgEmissionData} />
           </div>
         </div>
         <div className="waterInfoContent-tab5">
@@ -145,9 +150,7 @@ class WaterProject extends React.Component {
           return <FilterBond result={item} bonds={associatedBonds} />
         })
       }
-      </div>          
-        
-      
+      </div>                     
       </div>
     </div>
 	    	</div>
