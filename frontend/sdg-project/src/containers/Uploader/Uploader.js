@@ -539,13 +539,13 @@ class Uploader extends React.Component {
                     
                     <p className="download-desc">Our team developed an Excel template for issuers to upload their data to our tool. Be sure to carefully input <br></br>information and read through thoroughly to avoid any errors. </p>
                     <div className="dButtons">
-                    {/* sharelink: https://drive.google.com/file/d/1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H/view?usp=sharing*/}
-                    <StyledButton style = {{marginLeft: '267px'}} variant="outlined" className="download-button" href="https://drive.google.com/uc?export=download&amp;id=1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H"> 
+                    {/* sharelink: https://drive.google.com/file/d/1_zW_gwxbfZ7fMrAMQD52Yl8SURyh9Kmj/view?usp=sharing*/}
+                    <StyledButton style = {{marginLeft: '267px'}} variant="outlined" className="download-button" href="https://drive.google.com/uc?export=download&amp;id=1_zW_gwxbfZ7fMrAMQD52Yl8SURyh9Kmj"> 
                         <div className="plabel">Download Template</div> 
                         <img className="arrow" src={firstPage} alt="firstPage" />
                     </StyledButton>
                     {/* sharelink: https://drive.google.com/file/d/1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H/view?usp=sharing*/}
-                    <StyledButton  style = {{marginLeft: '267px'}} variant="outlined" className="download-button" > 
+                    <StyledButton  style = {{marginLeft: '267px'}} variant="outlined" className="download-button" href="https://drive.google.com/uc?export=download&amp;id=1txOF9AIOFd__E9sOEIqSdJxX0tsZCi-H"> 
                         <div className="plabel">Download Example</div> 
                         <img className="arrow" src={firstPage} alt="firstPage" />
                     </StyledButton>

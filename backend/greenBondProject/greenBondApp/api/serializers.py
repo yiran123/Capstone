@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from django.db.models import Sum
-from decimal import Decimal
 
 from greenBondApp.models import SDG, Project, Bond, FinancialInfo, Contractor, TimeSeries
 
