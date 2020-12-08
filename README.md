@@ -38,3 +38,8 @@ http://127.0.0.1:8000/api/project/1
 npm install
 npm start
 ```
+
+
+npm install @material-ui/core --save
+npm install @material-ui/icons --save
+8000/admin

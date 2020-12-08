@@ -553,8 +553,6 @@ class Uploader extends React.Component {
                 </div>
                 <div className="upload">
                     <p className="upload-desc">Once you’ve filled out the sheet, double check to ensure that you’ve added your institution’s name and the reporting <br></br>year. This will investors to ensure they are receiving the most up-to-date information from your institution. </p>
-
-
                     <input 
                     accept=".xlsx"
                     style={{ display: 'none' }}
