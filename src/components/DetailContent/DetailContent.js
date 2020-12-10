@@ -7,8 +7,6 @@ import FinancialInformation from './FinancialInformation';
 import AnnualWaterReduction from './AnnualWaterReduction';
 import GHGEmissionBond from './GHGEmissionBond.js';
 
-
-
 import './DetailContent.css'
 
 
@@ -21,19 +19,16 @@ function numberWithCommas(x) {
 }
 
 
-
-
 class DetailContent extends React.Component {
 
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state ={
       curTab: 'TRACKER',
       bond:{
         projects:[]
       },
-      filterProjects:[]
-      
+      filterProjects:[] 
     }
     this.fetchBond = this.fetchBond.bind(this)
     this.onChangeTab = this.onChangeTab.bind(this)
@@ -42,19 +37,25 @@ class DetailContent extends React.Component {
     this.applyFilter = this.applyFilter.bind(this)
   }
   
-  componentDidUpdate() {
-
-  }
+  componentDidUpdate() {}
 
   componentWillMount() {
     this.fetchBond();
   }
 
   onChangeTab(e) {
-
-     this.setState({curTab: e})
+    if(e != 'TRACKER') {
+      this.setState({      filterProjects:this.state.bond.projects     })
+    }
+    this.setState({curTab: e})
   }
 
+  /*
+  Get Bond level (aggregation of project level)
+  Residents with Equitable and Clean Access to Utilities,
+  Residents Benefitting from Climate Mitigation Efforts,
+  New Household Connections
+  */
   getCounts(climateData) {
     var access = 0;
     var connection = 0;
@@ -70,6 +71,7 @@ class DetailContent extends React.Component {
     return [access, connection, benefit];
   }
 
+  //get previous fiscal year project status
   getPreStatus(climateData) {
     var prefiscalYear = new Date().getFullYear()-2;
     var not = 0;
@@ -80,24 +82,21 @@ class DetailContent extends React.Component {
     if(e.year === prefiscalYear) {
       if(e.status == 'Not Started') {
         not++;
-
       }
       if (e.status == 'Under Construction') {
         un++;
-
       }
       if (e.status == 'Upgraded') {
         up++;
-
       }
       if (e.status == 'Built') {
         bu++;
-
       }
     }})
-
     return [not, un, up, bu]
   }
+
+  //get current fiscal year project status
   getProjectStatus(climateData) {
     var fiscalYear = new Date().getFullYear()-1;
     var not = 0;
@@ -108,38 +107,21 @@ class DetailContent extends React.Component {
     if(e.year === fiscalYear) {
       if(e.status == 'Not Started') {
         not++;
-
       }
       if (e.status == 'Under Construction') {
         un++;
-
       }
       if (e.status == 'Upgraded') {
         up++;
-
       }
       if (e.status == 'Built') {
         bu++;
-
       }
     }})
-
     return [not, un, up, bu]
   }
 
-  getAllYear(climateData) {
-    var fiscalYear = this.getfiscalYear();
-    var year = [];
-    climateData.forEach(e => {
-      if(parseInt(e.year)<=parseInt(fiscalYear)) {
-        if(!year.includes(e.year)) {
-          year.push(e.year);
-        }
-      }
-    })
-    return year;
-  }
-
+  //Get Bond level ANNUAL WATER REDUCTION (aggregation of project level)
   getReduction(climateData) {
     var fiscalYear = getfiscalYear();
     var data = {}
@@ -155,7 +137,8 @@ class DetailContent extends React.Component {
     })
     return data;
   }
-
+  
+  //Get Bond level ANNUAL GHG EMISSIONS (aggregation of project level)
   getGHGEmissionData(climateData) {
     var fiscalYear = getfiscalYear();
     var data = []
@@ -183,7 +166,7 @@ class DetailContent extends React.Component {
     return -1;
 }
 
-
+  //SdgAlignment filtering
   applyFilter(sdg, sdgsArray) {
     if(sdg == 'part') {
       var temp = this.state.bond.projects.filter(
@@ -196,10 +179,7 @@ class DetailContent extends React.Component {
     }
   }
 
-  
-
-  
-
+  //fetch API with bond ID
   fetchBond()   {
     fetch(`https://impact-green.herokuapp.com/api/bond/${this.props.match.params.id}`)
     .then(response => response.json())
@@ -234,6 +214,7 @@ class DetailContent extends React.Component {
       ghgData = this.getGHGEmissionData(climateData);
     }
 
+    //handle different Bond Enterprise: Water, Power, WasterWater
     if(this.state.bond.enterprise != undefined) {
       switch(this.state.bond.enterprise) {
         case "Power":
@@ -250,173 +231,166 @@ class DetailContent extends React.Component {
     connection = counts[1];
     benefit = counts[2];
     var diff = [status[0]-preStatus[0],status[1]-preStatus[1],status[2]-preStatus[2],status[3]-preStatus[3]]
-      return (
-    <div className="DetailContent">
-      <Tab change={this.onChangeTab} bond={this.state.bond} />
-      {
-        curTab === 'TRACKER' && <div>
-          <div className="DetailContentProject">  
-            <div className="DetailContentProjectInner">
-              <div className="DetailContentProjectCard" style={{ margin: '0 31px' }}>
-                <div className="DetailContentProjectCardTop">
-                  <div className="title">SDG Alignment</div>
-                  <div >
-                    <span className="desc">
-                      Amount [$]
-                </span>
+      
+    return (
+      <div className="DetailContent">
+        <Tab change={this.onChangeTab} bond={this.state.bond} />
+        {
+          curTab === 'TRACKER' && <div>
+            <div className="DetailContentProject">  
+              <div className="DetailContentProjectInner">
+                <div className="DetailContentProjectCard" style={{ margin: '0 31px' }}>
+                  <div className="DetailContentProjectCardTop">
+                    <div className="title">SDG Alignment</div>
+                    <div>
+                      <span className="desc">
+                        Amount [$]
+                      </span>
+                    </div>
+                  </div>
+                  <div className="DetailContentProjectCardBottom">
+                    <SdgsAlignment changeFilter={this.applyFilter} projects={this.state.bond.projects}/>
                   </div>
                 </div>
-                <div className="DetailContentProjectCardBottom">
-                  <SdgsAlignment changeFilter={this.applyFilter} projects={this.state.bond.projects}/>
+                <div className="DetailContentProjectCard" style={{ margin: '0 31px' }}>
+                  <div className="DetailContentProjectCardTop">
+                    <div className="title">FINANCIAL INFORMATION</div>
+                  </div>
+                  <div className="DetailContentProjectCardBottom">
+                    <FinancialInformation bond={this.state.bond}/>
+                  </div>
                 </div>
-
               </div>
-              <div className="DetailContentProjectCard" style={{ margin: '0 31px' }}>
-                <div className="DetailContentProjectCardTop">
-                  <div className="title">FINANCIAL INFORMATION</div>
-
-                </div>
-                <div className="DetailContentProjectCardBottom">
-                  <FinancialInformation bond={this.state.bond}/>
-                </div>
-
-              </div>
-
+              <p className="cardName">
+                VIEWING : ALL PROJECTS
+              </p>
             </div>
-            <p className="cardName">
-              VIEWING : ALL PROJECTS
-        </p>
+            <Table projects={this.state.filterProjects} />
+            <DetailContentBottom bond={this.state.bond}/>
           </div>
-          <Table projects={this.state.filterProjects} />
-          <DetailContentBottom bond={this.state.bond}/>
-        </div>
-      }
-      {
-
+        }
+        
+        {
           curTab === 'IMPACT' &&
           <div>
             <div className="impactTop">
               <div className="text-area">
                 <div className="text">Track the climate impacts of projects funded by this specific bond. All metrics are those recommended by the ICMA<br></br>
-                Harmonized Framework for Green Bond Impact Reporting. Some metrics are only tracked exclusively for certain enterprises.<br></br>
-                In some instances, issuers may not be able to disclose all information related to all metrics due to internal limitations. </div>
-              </div>
-
-              </div>
-            <div className="impactBottom">
-              <div className="impactChart">
-              <div className="wrapper-info">
-                
-      <div className="wrapper-impact">
-        <div className="wrapper-impact-txt1">MEASURING SOCIAL IMPACT</div>
-        <div className="wrapper-impact-txt2">Track the climate impacts of projects funded by this specific bond. All metrics are those<br></br>
-         recommended by the ICMA Harmonized Framework for Green Bond Impact Reporting. </div>
-        <div className="wrapper-impact-data">
-          <div className="wrapper-impact-data-info">
-      <div className="wrapper-impact-data-txt1">{numberWithCommas(access)}</div>
-            <div className="wrapper-impact-data-txt2">Residents with Equitable and Clean Access to Utilities</div>
-            <div className="wrapper-impact-data-txt3">*Number of People with Access to Clean Water</div>
-          </div>
-          <div className="wrapper-impact-data-info">
-      <div className="wrapper-impact-data-txt1">{numberWithCommas(benefit)}</div>
-            <div className="wrapper-impact-data-txt2">SF Residents Benefitting from Climate Mitigation Efforts</div>
-          </div>
-          <div className="wrapper-impact-data-info">
-            <div className="wrapper-impact-data-txt1">{numberWithCommas(connection)}</div>
-            <div className="wrapper-impact-data-txt2">New Household  Connections</div>
-            <div className="wrapper-impact-data-txt3">*Number of New Household Water Connections</div>
-          </div>
-        </div>
-      </div>
-      <div className="wrapper-char">
-        <div className="wrapper-char-left">
-          <div className="wrapper-char-left-txt1">
-            ANNUAL {bondType}
-          </div>
-          <div className="flex space-bet">
-            <div className="wrapper-char-left-txt2">
-              Amount in {bondUnit}
-            </div>
-          </div>
-          <div className="wrapper-char-bar" id="water-page-line-chart">
-            <AnnualWaterReduction data={reductionData}  />
-            </div>
-        </div>
-        <div className="wrapper-char-right">
-          <div className="flex space-bet">
-            <div className="wrapper-char-right-txt1">PROJECT STATUS</div>
-      <div className="wrapper-char-right-txt2">As of June 30, {fiscalYear}</div>
-          </div>
-          <div className="flex space-bet">
-            <div className="wrapper-char-right-case">
-              <div className="flex">
-                <div className="wrapper-char-right-button background1">
-      <span className="wrapper-char-right-txt5">{status[0]}</span>
-                  <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
-      <span className="wrapper-char-right-txt6">{status[0]-preStatus[0]}</span>
+                  Harmonized Framework for Green Bond Impact Reporting. Some metrics are only tracked exclusively for certain enterprises.<br></br>
+                  In some instances, issuers may not be able to disclose all information related to all metrics due to internal limitations. </div>
                 </div>
-                <div className="wrapper-char-right-txt4">Not Started</div>
               </div>
-              <div className="flex">
-                <div className="wrapper-char-right-button background2">
-                  <span className="wrapper-char-right-txt5">{status[1]}</span>
-                  <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
-                  <span className="wrapper-char-right-txt6">{status[1]-preStatus[1]}</span>
+              <div className="impactBottom">
+                <div className="impactChart">
+                  <div className="wrapper-info">                  
+                    <div className="wrapper-impact">
+                      <div className="wrapper-impact-txt1">MEASURING SOCIAL IMPACT</div>
+                      <div className="wrapper-impact-txt2">Track the climate impacts of projects funded by this specific bond. All metrics are those<br></br>
+                      recommended by the ICMA Harmonized Framework for Green Bond Impact Reporting. </div>
+                      <div className="wrapper-impact-data">
+                        <div className="wrapper-impact-data-info">
+                          <div className="wrapper-impact-data-txt1">{numberWithCommas(access)}</div>
+                          <div className="wrapper-impact-data-txt2">Residents with Equitable and Clean Access to Utilities</div>
+                          <div className="wrapper-impact-data-txt3">*Number of People with Access to Clean Water</div>
+                        </div>
+                        <div className="wrapper-impact-data-info">
+                        <div className="wrapper-impact-data-txt1">{numberWithCommas(benefit)}</div>
+                        <div className="wrapper-impact-data-txt2">SF Residents Benefitting from Climate Mitigation Efforts</div>
+                      </div>
+                      <div className="wrapper-impact-data-info">
+                        <div className="wrapper-impact-data-txt1">{numberWithCommas(connection)}</div>
+                        <div className="wrapper-impact-data-txt2">New Household  Connections</div>
+                        <div className="wrapper-impact-data-txt3">*Number of New Household Water Connections</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="wrapper-char">
+                    <div className="wrapper-char-left">
+                      <div className="wrapper-char-left-txt1">
+                        ANNUAL {bondType}
+                      </div>
+                      <div className="flex space-bet">
+                        <div className="wrapper-char-left-txt2">
+                          Amount in {bondUnit}
+                        </div>
+                      </div>
+                      <div className="wrapper-char-bar" id="water-page-line-chart">
+                        <AnnualWaterReduction data={reductionData}  />
+                      </div>
+                    </div>
+                    <div className="wrapper-char-right">
+                      <div className="flex space-bet">
+                        <div className="wrapper-char-right-txt1">PROJECT STATUS</div>
+                        <div className="wrapper-char-right-txt2">As of June 30, {fiscalYear}</div>
+                      </div>
+                      <div className="flex space-bet">
+                        <div className="wrapper-char-right-case">
+                          <div className="flex">
+                            <div className="wrapper-char-right-button background1">
+                              <span className="wrapper-char-right-txt5">{status[0]}</span>
+                              <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
+                              <span className="wrapper-char-right-txt6">{status[0]-preStatus[0]}</span>
+                            </div>
+                            <div className="wrapper-char-right-txt4">Not Started</div>
+                          </div>
+                          <div className="flex">
+                            <div className="wrapper-char-right-button background2">
+                              <span className="wrapper-char-right-txt5">{status[1]}</span>
+                              <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
+                              <span className="wrapper-char-right-txt6">{status[1]-preStatus[1]}</span>
+                            </div>
+                            <div className="wrapper-char-right-txt4">Under Construction</div>
+                          </div>
+                          <div className="flex">
+                            <div className="wrapper-char-right-button background3">
+                              <span className="wrapper-char-right-txt5">{status[2]}</span>
+                              <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
+                              <span className="wrapper-char-right-txt6">{status[2]-preStatus[2]}</span>
+                            </div>
+                            <div className="wrapper-char-right-txt4">Upgraded</div>
+                          </div>
+                          <div className="flex">
+                            <div className="wrapper-char-right-button background4">
+                              <span className="wrapper-char-right-txt5">{status[3]}</span>
+                              <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
+                              <span className="wrapper-char-right-txt6">{status[3]-preStatus[3]}</span>
+                            </div>
+                            <div className="wrapper-char-right-txt4">Built</div>
+                          </div>
+                        </div>
+                        <div className="wrapper-char-right-txt3">
+                          The goal is to <span>prioritize low-carbon alternatives</span> of important community investments. Establishing a conventional project to compare against mitigation alternatives is critical for quantifying greenhouse gas reductions.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="wrapper-news">
+                    <div className="wrapper-news-left">
+                      <div className="wrapper-news-left-txt1">ANNUAL GHG EMISSIONS</div>
+                      <div className="wrapper-news-left-txt2">The goal is to <span>prioritize<br></br> low-carbon alternatives</span> of <br></br>important community <br></br>investments. Establishing a conventional project to compare against mitigation alternatives is critical for quantifying greenhouse gas reductions.
+                      <span>Wedge</span> is the difference between emissions for conventional investment choices and emissions from actual investments selected for financing in CIP.
+                      </div>
+                    </div>
+                    <div className="wrapper-news-right" id="water-page-bar-char">           
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div className="waterInfoContent-tab3-demo">
+                          <div className="flex-r">
+                            <div className="waterInfoContent-tab3-bg3"></div>
+                            <div className="waterInfoContent-tab3-txt2 line20">Baseline</div>
+                          </div>
+                          <div className="flex-r">
+                            <div className="waterInfoContent-tab3-bg4"></div>
+                            <div className="waterInfoContent-tab3-txt2 line20">Actual</div>
+                          </div>
+                        </div>
+                        <div className="waterInfoContent-tab3-txt2 waterInfoContent-tab3-bg2 line30">Raw Amount [kg]</div> 
+                      </div>
+                      <div style={{marginTop:'25px'}}>
+                        <GHGEmissionBond  data={ghgData} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="wrapper-char-right-txt4">Under Construction</div>
-              </div>
-              <div className="flex">
-                <div className="wrapper-char-right-button background3">
-                  <span className="wrapper-char-right-txt5">{status[2]}</span>
-                  <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
-                  <span className="wrapper-char-right-txt6">{status[2]-preStatus[2]}</span>
-                </div>
-                <div className="wrapper-char-right-txt4">Upgraded</div>
-              </div>
-              <div className="flex">
-                <div className="wrapper-char-right-button background4">
-                  <span className="wrapper-char-right-txt5">{status[3]}</span>
-                  <span className={`triangle-${diff[0] < 0 ? 'down' : 'up'}`}></span>
-                  <span className="wrapper-char-right-txt6">{status[3]-preStatus[3]}</span>
-                </div>
-                <div className="wrapper-char-right-txt4">Built</div>
-              </div>
-            </div>
-            <div className="wrapper-char-right-txt3">
-              The goal is to <span>prioritize low-carbon alternatives</span> of important community investments. Establishing a conventional project to compare against mitigation alternatives is critical for quantifying greenhouse gas reductions.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="wrapper-news">
-        <div className="wrapper-news-left">
-          <div className="wrapper-news-left-txt1">ANNUAL GHG EMISSIONS</div>
-          <div className="wrapper-news-left-txt2">The goal is to <span>prioritize<br></br> low-carbon alternatives</span> of <br></br>important community <br></br>investments. Establishing a conventional project to compare against mitigation alternatives is critical for quantifying greenhouse gas reductions.
-          <span>Wedge</span> is the difference between emissions for conventional investment choices and emissions from actual investments selected for financing in CIP.
-          </div>
-        </div>
-        <div className="wrapper-news-right" id="water-page-bar-char">
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div className="waterInfoContent-tab3-demo">
-              <div className="flex-r">
-                <div className="waterInfoContent-tab3-bg3"></div>
-                <div className="waterInfoContent-tab3-txt2 line20">Baseline</div>
-              </div>
-              <div className="flex-r">
-                <div className="waterInfoContent-tab3-bg4"></div>
-                <div className="waterInfoContent-tab3-txt2 line20">Actual</div>
-              </div>
-            </div>
-            <div className="waterInfoContent-tab3-txt2 waterInfoContent-tab3-bg2 line30">Raw Amount [kg]</div>
-            
-          </div>
-          <div style={{marginTop:'25px'}}>
-          <GHGEmissionBond  data={ghgData} />
-          </div>
-        </div>
-      </div>
-    </div>
               </div>
             </div>
           </div>
@@ -424,8 +398,6 @@ class DetailContent extends React.Component {
       </div >
     );
   }
-
-
 }
 
 export default DetailContent;
