@@ -209,7 +209,7 @@ class Filter extends React.Component {
         </div>
         <div className="other-filter-item">
           <div className="other-filter-item-bottom">
-        <div className="buttonWrapper" style={{marginTop: 30}}>
+        <div className="buttonWrapper" style={{marginTop: 28}}>
           <FormControl variant="outlined" >
             <span style={{marginBottom: 5}}>
         <InputLabel id="select-outlined-label">SELECT A BOND ISSUER</InputLabel>
