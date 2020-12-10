@@ -158,7 +158,7 @@ class Filter extends React.Component {
   return (
     <div className="Filter">
     <div className="buttonLine">
-    <div className="buttonWrapper">
+    <div className="buttonWrapper" style={{visibility:'hidden'}}>
           <FormControl variant="outlined" >
         <InputLabel id="select-outlined-label">SELECT A BOND ISSUER</InputLabel>
         <Select
@@ -198,7 +198,7 @@ class Filter extends React.Component {
         </div>
       </div>
       <div className="other-filter">
-        <div className="other-filter-item">
+        <div className="other-filter-item" style={{display: 'none'}}>
           <div className="other-filter-item-top">
             <div className="filter-name">Funding</div>
             <SelectAllButton onClick={() => { this.onChange('all', this.state.bondType, this.state.year, this.state.sdgs)}}>DESELECT ALL</SelectAllButton>
@@ -207,6 +207,32 @@ class Filter extends React.Component {
             {fundings.map((item) => <div className={`funding-filter-item ${this.state.funding === 'part' && this.state.fundingArray.includes(item.label) ? 'active' : ''}`} onClick={() => { this.onChange(item.label, this.state.bondType, this.state.year, this.state.sdgs)}}>{item.label}</div>)}
           </div>
         </div>
+        <div className="other-filter-item">
+          <div className="other-filter-item-bottom">
+        <div className="buttonWrapper" style={{marginTop: 30}}>
+          <FormControl variant="outlined" >
+            <span style={{marginBottom: 5}}>
+        <InputLabel id="select-outlined-label">SELECT A BOND ISSUER</InputLabel>
+        </span>
+        <Select
+          labelId="select-outlined-label"
+          id="select-outlined"
+          value={this.state.bondIssuer}
+          onChange={this.handleChange}
+          label="Age"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl>
+          {/* <nav>SELECT A BOND ISSUER</nav> */}
+    </div>
+    </div>
+    </div>
 
         <div className="other-filter-item" style={{ margin: '0 56px' }}>
           <div className="other-filter-item-top" style={{ width: '200px' }}>
