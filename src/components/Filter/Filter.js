@@ -209,7 +209,7 @@ class Filter extends React.Component {
         </div>
         <div className="other-filter-item">
           <div className="other-filter-item-bottom">
-        <div className="buttonWrapper" style={{marginTop: 28}}>
+        <div className="buttonWrapper" style={{marginTop: 25.5}}>
           <FormControl variant="outlined" >
             <span style={{marginBottom: 5}}>
         <InputLabel id="select-outlined-label">SELECT A BOND ISSUER</InputLabel>
@@ -224,9 +224,8 @@ class Filter extends React.Component {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={1}>San Francisco Public Utilities Commission</MenuItem>
+          
         </Select>
       </FormControl>
           {/* <nav>SELECT A BOND ISSUER</nav> */}

@@ -62,7 +62,7 @@ var bar1 = year.selectAll(".bar.baseline")
 
   bar1.append("rect")
   .attr("class", "bar baseline")
-.style("fill","#207A5C")
+.style("fill","#7A961F")
   .attr("x", d => xScale1('baseline'))
   .attr("y", d => yScale(d.baseline))
   .attr("width", xScale1.bandwidth())
@@ -80,7 +80,7 @@ var bar1 = year.selectAll(".bar.baseline")
     .attr("y", d => {
         return yScale(d.baseline) - 5;
     })
-    .attr("font-family" , "sans-serif")
+    .attr("font-family" , "Roboto")
     .attr("font-size" , "14px")
     .attr("fill" , "black")
     .attr("text-anchor", "middle");
@@ -92,7 +92,7 @@ var bar2 = year.selectAll(".bar.actual")
 
   bar2.append("rect")
   .attr("class", "bar actual")
-.style("fill","#88B8A8")
+.style("fill","#EA7926")
   .attr("x", d => xScale1('actual'))
   .attr("y", d => yScale(d.actual))
   .attr("width", xScale1.bandwidth())

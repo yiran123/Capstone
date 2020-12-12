@@ -7,7 +7,6 @@
 	line-height: 16px;
 	/* identical to box height */
 	letter-spacing: 0.04em;
-
 	color: #0C2B42;
 	margin: 15px 0;
 }
@@ -15,8 +14,6 @@
 .line {
 	width: 417px;
 	height: 0px;
-
-
 	border: 1px solid #C0CEDB;
 }
 
@@ -30,7 +27,6 @@
 	display: flex;
 	align-items: center;
 	text-align: right;
-
 	/* 09 - Text / Default */
 	color: #080707;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
 import _ from 'lodash'
-import { unsdgs } from '../Filter/const'
 import './FinancialInformation.css'
 
 
@@ -47,84 +46,82 @@ class FinancialInformation extends React.Component {
     }
     return (
       <div>
-      <div className="leftTitle">
-      TOTAL USE OF PROCEEDS
-        <div style={{
-          display: 'inline-block',
-          float:'right'
-        }}>
-        <div className="number"> {formatter.format(financialInfo.use_of_proceeds)} </div>
+        <div className="leftTitle">
+        TOTAL USE OF PROCEEDS
+          <div style={{
+            display: 'inline-block',
+            float:'right'
+          }}>
+            <div className="number"> {formatter.format(financialInfo.use_of_proceeds)} </div>
+          </div>
         </div>
-      </div>
 
-      <div className="line"></div>
-      <div className="leftTitle">
-      TOTAL EXPENDED
-        <div style={{
-          display: 'inline-block',
-          float:'right'
-        }}>
-        <div className="number">({formatter.format(financialInfo.prior_year_spending + financialInfo.recent_year_spending)})</div>
+        <div className="line"></div>
+        <div className="leftTitle">
+        TOTAL EXPENDED
+          <div style={{
+            display: 'inline-block',
+            float:'right'
+          }}>
+            <div className="number">({formatter.format(financialInfo.prior_year_spending + financialInfo.recent_year_spending)})</div>
+          </div>
         </div>
-      </div>
 
-      <div className="line"></div>
-      <div className="leftTitle">
-      TOTAL REMAINING
-        <div style={{
-          display: 'inline-block',
-          float:'right'
-        }}>
-        <div className="number">{remaining}</div>
+        <div className="line"></div>
+        <div className="leftTitle">
+        TOTAL REMAINING
+          <div style={{
+            display: 'inline-block',
+            float:'right'
+          }}>
+            <div className="number">{remaining}</div>
+          </div>
         </div>
-      </div>
 
-      <div className="line"></div>
-      <div className="leftTitle">
-      TOTAL FY 18-19 SPENDING
-        <div style={{
-          display: 'inline-block',
-          float:'right'
-        }}>
-        <div className="number">{formatter.format(financialInfo.recent_year_spending)}</div>
+        <div className="line"></div>
+        <div className="leftTitle">
+        TOTAL FY 18-19 SPENDING
+          <div style={{
+            display: 'inline-block',
+            float:'right'
+          }}>
+            <div className="number">{formatter.format(financialInfo.recent_year_spending)}</div>
+          </div>
         </div>
-      </div>
 
-      <div className="line"></div>
-      <div className="leftTitle">
-      TOTAL PRIOR YRS SPENDING
-        <div style={{
-          display: 'inline-block',
-          float:'right'
-        }}>
-        <div className="number">{formatter.format(financialInfo.prior_year_spending)}</div>
+        <div className="line"></div>
+        <div className="leftTitle">
+        TOTAL PRIOR YRS SPENDING
+          <div style={{
+            display: 'inline-block',
+            float:'right'
+          }}>
+            <div className="number">{formatter.format(financialInfo.prior_year_spending)}</div>
+          </div>
         </div>
-      </div>
 
-      <div className="line"></div>
-      <div className="leftTitle">
-      FINAL MATURITY
-        <div style={{
-          display: 'inline-block',
-          float:'right'
-        }}>
-        <div className="number">{financialInfo.maturity_date}</div>
+        <div className="line"></div>
+        <div className="leftTitle">
+        FINAL MATURITY
+          <div style={{
+            display: 'inline-block',
+            float:'right'
+          }}>
+            <div className="number">{financialInfo.maturity_date}</div>
+          </div>
         </div>
-      </div>
 
-      <div className="line"></div>
-      <div className="leftTitle">
-      COUPON RATE
-        <div style={{
-          display: 'inline-block',
-          float:'right'
-        }}>
-        <div className="number">{financialInfo.avg_mature_rate*100}%</div>
+        <div className="line"></div>
+        <div className="leftTitle">
+        COUPON RATE
+          <div style={{
+            display: 'inline-block',
+            float:'right'
+          }}>
+            <div className="number">{financialInfo.avg_mature_rate*100}%</div>
+          </div>
         </div>
-      </div>
-
-      <div className="line"></div>
-
+        <div className="line"></div>
       </div>
     );
   }

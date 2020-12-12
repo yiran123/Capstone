@@ -10,8 +10,7 @@
 }
 
 .DetailContentProjectCard{
-  width: 488px;
-  /* height: 428px; */
+  width: 488px;  
   background: #FFFFFF;
   padding: 30px 36px;
   box-sizing: border-box;
@@ -26,81 +25,75 @@
 
 .DetailContentProjectCard .title{
 /* SDG ALIGNMENT */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.04em;
 
-font-family: Roboto;
-font-style: normal;
-font-weight: 500;
-font-size: 17px;
-line-height: 20px;
-display: flex;
-align-items: center;
-letter-spacing: 0.04em;
-
-color: #0F1F19;
-
-
+  color: #0F1F19;
 }
 
 .DetailContentProjectCard .desc{
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 20px;
-color: #0F1F19;
-  }
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #0F1F19;
+}
 
-  .DetailContentProject .cardName{
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 16px;
-text-align: center;
-color: #7B7B7B;
-padding-bottom: 20px;
-
-      }
+.DetailContentProject .cardName{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #7B7B7B;
+  padding-bottom: 20px;
+}
 
 .impactTop{
-  /* padding: 45px 108px; */
   background-color: #E3E6E8;
 }
 
 .impactTop > .model {
-font-style: normal;
-font-weight: 500;
-font-size: 17px;
-line-height: 20px;
-color: #3CCE54;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  color: #3CCE54;
 }
 
 .impactTop > .desc {
-font-weight: 300;
-font-size: 15px;
-line-height: 24px;
-color: #000000;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 24px;
+  color: #000000;
 }
 
 .impactBottom {
-  /* padding: 0 136px; */
   background-color: #E5E5E5;
   border-top: 1px solid #fff;
 }
 
 .impactChartTitle{
-font-weight: 500;
-font-size: 17px;
-line-height: 20px;
-letter-spacing: 0.05em;
-color: #0F1F19;
-padding: 53px 0 25px 0;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: 0.05em;
+  color: #0F1F19;
+  padding: 53px 0 25px 0;
 }
 
 .impactChartBody{
-width: 1008px;
-background: #FFFFFF;
-box-shadow: 0px 0px 15px 2px #C0CEDB;
-padding: 42px 105px;
-box-sizing: border-box;
+  width: 1008px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 15px 2px #C0CEDB;
+  padding: 42px 105px;
+  box-sizing: border-box;
 }
 
 .wrapper{
@@ -108,10 +101,12 @@ box-sizing: border-box;
   background-color: #FFF;
   box-shadow: 0px 4px 8px #A4B4C1;
 }
+
 .wrapper-top{
   display: flex;
   justify-content: space-between;
 }
+
 .wrapper-txt1{
   height: 15px;
   font-family: Roboto;
@@ -188,10 +183,10 @@ box-sizing: border-box;
 }
 
 .text-area{
-  /* height: 156px; */
   background: #E3E6E8;
   border-bottom: 1px solid #fff;
 }
+
 .text{
   width: 1103px;
   height: 93px;
@@ -210,11 +205,13 @@ box-sizing: border-box;
   background: #EAECED;
   padding: 67px 0 212px;
 }
+
 .wrapper-impact{
   background: #FFFFFF;
   box-shadow: 0px 0px 16px 4px rgba(12, 43, 66, 0.15);
   margin: 0px 91.5px 41px;
 }
+
 .wrapper-impact-txt1{
   font-family: Roboto;
   font-style: normal;
@@ -244,9 +241,11 @@ box-sizing: border-box;
 .wrapper-impact-data{
   display: flex;
 }
+
 .wrapper-impact-data-info{
   flex: 1 1 auto;
 }
+
 .wrapper-impact-data-txt1{
   font-family: Nunito Sans;
   font-style: normal;
@@ -258,6 +257,7 @@ box-sizing: border-box;
   
   color: #1C9A4E;
 }
+
 .wrapper-impact-data-txt2{
   width: 279px;
   height: 52px;
@@ -272,6 +272,7 @@ box-sizing: border-box;
   color: #0F1F19;
   padding: 14px 40px 21px;
 }
+
 .wrapper-impact-data-txt3{
   font-family: Roboto;
   font-style: normal;
@@ -291,12 +292,14 @@ box-sizing: border-box;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .wrapper-char-left{
   width: 584px;
   height: 424px;
   background: #FFFFFF;
   box-shadow: 0px 0px 16px 4px rgba(12, 43, 66, 0.15);
 }
+
 .wrapper-char-left-txt1{
   font-family: Roboto;
   font-style: normal;
@@ -307,6 +310,7 @@ box-sizing: border-box;
   color: #0F1F19;
   padding: 41px 0px 0px 45px;
 }
+
 .wrapper-char-left-txt2{
   font-family: Roboto;
   font-style: normal;
@@ -317,32 +321,38 @@ box-sizing: border-box;
   color: #0F1F19;
   padding: 24px 0px 0px 45px;
 }
+
 .wrapper-char-bar{
   width: 504px;
   height: 280px;
   margin: 19px 67px 27px;
 }
+
 .wrapper-char-demo{
   margin: 0px 4px 0px 8px ;
 }
+
 .wrapper-char-demo1{
   width: 14px;
   height: 10px;
   background: #007DC3;
   margin: 25px 8px 0px 0px;
 }
+
 .wrapper-char-demo2{
   width: 14px;
   height: 10px;
   background: #1C9A4E;
   margin: 25px 8px 0px 0px;
 }
+
 .wrapper-char-demo3{
   width: 14px;
   height: 10px;
   background: #C0CEDB;
   margin: 25px 8px 0px 0px;
 }
+
 .wrapper-char-left-txt3{
   font-family: Nunito Sans;
   font-style: normal;
@@ -353,16 +363,19 @@ box-sizing: border-box;
   color: #08253D;
   margin: 18px 8px 0px 0px;
 }
+
 .pr37{
   padding-right: 37px ;
 }
+
 .flex{
   display: flex;
-  
 }
+
 .space-bet{
   justify-content: space-between;
 }
+
 .wrapper-char-right{
   width: 584px;
   height: 424px;
@@ -392,6 +405,7 @@ box-sizing: border-box;
   color: #0F1F19;
   padding: 45px 52px 0px 0px;
 }
+
 .wrapper-char-right-txt3{
   width: 245px;
   font-family: Roboto;
@@ -530,5 +544,4 @@ box-sizing: border-box;
 .wrapper-news-right{
   padding: 10px 38px 55px 38px;
   box-sizing: border-box;
-  /* background-color: red; */
 }
