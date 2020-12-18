@@ -21,13 +21,17 @@
 ## Packages Installation:
 
 Create Python virtual environment for package management.
+
 `pip install virtualenv`
+
 `python3 -m venv env`
 
 And install all backend packages:
-`pip3 freeze > requirements.txt`
+
+`pip3 install -r requirements.txt`
 
 Frontend packages are referred in [package.json file](./package.json). When you run the following command, the frontend packages will be installed automatically.
+
 `npm install`
 
 ## Running
