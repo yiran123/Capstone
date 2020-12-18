@@ -12,7 +12,7 @@
 
 -   Python 3.8.5 or up
 
-## Web framework
+## Web Framework
 
 -   Reactjs version 16.13.1
 
@@ -32,17 +32,17 @@ Frontend packages are referred in [package.json file](./package.json). When you 
 
 ## Running
 -   Frontend
-cd frontend/sdg-project
-`npm install`
+    cd frontend/sdg-project
+    `npm install`
 
-Run UI frontend locally:
-`npm start`
+    Run UI frontend locally:
+    `npm start`
 
-View on
-`localhost:3000`
+    View on
+    `localhost:3000`
 
 -   Backend
-python3 manage.py runserver
+    `python3 manage.py runserver`
 
 
 ## Documentation
