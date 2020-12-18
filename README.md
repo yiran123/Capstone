@@ -1,8 +1,21 @@
 # Capstone Project: Green Bonds
+
+## Design Files
+
+[Figma file](https://www.figma.com/file/bYmf0LYkPu8db0GXhpmUDT/Impact-Green?node-id=1177%3A216)
+
 ## Getting Started:
 
 > Impact Green made with [Material UI's](https://material-ui.com) components, [React](https://reactjs.org) and Django.
 
+## Vesions and Cloud Deployment
+To see codes before cloud deployment, please go to git commit history: [ed04c14](https://github.com/yiran123/Capstone/tree/ed04c14b02edffe26ca7292064dda1fdf8fafafa)
+
+To see codes after cloud deployment, please go to git commit history: [31f03c7](https://github.com/yiran123/Capstone/tree/31f03c721596a2ec3e2fed8caf07c42119292f3e) (Latest commit)
+
+To run and debug the program locally, it is suggested to download the commit version before deployment [ed04c14](https://github.com/yiran123/Capstone/tree/ed04c14b02edffe26ca7292064dda1fdf8fafafa). However, it is worth noting that some modifications are made to the program after cloud deployment. Thus, you may find discrepancies between the two commits mentioned above.
+
+For cloud deployment guide, please refer to this [file](https://drive.google.com/drive/folders/10qkFwZWNBpwQbLCZCy9VYbCjqwbOJEHr?usp=sharing).
 
 ## Runtime:
 
@@ -48,65 +61,64 @@ Frontend packages are referred in [package.json file](./package.json). When you 
 -   Backend
     `python3 manage.py runserver`
 
-
 ## Documentation
 
 The documentation for the React Material Kit is can be found [here](https://material-ui.com).
 
-## Design Files
+## System Structure
+The backend and the frontend communicate through [Django-Rest API's](https://www.django-rest-framework.org/). You may also refer to [serializers.py](./greenBondApp/api/serializers.py) for more details.
 
-[Figma file](https://www.figma.com/file/bYmf0LYkPu8db0GXhpmUDT/Impact-Green?node-id=1177%3A216)
+Fo the issuers' signin, Django-rest-auth is used for backend. You may refer to this [document](https://django-rest-auth.readthedocs.io/en/latest/) for more detail.
 
+## Excel Template
+The uploader of this program requires the issuers to upload an excel file to our website, so that our website writes data to the database. To see the template, you may refer to this [example](https://docs.google.com/spreadsheets/d/1J1pcknSblta2Eob8xePS4_3MA3r2lvUP/edit#gid=952669077).
 
-## Start the Program.
-0. 
-1. **Make sure python version in your mac is python3**. Install pip3.
-```
-python3 -m pip install --user --upgrade pip
-```
+## TODO List:
 
-2. Enter virtual environment.
-In backend folder, enter the command below:
-```
-source env/bin/activate
-```
-3. Make migrations to database.
-Go to the the project folder:
-```
-cd greenBondProject
-```
+-   Differente environmental impact data for different project type.
 
-Every time a change is made to the database, run the command line below:
-```
-python3 manage.py makemigrations
-python3 manage.py migrate
-```
-Actually, the database will constantly update. Remember to run these commands everytime you pull new changes from git.
+There are three types of projects: water, power and waste water. Different types of projects may have different environmental impact data:
 
-4. For backend, the APIs of Project and Bonds are provided. If run locally, the program provides APIs like below:
+* Power
+    * Capacity of Renewable Energy Plant Constructed or Rehabilitated 
+    * Capacity of Renewable Energy plants to be Served by Transmission Systems
+    * Gross GHG emissions from the Project (CO2e)
+    * Energy Savings (J)
+* Water
+    * Water Reduction (Tons)
+    * Water Catchment
+* Wastewater
+    * Gross Amount of Water (Treated) - Before
+    * Gross Amount of Water (Reused)- Before
+    * Gross Amount of Water (Avoided) - Before
+    * Gross Amount of Water (Treated) - After
+    * Gross Amount of Water (Reused)- After
+    * Gross Amount of Water (Avoided) - After
+    * Energy generation from non-recyclable waste in energy-efficient waste-to-energy facilities (J)
+    * Energy recovered from waste (minus any support fuel) (J)
+    * Gross amount of waste that is separated and/or collected and treated (including composted) or disposed of (kg)
 
-```
-http://127.0.0.1:8000/api/bond
-http://127.0.0.1:8000/api/bond/1
+You may consider model inheritance in Django. Please refer to this [document](https://docs.djangoproject.com/en/3.1/topics/db/models/#model-inheritance).
 
-http://127.0.0.1:8000/api/project
-http://127.0.0.1:8000/api/project/1
-```
-5. For frontend, installation and start
+-   Issuers signup
 
+Note that issuers data has not been created in our Github repository due to the limited time. You may  want to design an authorization method for issuer registration. That is to say, not everyone could signup as an issuer in our website, since the issuers could add/edit/delete data in our database. We want that only the authorized person can manage the data in our database.
 
+One of the solutions for issuer registration is as follows. When the potential issuer signup in our website, an email will be sent to a central admin person. This admin person could approve this signup application or reject it. However, more user research should be conducted about how the central admin person could judge on the issuer applicant's qualification, and decide to approve or reject the application.
 
+Django-rest-auth package supports user registeration. You may refer to this [document](https://django-rest-auth.readthedocs.io/en/latest/installation.html#registration-optional).
 
+-   Bond ratings data
 
-## File Structure
+Investors may be interested in bond ratings. You may add bond ratings to bond model. Also, the excel sheet template and uploader should be changed accordingly.
 
+-   Editing/deleting data
+The current version only supports writing data into the database using an Excel file. It is strongly recommended that editing and deleting operations be provided.
 
-## Further:
+For adding data to the database, the users are supposed to upload Excel files to our website; then our website writes the data in the database for the user. For editing and deleting data in the database, however, we recommend that an UI should be provided to the user to edit and delete the data.
 
--  Issuer sign up
+Users may want to display all or some of the data in the UI, along the buttons for editing and deleting the data. Note that the users may not necessarily find the data they want to edit/delete easily. Therefore, it is also recommended that you provide a searching function for this editing/deleting UI. This program already provides a filtering function in bond page. You can select SDG tags, or issue year to search for a particular bond. However, in next phase, it is recommended that you also provide searching tools for project data, financial data and environmental impact data.
 
--  Bond issuer input and filtering select
--  Bond rating data
--  Different bond enterprises pages (Water, Power, WwasteWater)
--  Responsive web design
--  Search function
+-   Restrict Accesses to APIs
+
+Some APIs should be limited to only authorized users, i.e. issuers. When the users enter the uploader URL without loging in, the program should be directed to other page. You may refer to this [post](https://stackoverflow.com/questions/31084779/how-to-restrict-access-to-routes-in-react-router) for more details restricting API accesses.
