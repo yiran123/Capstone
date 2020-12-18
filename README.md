@@ -36,16 +36,20 @@ http://127.0.0.1:8000/api/project/1
 4. For frontend, installation and start
 
 
-Impact Green made with [Material UI's](https://material-ui.com) components, [React](https://reactjs.org)
 
-## Getting Started:
-# Prerequisties:
+
+
+> Impact Green made with [Material UI's](https://material-ui.com) components, [React](https://reactjs.org)
+
+# Getting Started:
+
+## Prerequisties:
 nodejs version10.15.3 or up
 npm version 6.14.8 or up
 Web framework
 Reactjs version 16.13.1
 
-# Installation:
+## Installation:
 cd frontend/sdg-project
 `npm install`
 
@@ -64,15 +68,15 @@ The documentation for the React Material Kit is can be found [here](https://mate
 [Figma file](https://www.figma.com/file/bYmf0LYkPu8db0GXhpmUDT/Impact-Green?node-id=1177%3A216)
 
 
-File Structure
+## File Structure
 
 
-## Wishlist:
+## Further:
 
-Issuer sign up
+-  Issuer sign up
 
 -  Bond issuer input and filtering select
 -  Bond rating data
 -  Different bond enterprises pages (Water, Power, WwasteWater)
 -  Responsive web design
--  Search function through the whole platform
+-  Search function
