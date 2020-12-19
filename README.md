@@ -2,7 +2,7 @@
 
 ## Design Files
 
-[Figma file](https://www.figma.com/file/bYmf0LYkPu8db0GXhpmUDT/Impact-Green?node-id=1177%3A216)
+[Figma file](https://www.figma.com/file/7Y3bOlO6RXO8ajkKUACV4H/Impact-Green-Iterations?node-id=1%3A14991)
 
 ## Getting Started:
 
@@ -122,3 +122,7 @@ Users may want to display all or some of the data in the UI, along the buttons f
 -   Restrict Accesses to APIs
 
 Some APIs should be limited to only authorized users, i.e. issuers. When the users enter the uploader URL without loging in, the program should be directed to other page. You may refer to this [post](https://stackoverflow.com/questions/31084779/how-to-restrict-access-to-routes-in-react-router) for more details restricting API accesses.
+
+-   Responsive Web Design
+
+HTML responds to the needs of the users and the devices they're using. The layout will change based on the size and capabilities of the device.
